@@ -1,0 +1,355 @@
+.comparison-panel {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.comparison-panel>.variant-pf,
+.comparison-panel>.industry-pf {
+  display: block;
+  position: absolute;
+  width: 50%;
+}
+
+.comparison-panel>.variant-pf {
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.comparison-panel>.variant-pf.mapping {
+  -webkit-box-shadow: inset 0px 0px 3px 3px rgba(14, 209, 247, 1);
+  -moz-box-shadow: inset 0px 0px 3px 3px rgba(14, 209, 247, 1);
+  box-shadow: inset 0px 0px 3px 3px rgba(14, 209, 247, 1);
+}
+
+.comparison-panel>.industry-pf {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+}
+
+.comparison-panel>.industry-pf:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 1px;
+  top: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: #dfdfdf;
+}
+
+.comparison-panel .pf-container {
+  display: block;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  bottom: 100px;
+  overflow: auto;
+  z-index: 1;
+}
+.comparison-panel>.industry-pf .pf-container.pf-kpi-detail-container {
+  display: block;
+  z-index: 2;
+  background-color: #333;
+  bottom: 0;
+}
+
+.comparison-panel .recipe-container {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.comparison-panel>.variant-pf .pf-container,
+.comparison-panel>.industry-pf .recipe-container {
+  overflow: hidden;
+}
+
+.comparison-panel>.industry-pf .pf-container,
+.comparison-panel>.industry-pf .recipe-container {
+  display: none;
+}
+
+.comparison-panel>.industry-pf .pf-container[show],
+.comparison-panel>.industry-pf .recipe-container[show] {
+  display: block;
+}
+
+.comparison-panel .kpi-container {
+  display: none;
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 1px;
+  z-index: 3;
+}
+
+.comparison-panel .kpi-container[show] {
+  display: block;
+}
+
+
+/* Notify Section */
+
+.comparison-panel .notify {
+  display: none;
+  position: absolute;
+  top: 10px;
+  left: 20%;
+  right: 20%;
+  padding: 20px 30px;
+  background-color: #FF931E;
+  z-index: 25;
+  color: #fff;
+}
+
+.comparison-panel .notify[show] {
+  display: block;
+}
+
+.comparison-panel .notify>.desc {
+  display: inline-block;
+  margin-right: 190px;
+}
+
+.comparison-panel .notify>.desc>i {
+  margin-right: 15px;
+}
+
+.comparison-panel .notify>.action {
+  display: block;
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  text-decoration: underline;
+  color: #fff;
+}
+.comparison-panel .notify>.notify-close {
+  display: block;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  color: #fff;
+  font-size: 16px;
+  line-height: 1;
+}
+
+
+/* End Styles of Notify Section */
+
+
+/* Map Pin */
+.comparison-panel .pn-chart .pn-controls {
+  top: 25px;
+}
+.comparison-panel .pn-chart .pn-node.pn-trans.pined {
+  background-color: #FFEE00!important;
+  color: #333;
+}
+
+.comparison-panel .pn-chart .pn-node.pn-trans.pined.start>.point {
+  border-color: transparent transparent transparent #333;
+  background-color: #FFEE00;
+}
+
+.comparison-panel .pn-chart .pn-node.pn-trans.pined>.caption {
+  /*background-color: #FFEE00;*/
+  color: #333;
+}
+
+.comparison-panel .pn-chart .pn-node.pn-trans.pined>.caption>.title,
+.comparison-panel .pn-chart .pn-node.pn-trans.pined>.caption>.label {
+  color: #333;
+}
+
+.comparison-panel .pn-chart .pn-node.pn-trans.flag-pined {
+  background-color: #00C9FF!important;
+  color: #fff;
+}
+
+.comparison-panel .pn-chart .pn-node.pn-trans.flag-pined.start>.point {
+  border-color: transparent transparent transparent #333;
+  background-color: #00C9FF;
+}
+
+.comparison-panel .pn-chart .pn-node.pn-trans.flag-pined>.caption {
+  /*background-color: #00C9FF;*/
+  color: #fff;
+}
+
+.comparison-panel .pn-chart .pn-node.pn-trans.flag-pined>.caption>.title,
+.comparison-panel .pn-chart .pn-node.pn-trans.flag-pined>.caption>.label {
+  color: #fff;
+}
+
+.comparison-panel .pn-chart .pn-node.pn-trans.highlight {
+  background-color: #FEED01;
+  color: #333;
+}
+
+.comparison-panel .pn-chart .pn-node.pn-trans.highlight>.point {
+  background-color: #333;
+}
+
+.comparison-panel .pn-chart .pn-node.pn-trans.highlight>.caption {
+  background-color: #FEED01;
+  color: #333;
+}
+
+.comparison-panel .pn-chart .pn-node.pn-trans.highlight>.caption>.title,
+.comparison-panel .pn-chart .pn-node.pn-trans.highlight>.caption>.label {
+  color: #333;
+}
+
+.comparison-panel .pn-map-pin {
+  display: block;
+  position: absolute;
+  left: 6px;
+  top: -24px;
+  color: #00C9FF;
+  line-height: 1;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.comparison-panel .pn-map-pin>i {
+  font-size: 28px;
+}
+
+.comparison-panel .pn-map-pin>.pn-map-pin-label {
+  display: inline-block;
+  font-family: 'GT-Walsheim-Bold';
+  font-size: 10px;
+  position: relative;
+  left: -17px;
+  top: -11px;
+  color: #fff;
+}
+
+
+/* End Styles of Map Pin */
+
+/* Confirm Box */
+.confirm-box-wrapper {
+	display: none;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.75);
+	z-index: 30;
+}
+.confirm-box-wrapper[show] {
+	display: block;
+}
+.confirm-box-wrapper>.confirm-box {
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 280px;
+	height: 140px;
+	margin-left: -140px;
+	margin-top: -70px;
+	background-color: #7d7d7d;
+	border: 1px solid #dfdfdf;
+	
+}
+.confirm-box>.confirm-box-message {
+	display: block;
+	font-size: 16px;
+	padding: 10px 15px;
+	color: #fff;
+	margin: 0;
+}
+.confirm-box>.confirm-box-actions {
+	display: block;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: #dfdfdf;
+	padding: 10px 15px;
+	text-align: right;
+}
+.confirm-box>.confirm-box-actions>button {
+	display: inline-block;
+	margin: 0 4px;
+	padding: 4px 10px;
+	font-size: 14px;
+	background-color: #FDED01;
+	font-family: 'GT-Walsheim-Bold';
+	color: #333;
+	border-radius: 0;
+	border: 1px solid #DDDD00;
+}
+.confirm-box>.confirm-box-actions>button:hover {
+	background-color: #FFFF00;
+	border-color: #FFDD00;
+}
+.confirm-box>.confirm-box-actions>button:focus {
+	outline: none;
+}
+.confirm-box>.confirm-box-actions>button.default {
+	background-color: #D9D9D9;
+	color: #333;
+	border: 1px solid #BBB;
+}
+.confirm-box>.confirm-box-actions>button.default:hover {
+	background-color: #EEE;
+	border-color: #CCC;
+}
+/* End Styles of Confirm Box*/
+
+/* KPI Detail */
+.pf-kpi-detail-body {
+  display: block;
+  position: absolute;
+  top: 25px;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+}
+.pf-kpi-detail {
+  display: block;
+  width: 100%;
+  height: 33.33333%;
+  padding: 2px;
+  position: relative;
+}
+.pf-kpi-detail>.pf-kpi-label {
+  display: block;
+  position: absolute;
+  left: 5px;
+  bottom: 0;
+  transform: rotate(-90deg);
+  transform-origin: 0 0;
+  color: #dfdfdf;
+}
+.pf-kpi-detail>.pf-kpi-detail-wrapper {
+  display: block;
+  position: relative;
+  margin-left: 28px;
+  margin-right: 28px;
+  background-color: #fff;
+  height: 100%;
+}
+.pf-kpi-detail-close {
+  display: block;
+  position: absolute;
+  right: 5px;
+  top: 25px;
+  text-decoration: none;
+  color: #fff;
+  z-index: 1;
+  font-size: 18px;
+}
+.pf-kpi-detail-close:hover {
+  color: #dfdfdf;
+  text-decoration: none;
+}
+/* End Styles of KPI Detail */

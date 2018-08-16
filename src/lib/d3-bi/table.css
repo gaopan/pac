@@ -1,0 +1,161 @@
+    .bi-table ::-webkit-scrollbar {
+        width: 8px;
+        background-color: rgb(224, 224, 224);
+    } 
+    .bi-table ::-webkit-scrollbar-thumb {
+        background-color: rgb(179, 179, 179);
+    }
+    .bi-table table thead th{
+        background-color: rgb(103, 103, 103);
+        text-align: left;
+        color: white;
+    }   
+    .bi-table table tbody tr:nth-child(even){
+        background-color: #EDEDED;
+    } 
+    .bi-table table tbody tr:hover{
+        background-color: #A7A5A5;
+    }   
+    .bi-table table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    .bi-table table thead th i{
+        vertical-align: middle;
+        padding-left:4px;
+        cursor:pointer;
+    }      
+    .bi-table table tbody{
+        overflow-y: auto;
+        overflow-x: hidden;
+        display: block;
+        /* border:1px solid #cecece; */
+    }    
+    .bi-table table tr{
+        height: 30px;
+        display: table;
+        width: 100%;
+        table-layout: fixed;    
+    }
+
+    .bi-table table td {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .bi-table .thead-text{  /*important class name*/
+        display: inline-block;
+    }
+
+    .bi-table .clearfix:after {
+        content: "";
+        height: 0;
+        visibility: hidden;
+        display: block;
+        clear: both;
+    }
+    .bi-table .table-toolbar {
+        height: auto;
+        padding-bottom: 6px;
+        padding-right: 6px;
+    }
+    .bi-table .filter-column {
+        position: relative;
+        margin-left: 30px;
+        float: right;
+    }
+    .bi-table .column-series {
+        position: absolute;
+        top: 26px;
+        right: 0;
+        z-index: 10;
+        background-color: white;
+        width: 100px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        display: none;
+    }
+    .bi-table .column-series li {
+        height: 40px;
+        line-height: 40px;
+        text-indent: 10px;
+    }
+    .bi-table .search-box {
+        float: left;
+        white-space: nowrap;        
+    }
+    .bi-table .icon-search {
+        font-size: 14px;
+        margin-left: -26px;
+    }
+    .bi-table .search-input {
+        outline: none;
+        border: none;
+    }
+
+    .bi-table .selection {
+        display: inline-block;
+        position: relative;
+        z-index: 100;
+        margin-left: 10px;
+    }
+/*    .bi-table .select-ul {
+        background-color: gray;
+        text-indent: 10px;
+        position: absolute;
+        top: 24px;
+        display: none;
+    }
+    .bi-table .select-ul ul {
+        margin-bottom: 0;
+    }
+    .bi-table .select-ul li {
+        cursor: pointer;
+        border-bottom: 1px solid #fff;
+        width: 97px;
+        text-indent: 6px;
+    }
+    .bi-table .select-ul li:hover{
+        background-color: rgb(239, 239, 239);
+    }*/
+
+    .bi-table .table-container{
+        position: relative;
+    }
+
+    .bi-table .table-body {
+        width: 100%;
+    }
+
+    .bi-table .table-body thead tr th,
+    .bi-table .table-body tbody tr td {
+        height: 20px;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .bi-table .fixed-thead thead tr th {
+        color: rgb(208, 208, 208)
+    }
+    .bi-table .fixed-thead>thead>tr>th+th {
+        border-left: 1px solid black;
+    }
+
+    .bi-table .no-data {
+        text-align: center;
+    }
+    .bi-table .no-data {text-align: center;border:none;}
+ 
+    .bi-table .td-clickable{
+        cursor:pointer;
+    }
+    .bi-table .td-clickable:hover{
+        text-decoration: underline;
+    }
+
+    .bi-table .filter-column ul input,
+    .bi-table .filter-column ul label{
+        cursor:pointer;
+        vertical-align: middle;    
+    }    

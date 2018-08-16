@@ -1,0 +1,43 @@
+$backgroundColor: #fff;
+
+.bi-tooltip.df-variant-chart-tooltip,
+.bi-tooltip.df-attribute-chart-tooltip {
+    background-color: $backgroundColor;
+    border-radius: 5px;
+    border: 0.5px solid #B3B3B3;
+
+    &.leftTop:after{
+        border-right: 10px solid $backgroundColor;
+    }
+
+    &.leftBottom:after{
+        border-right: 10px solid $backgroundColor;
+    }
+
+    &.rightTop:after{
+        border-left: 10px solid $backgroundColor;
+    }
+
+    &.rightBottom:after{
+        border-left: 10px solid $backgroundColor;
+    }
+
+    .variants-hover-box,
+    .attribute-hover-box {
+
+        .title {
+            color: #000000;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        p {
+            .data {
+                color: #666666;
+            }
+            .value {
+                color: #000000;
+            }
+        }
+    }
+}

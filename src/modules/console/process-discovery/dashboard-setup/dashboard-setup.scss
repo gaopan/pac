@@ -1,0 +1,64 @@
+.dashboard-setup {
+  display: block;
+  position: absolute;
+  background-color: #fff;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  >.head {
+    padding: 10px 15px;
+    line-height: 1.5;
+    position: relative;
+    >.title {
+      font-size: 20px;
+    }
+    >.actions {
+      display: inline-block;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+
+      >.btn {
+      	margin-left: 10px;
+      }
+    }
+  }
+  >.body {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 50px;
+    >.conf-panel {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 20%;
+      bottom: 0;
+      background-color: #535353;
+    }
+    >.tile-panel {
+      background-color: #EAEAEA;
+    }
+  }
+  >.body.config {
+    >.tile-panel {
+      left: 20%;
+      width: 80%;
+    }
+  }
+
+  .tile-panel .tile .tile-wrapper {
+    border: 2px solid transparent;
+  }
+  .tile-panel .tile .tile-wrapper.current {
+    border: 2px solid #3AD8FE;
+
+    .edit-btn {
+    	display: none;
+    }
+  }
+}

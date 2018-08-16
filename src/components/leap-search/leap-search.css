@@ -1,0 +1,63 @@
+.leap-search .search-container input{
+    background: #f5f5f5;
+    color: #666666;
+    border-color: #CCCCCC;
+    font-size: 14px;
+}
+
+.leap-search .search-container input:disabled {
+    cursor: not-allowed;
+}
+
+.leap-search .search-container input::placeholder {
+    color: #CCCCCC;
+}
+
+.leap-search .search-container input:focus {
+    background: #fff;
+    color: #000000;
+    border-color: #000000;
+}
+
+.leap-search .search-container i {
+    margin-left: -30px;
+    vertical-align: middle;
+    color: #333333;
+}
+
+.leap-search .search-container input:focus + i { 
+    color: #000000;
+}
+
+.leap-search .search-container i.icon-close{
+    cursor: pointer;
+}
+
+.leap-search .search-container input[type=text]::-ms-clear {
+    display: none;
+}
+
+/* Disabled */
+.leap-search .search-container.disabled input {
+    background-color: #CCCCCC;
+    border-color: #787878;
+}
+
+.leap-search .search-container.disabled input::placeholder,
+.leap-search .search-container.disabled i  {
+    color: #787878;
+}
+/*End of Disabled*/
+
+/*Have Error*/
+.leap-search .search-container.have-error input {
+    background-color: #F6CCD0;
+    border-color: #D0011B;
+}
+
+.leap-search .search-container.have-error input,
+.leap-search .search-container.have-error input::placeholder,
+.leap-search .search-container.have-error i  {
+    color: #000000;
+}
+/*End of Have Error*/

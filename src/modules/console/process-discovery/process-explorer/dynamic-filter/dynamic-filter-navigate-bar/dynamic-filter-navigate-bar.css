@@ -1,0 +1,354 @@
+.dynamic-filter-navigate-bar-container {
+  position: fixed;
+  height: 40px;
+  background-color: #777;
+  padding: 0px 20px;
+  z-index: 800;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  bottom: 0px;
+}
+
+.hiddenPanel {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 901;
+  background-color: #777;
+  opacity: 0.5;
+}
+
+.confirmPanel {
+  position: absolute;
+  height: 250px;
+  width: 350px;
+  margin-top: 12%;
+  margin-left: 40%;
+  background-color: #FFF;
+  z-index: 902;
+}
+
+.confirmPanelHead {
+  background-color: black;
+  color: white;
+  height: 26px;
+  font-size: 13px;
+  padding: 6px 10px;
+}
+
+.confirmPanelHeadText {
+  height: 15px;
+  padding-top: 3px;
+  padding-left: 5px;
+  float: left;
+}
+
+.confirmPanelHeadIcon {
+  padding-top: 3px;
+  padding-right: 5px;
+  float: right;
+}
+
+.confirmPanelDetails {
+  text-align: center;
+  margin-top: 15px;
+  color: black;
+}
+
+.confirmPanelIcon {
+  font-size: 35px;
+}
+
+.confirmPanelNotice {
+  font-size: 40px;
+  margin-top: -10px;
+}
+
+.confirmPanelButtons {
+  height: 40px;
+  margin-top: 25px;
+}
+
+.confirmPanelButtonsContainer {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 240px;
+  margin-left: 50px;
+}
+
+.confirmPanelButtons .yesButton {
+  width: 110px;
+  height: 25px;
+  float: left;
+  text-align: center;
+  cursor: pointer;
+  margin-left: 10px;
+  background-color: #FEED00;
+}
+
+.confirmPanelButtons .yesButton:hover {
+  background-color: #000;
+  color: #FFED00;
+}
+
+.confirmPanelButtons .cancelButton {
+  width: 110px;
+  height: 25px;
+  float: left;
+  text-align: center;
+  cursor: pointer;
+  margin-left: 10px;
+  border: 2px solid;
+}
+
+.confirmPanelButtons .cancelButton:hover {
+  border: 2px solid #FFED00;
+}
+
+.left-bar {
+  height: 40px;
+  color: #ffffff;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.left-bar-container {
+  display: flex;
+}
+
+.left-bar-item {
+  height: 40px;
+  padding: 12px 10px;
+}
+
+.left-bar-item>span {
+  white-space: nowrap;
+}
+
+.left-bar .breadcrumb-title {
+  padding-left: 0;
+}
+
+.left-bar .breadcrumb-icon {
+  padding-top: 15px;
+  font-size: 10px;
+}
+
+.left-bar .breadcrumb-selection.disabled-selection {
+  color: #8f8f8f;
+  cursor: not-allowed;
+}
+
+.left-bar .breadcrumb-selection.active {
+  background-color: #333333;
+  box-shadow: inset 0 -2px 0 0 #feed01;
+}
+
+.left-bar .breadcrumb-selection {
+  width: 60%;
+  cursor: pointer;
+}
+
+.left-bar .breadcrumb-selection > i {
+  font-size: 10px;
+  padding-top: 3px;
+}
+
+.mid-bar {
+  height: 40px;
+  text-align: center;
+}
+
+.mid-bar .midBarContainer {
+  color: #ffffff;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+}
+
+.mid-bar .midBarContainer .icon-container {
+  position: relative;
+  padding: 0 10px;
+  cursor: pointer;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mid-bar .midBarContainer .icon-container.active-icon,
+.mid-bar .midBarContainer .icon-container:hover {
+  background-color: #333333;
+}
+
+.mid-bar .midBarContainer .icon-container.active-icon {
+  box-shadow: inset 0 -2px 0 0 #feed01;
+}
+
+.mid-bar .midBarContainer .icon-container.disabled-icon {
+  color: #8f8f8f;
+  cursor: not-allowed;
+}
+
+.mid-bar .midBarContainer .icon-container.disabled-icon:hover {
+  background-color: transparent;
+}
+
+.right-bar {
+  height: 40px;
+}
+
+.right-bar-container {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 265px;
+  float: right;
+  text-align: right;
+}
+
+.right-bar .applyFilterButton {
+  background-color: #CCC;
+  color: #787878;
+  float: left;
+  text-align: center;
+  cursor: not-allowed;
+}
+
+.right-bar .detailsApplyFilterButton:hover {
+  background-color: #000;
+  color: #FFED00;
+}
+
+.right-bar .detailsApplyFilterButton {
+  background-color: #FEED00;
+  float: left;
+  text-align: center;
+  cursor: pointer;
+}
+
+.right-bar .closeButton {
+  background-color: #fff;
+  float: right;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.right-bar .closeButton:hover {
+  border: 2px solid #ffed00;
+}
+
+.right-bar-text {
+  height: 25px;
+  position: relative;
+  padding: 3px 35px;
+  font-size: 14px;
+}
+
+.modal-header-container {
+  background-color: #333333;
+  color: white;
+  padding: 5px 15px;
+}
+
+.modal-header-title {
+  /* float: left; */
+}
+
+.filter-title {
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.modal-header-title-close {
+  float: right;
+  cursor: pointer;
+}
+
+.modal-body-favourite {
+  margin-top: 15px;
+  margin-bottom: 50px;
+}
+
+.modal-body-text {
+  text-align: center;
+  margin: 50px 0 50px 0;
+}
+
+.favourite-btn {
+  margin-right: 10px;
+  /* cursor: pointer; */
+  font-size: 14px;
+}
+
+.modal-body-favourite span {
+  cursor: pointer;
+}
+
+.modal-action-btn-container {
+  float: right;
+  overflow: hidden;
+}
+
+.active-filter {
+  color: #FFED00;
+}
+
+
+/* .pop-box-wrapper {
+                position: relative;
+                cursor: text;
+ } */
+
+.pop-box {
+  display: none;
+  position: absolute;
+  bottom: 42px;
+  padding: 5px 10px;
+  background-color: #eee;
+  font-size: 12px;
+  width: 160px;
+  /* text-align: center; */
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  z-index: 500;
+  color: black;
+  left: -15px;
+}
+
+.pop-box:after {
+  content: "\25BC";
+  display: block;
+  position: absolute;
+  left: 25px;
+  bottom: -13px;
+  color: #eee;
+  font-size: 12px;
+}
+
+.icon-container:hover > .pop-box {
+  display: block;
+}
+
+.applyFilterButton:hover > .pop-box {
+  display: block;
+}
+
+
+/* 
+ .pop-box:after {
+                        content: "\25BC";
+                        display: block;
+                        position: absolute;
+                        left: 25px;
+                        bottom: -13px;
+                        color: #eee;
+                        font-size: 12px;
+                    } */

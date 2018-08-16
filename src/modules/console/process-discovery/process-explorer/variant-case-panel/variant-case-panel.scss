@@ -1,0 +1,299 @@
+.variant-case ::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgb(224, 224, 224);
+}
+
+.variant-case ::-webkit-scrollbar:horizontal {
+  height: 10px;
+  background-color: rgb(224, 224, 224);
+}
+
+.variant-case ::-webkit-scrollbar-thumb {
+  background-color: rgb(179, 179, 179);
+}
+
+.variant-case .wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+}
+
+
+.variant-case .variant-panel,
+.variant-case .case-panel {
+  vertical-align: top;
+  display: inline-block;
+  width: 15%;
+  height: 100%;
+  background-color: #fff;
+  padding: 5px;
+}
+
+.case-details {
+  display: inline-block;
+  width: 85%;
+  vertical-align: top;
+  height: 100%;
+}
+
+.case-detail-chart-area,
+.case-detail-table-area {
+  background-color: #4d4d4d;
+  margin: 0;
+  position: relative;
+  padding: 5px;
+  vertical-align: top;
+}
+
+.variant-case .variant-paging,
+.variant-case .case-paging {
+  margin-top: 10px;
+}
+
+.variant-case .wrapper .chart-area {
+  display: block;
+  width: 100%;
+  background-color: #fff;
+  position: relative;
+  white-space: nowrap;
+}
+
+.variant-case .wrapper .chart-area>.activity-duration-chart-wrapper {
+  display: inline-block;
+  width: 80%;
+  position: relative;
+  height: 100%;
+}
+
+.variant-case .chart-area>.activity-duration-chart-wrapper .line-group:nth-of-type(2)>.line-path {
+  display: none;
+}
+
+.variant-case .chart-area>.activity-duration-chart-wrapper .line-tooltip>g>circle:nth-of-type(2) {
+  display: none;
+}
+
+.variant-case .chart-area>.activity-duration-caption {
+  display: inline-block;
+  width: 20%;
+  position: relative;
+  padding: 5px;
+}
+
+.variant-case .button-area {
+  display: block;
+  padding: 5px 10px;
+  background-color: #eee;
+  position: relative;
+}
+
+.variant-case .case-details-85 {
+  width: 85%;
+}
+
+.variant-case .case-details-70 {
+  width: 70%;
+}
+
+.variant-case .button-area .title {
+  display: inline-block;
+  color: $color;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.variant-case .exit {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 14px;
+  color: #333;
+}
+
+.variant-case .search-variant,
+.variant-case .search-case {
+  width: 100%;
+  margin-top: 2px;
+  background-color: #000;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.variant-panel .search-variant>input,
+.case-panel .search-case>input {
+  width: 100%;
+}
+
+.variant-panel .variant-list,
+.case-panel .caseList {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 76%;
+}
+
+
+.case-panel .search-case i {
+  cursor: pointer;
+}
+
+.variant-panel .search-variant i,
+.case-panel .search-case i {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.variant-case .sort-switch {
+  font-size: 12px;
+}
+
+.variant-case .sort-switch-label {
+  display: inline-block;
+  color: #7d7d7d;
+  font-size: 1em;
+  display: inline-block;
+  margin: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sort-switch .dropdown-group {
+  width: 100%;
+}
+
+.sort-switch .dropdown-group .process-label {
+  height: auto;
+  box-shadow: none;
+  border: 1px solid #ccc;
+}
+
+.sort-switch .dropdown-group .process-label span {
+  font-size: 14px;
+}
+
+.sort-switch .dropdown-group .dropdown-menu .wrapper-li li {
+  padding: 5px 8px 5px;
+}
+
+.variant-list-ul,
+.case-list-ul {
+  list-style: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.variant-list-ul li,
+.case-list-ul li {
+  cursor: pointer;
+  width: 100%;
+  position: relative;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  background-color: #eee;
+}
+
+.current-case-item {
+  color: $color !important;
+}
+
+.variant-list-ul li+li,
+.case-list-ul li+li {
+  /*border-bottom: 1px solid #464646;*/
+}
+
+.variant-info-wrapper,
+.case-info-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.variant-info-wrapper p,
+.case-info-wrapper p {
+  margin: 0 0 5px;
+  padding: 0;
+  text-align: right;
+}
+
+.variant-info-caseId,
+.case-info-caseId {
+  font-size: 12px;
+  color: #7d7d7d;
+}
+
+.variant-info-duration,
+.case-info-duration {
+  font-size: 10px;
+  color: #333;
+}
+
+.variant-list-ul i,
+.case-list-ul i {
+  font-size: 8px;
+  color: #333;
+  padding: 5px;
+}
+
+.variant-case .news-pages ul li:first-child:hover,
+.variant-case .news-pages ul li:last-child:hover {
+  color: #fff;
+  background-color: #4d4d4d;
+}
+
+.variant-case .news-pages ul li.disabled {
+  color: #A9ADAD;
+}
+
+.variant-case .news-pages ul li:first-child.disabled:hover,
+.variant-case .news-pages ul li:last-child.disabled:hover {
+  color: #A9ADAD;
+  background: #4d4d4d;
+}
+
+.variant-case .news-pages ul li:hover {
+  background-color: #fff;
+  color: #4d4d4d;
+}
+
+.variant-case .news-pages ul li.active:hover {
+  color: #fff;
+}
+
+.variant-case .news-pages ul li.active {
+  background-color: $color;
+  color: #fff;
+}
+
+.variant-case .news-pages ul li {
+  background: #4d4d4d;
+  color: #fff;
+}
+
+.case-variant-no-data {
+  height: 46px;
+  width: 100%;
+  line-height: 40px;
+  text-align: center;
+  color: white;
+  font-size: 12px;
+}
+
+.case-detail-table-area {
+  background-color: white;
+}
+
+.case-details .button-area i {
+  font-size: 18px;
+}
+
+.case-detail-table-area table tbody tr {
+  height: 26px;
+  background-color: white;
+}

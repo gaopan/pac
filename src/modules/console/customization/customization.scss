@@ -1,0 +1,36 @@
+.customization {
+	.chart-title {
+		display: block;
+		padding: 10px 15px;
+
+		&>span {
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		.selector {
+			display: inline-block;
+			float: right;
+			vertical-align: middle;
+		}
+
+		&:after {
+			content: " ";
+			display: table;
+			clear: both;
+		}
+	}
+
+	.tile-title {
+		&>header {
+			font-weight: bold;
+		}
+	}
+
+	.table-wrapper {
+		padding: 5px;
+		height: 100%;
+		width: 100%;
+		overflow: auto;
+	}
+}

@@ -1,0 +1,203 @@
+.recipe-selection-container {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow-x: hidden;
+  .recipe-selection {
+    padding: 20px;
+    margin: 0;
+    .header {
+      text-align: center;
+      .main-title {
+        font-size: 24px;
+        font-family: "GT-Walsheim-Bold";
+        margin-bottom: 0;
+      }
+      .desc {
+        color: #000;
+      }
+    }
+    .content-box {
+      padding: 15px 0;
+      background-color: #F9F9F9;
+      height: auto;
+      margin: 0;
+      .action-box {
+        .search-group {
+          padding: 0;
+          color: #B3B3B3;
+          .form-control {
+            padding-left: 30px;
+            @include remove-border-styling();
+            &:focus {
+              @include remove-border-styling();
+            }
+          }
+          .form-control-feedback {
+            top: -3px;
+            left: 0;
+            line-height: 40px;
+            pointer-events: auto;
+            color: grey;
+            &:hover,
+            &:focus {
+              text-decoration: none;
+            }
+          }
+        }
+        .toggle-group {
+          padding: 0;
+          i {
+            font-size: 18px;
+            padding: 9px 10px;
+            height: 34px;
+            background-color: #DDDDDD;
+          }
+        }
+      }
+      .view-box {
+        .recipe {
+          display: block;
+          overflow: hidden;
+          background-color: #EAEAEA;
+          padding: 15px;
+          .header {
+            .indicator {
+              background-color: #000;
+              text-align: center;
+              padding: 4px 0px;
+              font-family: 'GT-Walsheim-Bold';
+            }
+            .detail {
+              padding-left: 10px;
+              text-align: left;
+              .recipe-name {
+                font-family: "GT-Walsheim-Bold";
+                color: #333333;
+              }
+              .type-name {
+                color: #000000;
+                @include singleLineEllipsis();
+              }
+            }
+          }
+          .body {
+            p {
+              width: 100%;
+              color: #666666;
+            }
+          }
+          &:hover {
+            box-shadow: 0 0 0 3px #000;
+            background-color: #fff;
+            cursor: pointer;
+          }
+          &.recipe-card {
+            height: 150px;
+            margin-top: 15px;
+            .header {
+              .indicator {
+                height: 40px;
+                width: 16%;
+                font-size: 162%;
+              }
+              .detail {
+                width: 78%;
+                .recipe-name {
+                  @include singleLineEllipsis();
+                }
+              }
+            }
+            .body {
+              padding-top: 15px;
+              p {
+                @include multiLineEllipsis(1.4em, 3, #EAEAEA);
+              }
+            }
+            &:hover {
+              .body {
+                p {
+                  @include multiLineEllipsis(1.4em, 3, #fff);
+                }
+              }
+            }
+          }
+          &.recipe-list {
+            height: 65px;
+            margin: 10px 0;
+            .header {
+              width: 30%;
+              .indicator {
+                height: 36px;
+                width: 18%;
+                font-size: 140%;
+              }
+              .detail {
+                width: 80%;
+                .recipe-name {
+                  @include singleLineEllipsis();
+                  margin-top: 5px;
+                }
+              }
+            }
+            .body {
+              width: 70%;
+              padding-left: 10px;
+              span {
+                margin-top: 5px;
+                @include singleLineEllipsis();
+              }
+            }
+          }
+        }
+      }
+      .view-box-card {
+        padding-right: 0;
+      }
+      .view-box-list {
+        padding-right: 15px;
+        margin-top: 15px;
+      }
+    }
+  }
+  .recipe-comparison {
+    /* Updated for setting content size: width and height, which must be defined instead of changing by child */
+    /*margin-top: 15px;*/
+    padding: 25px 15px 15px;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    height: 100%;
+    .header {
+      padding: 0;
+      height: 58px;
+      overflow: hidden;
+      border-bottom: 1px solid #e5e5e5;
+      .title {
+        font-family: "GT-Walsheim-Bold";
+        color: #000;
+        font-size: 20px;
+        margin-bottom: 0;
+        @include singleLineEllipsis();
+      }
+      .sub-title {
+        color: #666666;
+        @include singleLineEllipsis();
+      }
+      .btn-primary {
+        // padding: 10px;
+        margin-top: 5px;
+      }
+      .close {
+        color: #000;
+      }
+    }
+    .content {
+      position: absolute;
+      top: 83px;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  }
+}

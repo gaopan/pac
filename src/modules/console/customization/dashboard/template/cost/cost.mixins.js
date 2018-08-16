@@ -1,0 +1,308 @@
+import * as d3 from 'd3'
+import * as d3BI from '@/lib/d3-bi/index.js'
+import TypeChecker from '@/utils/type-checker.js'
+import CommonUtils from '@/utils/common-utils.js'
+import LeapSelect from '@/components/leap-select/LEAPSelect.vue'
+import shared from '@/shared.js'
+let eventHub = shared.eventHub;
+export default {
+  template: `<div class="container-fluid" ref="container">
+    <div class="row">
+      <div class="col-xs-12">
+          <div class="chart-title">
+            <span>成本与里程</span>
+            <div class="selector">
+              <leap-select :options="typeOptions" :initSelectedValue="selectedType" v-on:onSelectedValues="selectType"></leap-select>
+            </div>
+          </div>
+          <div class="chart-container" ref="hUContainer"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+          <div class="chart-title">
+            <span>成本目标</span>
+          </div>
+          <div class="chart-container" ref="hDContainer"></div>
+        </div>
+    </div>
+  </div>`,
+  props: {
+    tileId: {
+      type: String,
+      required: true
+    },
+    conf: {
+      validator: function(_conf) {
+        if (!TypeChecker.isObject(_conf)) return false;
+        return true;
+      }
+    }
+  },
+  data() {
+    return {
+      hUData: null,
+      hDData: null,
+      selectedType: '内业',
+      typeOptions: [{ name: '内业', value: '内业' }, { name: '外业', value: '外业' }]
+    };
+  },
+  created() {
+    eventHub.$on("tile-window-resized", this.windowResized);
+    eventHub.$on("tile-full-screen-inner", this.toggleFullScreen);
+    this.parseData(this.conf.data);
+  },
+  components: { LeapSelect },
+  watch: {
+    selectedType(val) {
+      this.parseData(this.conf.data);
+      this.draw();
+    }
+  },
+  mounted() {
+    this.container = this.$refs.container;
+    this.init();
+    this.draw();
+  },
+  methods: {
+    init() {
+      let vm = this;
+      vm.hUContainer = d3.select(vm.$refs.hUContainer);
+      vm.hUChart = d3BI.baseChart()
+        .x(function(d) { return d.label })
+        .y(function(d) { return d.value })
+        .y2(function(d) { return d.y2 })
+        .margin({ top: 15, right: 20, left: 15, bottom: 10 });
+      vm.hUChart.axisLines.showAll({ x: false, y: false });
+      vm.hUChart.xAxis.title("月").maxTextLength(10);
+      vm.hUChart.yAxis.title("元").domainToZero(true).axis().ticks(5);
+      vm.hUChart.y2Axis.title("公里").axis().ticks(5);
+
+      vm.hDContainer = d3.select(vm.$refs.hDContainer);
+      vm.hDChart = d3BI.baseChart()
+        .x(function(d) { return d.label })
+        .y(function(d) { return d.value })
+        .margin({ top: 15, right: 20, left: 15, bottom: 10 });
+      vm.hDChart.axisLines.showAll({ x: false, y: false });
+      vm.hDChart.xAxis.title("月").maxTextLength(10);
+      vm.hDChart.yAxis.title("元/公里").domainToZero(true).axis().ticks(5);
+    },
+    selectType(args) {
+      this.selectedType = args.value;
+    },
+    draw() {
+      let vm = this,
+        chartHeight = (vm.container.parentNode.clientHeight - 53 - 34) / 2 + 'px';
+      vm.hUContainer.style('height', chartHeight);
+      if (vm.hUContainer.select('svg').size()) {
+        vm.hUContainer
+          .select('svg')
+          .datum(function(d) { return vm.hUData ? vm.hUData : d })
+          .call(vm.hUChart);
+      } else {
+        vm.hUContainer
+          .append('svg')
+          .datum(vm.hUData)
+          .call(vm.hUChart);
+      }
+
+      vm.hDContainer.style('height', chartHeight);
+      if (vm.hDContainer.select('svg').size()) {
+        vm.hDContainer
+          .select('svg')
+          .datum(function(d) { return vm.hDData ? vm.hDData : d })
+          .call(vm.hDChart);
+      } else {
+        vm.hDContainer
+          .append('svg')
+          .datum(vm.hDData)
+          .call(vm.hDChart);
+      }
+    },
+    windowResized: function(args) {
+      if (args.id == this.$props.tileId) {
+        this.draw();
+      };
+    },
+    toggleFullScreen(args){
+      if (args.id == this.$props.tileId) {
+        this.draw();
+      };
+    },
+    parseUData(d, chartData) {
+      let zcbData = d.map(_d => {
+          return {
+            label: _d['月份'],
+            value: _d['总成本（元）']
+          };
+        }),
+        zglData = d.map(_d => {
+          return {
+            label: _d['月份'],
+            value: _d['总成本（元）'],
+            y2: _d['总公里数（公里）']
+          };
+        });
+
+      this.hUData = chartData(zcbData, zglData);
+    },
+    parseDData(d, chartData) {
+      let vm = this;
+      let sqcbData = null, gscbData = null, sqcbmbData = null, gscbmbData = null;
+      if(vm.selectedType == '内业') {
+        sqcbData = d.map(_d => {
+          return {
+            label: _d['月份'],
+            value: _d['成本（元/公里）']
+          };
+        });
+        gscbData = d.map(_d => {
+          return {
+            label: _d['月份'],
+            value: _d['成本目标（元/公里）']
+          };
+        });
+      } else {
+        sqcbData = d.map(_d => {
+          return {
+            label: _d['月份'],
+            value: _d['市区成本（元/公里）']
+          };
+        });
+        gscbData = d.map(_d => {
+          return {
+            label: _d['月份'],
+            value: _d['高速成本（元/公里）']
+          };
+        });
+        sqcbmbData = d.map(_d => {
+          return {
+            label: _d['月份'],
+            value: _d['市区成本目标（元/公里）']
+          };
+        });
+        gscbmbData = d.map(_d => {
+          return {
+            label: _d['月份'],
+            value: _d['高速成本目标（元/公里）']
+          };
+        });
+      }
+
+      this.hDData = chartData(sqcbData, gscbData, sqcbmbData, gscbmbData);
+    },
+    parseData(data) {
+      let vm = this;
+      let hUChartData = function(_zcbData, _zglData) {
+        return [{
+          type: 'bar',
+          name: '总成本（元）',
+          label: {
+            x: '月',
+            y: '总成本（元）',
+            name: ''
+          },
+          color: 'rgb(43, 162, 41)',
+          values: _zcbData
+        }, {
+          type: 'line',
+          name: '总公里数（公里）',
+          axis: 'y2',
+          label: {
+            x: '月',
+            y: '总公里数（公里）',
+            name: ''
+          },
+          color: 'rgb(0, 201, 255)',
+          values: _zglData
+        }];
+      };
+      let hDChartData = function(_sqcbData, _gscbData, _sqcbmbData, _gscbmbData) {
+        let _data = null;
+        if (vm.selectedType == '外业') {
+          _data = [{
+            type: "bar",
+            name: '市区成本',
+            label: {
+              x: '月',
+              y: '市区成本',
+              name: ''
+            },
+            color: 'rgb(0, 201, 255)',
+            values: _sqcbData
+          }, {
+            type: "bar",
+            name: '高速成本',
+            label: {
+              x: '月',
+              y: '高速成本',
+              name: ''
+            },
+            color: 'rgb(43, 162, 41)',
+            values: _gscbData
+          }, {
+            type: 'line',
+            name: '市区成本目标',
+            label: {
+              x: '月',
+              y: '高速成本目标',
+              name: ''
+            },
+            dashed: '3 3',
+            color: 'rgb(0, 201, 255)',
+            values: _sqcbmbData
+          }, {
+            type: 'line',
+            name: '高速成本目标',
+            label: {
+              x: '月',
+              y: '高速成本目标',
+              name: ''
+            },
+            dashed: '3 3',
+            color: 'rgb(43, 162, 41)',
+            values: _gscbmbData
+          }];
+        } else {
+          _data = [{
+            type: "bar",
+            name: '成本',
+            label: {
+              x: '月',
+              y: '成本',
+              name: ''
+            },
+            color: 'rgb(0, 201, 255)',
+            values: _sqcbData
+          }, {
+            type: 'line',
+            name: '成本目标',
+            label: {
+              x: '月',
+              y: '成本目标',
+              name: ''
+            },
+            dashed: '3 3',
+            color: 'rgb(43, 162, 41)',
+            values: _gscbData
+          }];
+        }
+        return _data;
+      };
+      if (!TypeChecker.isObject(data) || !TypeChecker.isArray(data[this.selectedType])) {
+        this.hUData = hUChartData([]);
+        this.hDData = hDChartData([]);
+        return;
+      }
+
+      let d = data[this.selectedType];
+
+      this.parseUData(d, hUChartData);
+      this.parseDData(d, hDChartData);
+    }
+  },
+  beforeDestroy: function() {
+    eventHub.$off("tile-window-resized", this.windowResized);
+    eventHub.$off("tile-full-screen-inner", this.toggleFullScreen);
+  }
+}

@@ -1,0 +1,178 @@
+.top-ranked-variants {
+
+  z-index: 100 !important;
+  overflow: visible;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.top-ranked-variants .top-ranked-variants-tab {
+  position: relative;
+  width: 100%;
+  height: 10%;
+  min-height: 40px;
+}
+
+.top-ranked-variants .pv-chart {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.top-ranked-variants .noneTab{
+  height: 100% !important;
+}
+
+.xAxis path,
+.xAxis line {
+  fill: none;
+  stroke: white;
+  shape-rendering: crispedges;
+}
+
+.xAxis text {
+  font-family: sans-serif;
+  font-size: 10px;
+}
+
+
+.yAxis path,
+.yAxis line {
+  fill: none;
+  stroke: white;
+  shape-rendering: crispedges;
+}
+
+.yAxis text {
+  font-family: sans-serif;
+  font-size: 10px;
+}
+
+.drag-area.grid line {
+  stroke: lightgrey;
+  opacity: 0.7;
+}
+
+.grid path {
+  stroke-width: 0;
+}
+
+
+.bar-area>text {
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  -webkit-box-orient: vertical;
+  /* line-height: 12px !important;*/
+}
+
+
+.bar-area>rect:hover {
+  cursor: pointer;
+}
+
+.bar-area>text,
+.insideBar,
+.bar-area>path {
+  pointer-events: none;
+}
+
+
+.bar-area .percentage rect {
+  border: 1px;
+  border-radius: 50%;
+}
+
+.bar-area .stepPercentage {
+  font-size: 12px;
+  color: #fff;
+}
+
+.bar-area .stepDuration {
+  font-size: 12px;
+  color: #000;
+}
+
+.bar-area {
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  -webkit-box-orient: vertical;
+}
+
+
+.dragToStep {
+  /* pointer-events: none;*/
+  cursor: pointer;
+}
+
+
+.icon {
+    pointer-events: all !important;
+}
+.icon:hover {
+  cursor: pointer;
+  fill: $color;
+}
+
+
+.top-ranked-variants .icon:hover {
+  color:  $color;
+}
+
+.top-ranked-variants .top-ranked-variants-tab ul {
+  width: 100%;
+  height: 40px;
+  border: none !important;
+}
+
+.top-ranked-variants .top-ranked-variants-tab li {
+  width: 50%;
+  height: 100%;
+  text-align: left;
+  background-color: #333333;
+  color: #fff;
+  vertical-align: middle;
+  border: none;
+}
+
+.top-ranked-variants .top-ranked-variants-tab a {
+  font-size: 12px;
+  color: #fff;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  text-align: center;
+  line-height: 40px;
+  position: relative;
+  display: block;
+  border: none;
+}
+
+.top-ranked-variants .top-ranked-variants-tab li:hover {
+  cursor: pointer;
+}
+
+.top-ranked-variants .top-ranked-variants-tab .active:hover {
+  cursor: default;
+}
+
+.top-ranked-variants .top-ranked-variants-tab a:hover {
+  background-color: #333333;
+  border: none;
+}
+
+.top-ranked-variants .top-ranked-variants-tab .active:hover {
+  color: $color !important;
+  background-color: #535353 !important;
+  border: none;
+}
+
+.top-ranked-variants .top-ranked-variants-tab .active {
+  color: $color;
+  background-color: #535353;
+  border: none;
+}
+
+.top-ranked-variants .case-chart .sliderDot:hover{
+    cursor: pointer;
+}

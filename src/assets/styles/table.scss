@@ -1,0 +1,345 @@
+.leap-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  vertical-align: middle;
+  font-size: 12px;
+}
+
+.leap-table thead {
+  background: #000;
+  color: #fff;
+  text-align: left;
+}
+
+.leap-table thead i {
+  padding: 2px 0;
+  float: right;
+  color: #666;
+  font-size: 14px;
+}
+
+.leap-table thead>tr {
+  border: 1px solid #000;
+}
+
+.leap-table th {
+  padding: 6px 12px;
+  height: 36px;
+  position: relative;
+}
+
+.leap-table th>div {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.leap-table th>.sortable {
+  cursor: pointer;
+}
+
+.leap-table th:not(:last-child):after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 1px;
+  left: 100%;
+  top: 6px;
+  bottom: 6px;
+  background-color: #fff;
+}
+
+.leap-table tbody>tr {
+  border: 1px solid #D7D7D7;
+}
+
+.leap-table tbody>tr>td {
+  height: 36px;
+  padding: 6px 8px;
+}
+
+.leap-table .edit-actions i {
+  display: inline-block;
+  margin-right: 16px;
+}
+
+.icon-check-circle-o.disable,
+.icon-times-circle-o.disable,
+.icon-toggle-off.disable,
+.icon-toggle-on.disable,
+.icon-trash-o.disable {
+  color: #D0CFCB;
+  cursor: not-allowed;
+}
+
+.process {
+  position: relative;
+}
+
+.process-cursor {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  text-decoration: underline;
+}
+
+.process .tooltip_ {
+  min-width: 160px;
+  position: absolute;
+  background: white;
+  border: 1px solid #dfdfdf;
+  border-radius: 4px;
+  z-index: 10;
+  top: -10px;
+  left: 50px;
+}
+
+.process .tooltip_>.arrow {
+  display: block;
+  position: absolute;
+  left: -10px;
+  top: 10px;
+}
+
+.process .tooltip_>.arrow:before {
+  content: "";
+  display: block;
+  position: absolute;
+  border-style: solid;
+  border-width: 8px 10px 8px 0px;
+  border-color: transparent #dfdfdf transparent transparent;
+}
+
+.process .tooltip_>.arrow:after {
+  content: "";
+  display: block;
+  position: absolute;
+  border-style: solid;
+  border-width: 8px 10px 8px 1px;
+  border-color: transparent #fff transparent transparent;
+}
+
+.tooltip_ p {
+  padding: 6px;
+  margin: 0;
+}
+
+.process-cursor {
+  display: inline-block;
+  text-decoration: underline;
+}
+
+.leap-table-wrapper .dropdown-group.process-label {
+  padding: 2px 2px 2px 4px;
+}
+
+.leap-table-edit-box {
+  display: block;
+  position: relative;
+  background-color: #f7f7f7;
+  padding: 10px 12px;
+}
+
+.leap-table-edit-box form .control-label {
+  height: 32px;
+  line-height: 32px;
+  margin-bottom: 21px;
+}
+
+.leap-table-edit-box form input.form-control,
+.leap-table-edit-box form select.form-control {
+  height: 32px;
+  padding: 4px;
+  font-size: 12px;
+}
+
+.leap-table-edit-box form textarea.form-control {
+  padding: 4px;
+  font-size: 12px;
+}
+
+.leap-table-edit-box form .btn {
+  height: 30px;
+  padding: 5px 24px;
+  font-size: 12px;
+}
+
+.leap-table-wrapper td.td-edit-box {
+  height: auto;
+  padding: 0;
+}
+
+.leap-table-edit-box form .botton {
+  height: 27px;
+  line-height: 27px;
+}
+
+.edit-picture-cell .img-upload-as-data-url {
+  padding: 2px;
+  height: auto;
+  width: 70%;
+  overflow: hidden;
+}
+
+.edit-picture-cell img {
+  width: 70px;
+  padding: 2px;
+}
+
+.editing {
+  border: #09CAFE 1px solid;
+}
+
+.edit-actions i {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.icon-item {
+  display: inline-block;
+}
+
+.icon-item.disabled>i {
+  color: #d0cfcb;
+  cursor: not-allowed;
+}
+
+.mark-icon i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.enable-icon {
+  margin-bottom: 0;
+  display: inline-block;
+}
+
+.enable-icon i {
+  display: inline-block;
+  margin-left: 6px;
+}
+
+.mark-icon i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.name-content-edit input {
+  width: 80px;
+}
+
+.leap-table .no-data {
+  border: 1px solid #000;
+}
+
+.leap-table .red {
+  background-color: red;
+}
+
+.leap-table .gray {
+  background-color: #666;
+}
+
+.leap-table .green {
+  background-color: #63FF00;
+}
+
+.list-tip {
+  display: block;
+  min-width: 160px;
+  position: absolute;
+  background: white;
+  border: 1px solid #dfdfdf;
+  border-radius: 4px;
+  z-index: 10;
+  top: -10px;
+  left: 100%;
+}
+
+.list-tip>.arrow {
+  display: block;
+  position: absolute;
+  left: -10px;
+  top: 10px;
+}
+
+.list-tip>.arrow:before {
+  content: "";
+  display: block;
+  position: absolute;
+  border-style: solid;
+  border-width: 8px 10px 8px 0px;
+  border-color: transparent #dfdfdf transparent transparent;
+}
+
+.list-tip>.arrow:after {
+  content: "";
+  display: block;
+  position: absolute;
+  border-style: solid;
+  border-width: 8px 10px 8px 1px;
+  border-color: transparent #fff transparent transparent;
+}
+
+.list-tip>.list-tip-item {
+  padding: 6px;
+  margin: 0;
+}
+
+.leap-table tbody.active,
+.leap-table tbody tr.active {
+  background-color: #F2F2F2;
+}
+
+
+/***************** level 2 table start ***************/
+
+.leap-table.level-2>thead {
+  background-color: #C4C4C4;
+  color: #000000;
+}
+
+.leap-table.level-2>thead>tr {
+  border: 1px solid #C4C4C4;
+}
+
+.leap-table.level-2>tbody {
+  background-color: #FFFFFF;
+}
+
+.leap-table.level-2>thead i {
+  color: #000000;
+}
+
+
+/***************** level 3 table start ***************/
+
+.leap-table.level-3 {
+  border: 1px solid #D7D7D7;
+}
+
+.leap-table.level-3>thead {
+  border: 1px solid #000000;
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+.leap-table.level-3>tbody {
+  background-color: #F2F2F2;
+}
+
+.leap-table.level-3>tbody>tr {
+  border: none;
+}
+
+.leap-table.level-3>thead i {
+  color: #FFFFFF;
+}

@@ -1,0 +1,48 @@
+.cust-dashboard-input {
+	padding: 10% 0;
+
+	&.editing {
+		padding: 0;
+	}
+
+	input.form-control, textarea.form-control {
+		border-radius: 0;
+	}
+
+	.form-control.has-error {
+		border-color: #D9534F;
+	}
+
+	legend {
+		margin: 15/12*$unit;
+	}
+
+	.close {
+		position: absolute;
+		right: 0;
+		top: 30/12*$unit;
+		color: #000;
+	}
+
+	.table-no-data {
+		display: block;
+		padding: 10/12*$unit 15/12*$unit;
+		text-align: center;
+	}
+
+	.table-form-wrapper {
+		padding: 10/12*$unit 15/12*$unit;
+	}
+
+	.leap-table {
+		td>a {
+			font-size: 16/12*$unit;
+			&:hover {
+				text-decoration: none;
+			}
+		}
+		td>a+a {
+			margin-left: 5/12*$unit;
+		}
+	}
+}

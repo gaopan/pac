@@ -1,0 +1,93 @@
+/* map */
+.bi-map {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  background-color: #E5E3DF;
+}
+
+
+/* bg img */
+.bi-map .bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: move;
+  z-index: 0;
+}
+
+
+/* markers */
+.bi-map .markers-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0px;
+  z-index: 4;
+}
+
+.bi-map .marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+
+/* controls */
+.bi-map .controls-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0px;
+  z-index: 5;
+}
+
+.bi-map .zoom-control {
+  position: absolute;
+  width: auto;
+  top: 10px;
+  left: 10px;
+}
+.bi-map .zoom-control button {
+  display: block;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 25px;
+  height: 25px;
+  font-size: 15px;
+  line-height: 25px;
+  color: #333;
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+}
+.bi-map .zoom-control button:disabled {
+  cursor: not-allowed;
+  background-color: #fafafa;
+}
+.bi-map .zoom-control button:enabled:hover {
+  color: #000;
+}
+.bi-map .zoom-control button.cut {
+  font-size: 21px;
+}
+.bi-map .zoom-control button.cut:before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 15%;
+  width: 70%;
+  height: 0.5px;
+  background-color: #eee;
+}
+
+
+/* Only for commend center */
+.bi-map .zoom-control button.cut {
+  font-size: 19px;
+}

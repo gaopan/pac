@@ -1,0 +1,19 @@
+.attribute-panel {
+    height: 100%;
+    width: 100%;
+}
+
+.date-container {
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+
+    .empty-data {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+}

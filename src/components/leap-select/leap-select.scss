@@ -1,0 +1,242 @@
+.dropdown-group {
+    padding: 0;
+    font-weight: normal;
+
+    &.no-allowed {
+        cursor: not-allowed;
+    }
+
+    .process-label {
+        width: 100%;
+        display: block;
+        padding: 0px 10px;
+        overflow: hidden;
+        background-color: #f5f5f5;
+        color: #000;
+        box-shadow: 0 0 0 1px #ccc;
+
+        &.has-error {
+            // border: 2px solid #D0011B;
+            box-shadow: 0 0 0 2px #D0011B;
+            background-color: rgba(208, 1, 27, 0.2);
+            color: #000000;
+        }
+        
+        span {
+            display: inline-block;
+            // padding-right: 1em;
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 90%;
+            line-height: 32px;
+            vertical-align: middle;
+        }
+
+        i {
+            display: inline-block;
+            padding: 0;
+            text-align: center;
+            font-size: 14px;
+            line-height: 32px;
+            vertical-align: middle;
+        }
+
+        &.disabled-dropdown {
+            pointer-events: none;
+        }
+    }
+
+    .process-label[aria-expanded="true"]{
+        box-shadow: 0 0 0 2px #231F20;
+        // border-color: transparent;
+        background-color: #fff;
+    }
+
+    .dropdown-menu {
+        width: 100%;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        border: none;
+        border-radius: 0;
+        top: auto;
+
+        &.up {
+            bottom: 100%;
+            top: auto;
+        }
+
+        &.down {
+            top: 100%;
+            bottom: auto;
+        }
+
+        .dropdown-menu-wrapper {
+            max-height: 130px;
+            overflow-y: auto;
+            box-shadow: 0 0 0 2px #231F20;
+
+            &.have-search {
+                max-height: 182px;
+            }
+
+            .wrapper-li {
+                padding: 0px 1px;
+
+                li {
+                    padding: 2px 10px;
+                    height: 32px;
+                    line-height: 27px;
+                    vertical-align: middle;
+                    width: 100%;
+                    @include singleLineEllipsis();
+    
+                    &:hover {
+                        cursor: pointer;
+                        color: #333333;
+                        background-color: #F2F2F2;
+                    }
+    
+                    &.selected {
+                        background-color: #FFFFFF;
+                        color: #D9D9D9;
+                    }
+    
+                    span {
+                        line-height: 22px;
+                        vertical-align: middle;
+                        @include singleLineEllipsis();
+                    }
+                }
+            }
+    
+            .wrapper-search-li{
+                li {
+                    width:100%;
+                    padding: 10px;
+                    @include singleLineEllipsis();
+    
+                    input{
+                        width:100%;
+                        max-width:100%;
+                    }
+    
+                    input::placeholder {
+                        color: #676767;
+                    }
+    
+                }
+            }
+        }
+        
+        .dropdown-menu-wrapper::-webkit-scrollbar {
+            width: 8px;
+            height: 98%;
+            background-color: red;
+        }
+          
+        .dropdown-menu-wrapper::-webkit-scrollbar-thumb {
+            border-radius: 0px;
+            background: #929497;
+            height: 50%;
+            width: 6px;
+            // border-right: 0.5px solid #231F20;
+            // margin-bottom: 0.5px;
+        }
+          
+        .dropdown-menu-wrapper::-webkit-scrollbar-track {
+            background: #ccc;
+            border-radius: 0px;
+            width: 6px;
+            // border-right: 0.5px solid #231F20;
+            // border-bottom:  0.5px solid #231F20;
+        }
+
+    }
+
+}
+
+/* Select Box : http://kyusuf.com/post/completely-css-custom-checkbox-radio-buttons-and-select-boxes*/
+.control-group {
+    
+    .control {
+        position: relative;
+        display: block;
+        overflow-y: hidden;
+        cursor: pointer;
+        margin-bottom: 0px;
+        width: 100%;
+        padding: 2px 10px 2px 44px;
+        height: 32px;
+        line-height: 27px;
+
+        span {
+            @include singleLineEllipsis();
+        }
+
+        input {
+            //hide default checkbox []; 
+            position: absolute;
+            z-index: -1;
+            opacity: 0;
+            left: 12px;
+            top: 4px;
+
+            &:checked {
+                ~.control__indicator {
+                    // Background of Rectangle Area[]:Select All, n become yellow when checked 
+                    background: #ffed00;
+                    box-shadow: 0 0 0 1px #ffed00;
+
+                    &:after {
+                        display: block;
+                    }
+                }
+            }
+        }
+
+        .control__indicator {
+            //custom Rectangle Area[]
+            position: absolute;
+            top: 6px;
+            left: 12px;
+            width: 16px;
+            height: 16px;
+            background: #f9f9f9;
+            box-shadow: 0 0 0 1px #000;
+
+            &:after {
+                position: absolute;
+                display: none;
+                content: '';
+            }
+        }
+
+        &.control--checkbox {
+            // When checked, display '/' inside Rectangle Area[] 
+            .control__indicator {
+                &:after {
+                    top: 0px;
+                    left: 6px;
+                    width: 6px;
+                    height: 13px;
+                    transform: rotate(45deg);
+                    border: solid #000;
+                    border-width: 0 2px 2px 0;
+                }
+            }
+        }
+
+        &:hover {
+            cursor: pointer;
+            color: #333333;
+            background-color: #F2F2F2;
+        }
+
+        &.selected {
+            background-color: #FFFFFF;
+            color: #D9D9D9;
+        }
+    }
+}

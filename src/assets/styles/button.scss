@@ -1,0 +1,39 @@
+.btn {
+  display: inline-block;
+  border-radius: 0px;
+  border: none;
+  height: 32/12*$unit;
+  padding: 5/12*$unit 10/12*$unit;
+  font-size: 14/12*$unit;
+  vertical-align: middle;
+  white-space: nowrap;
+  line-height: 1;
+  background-color: transparent;
+  color: #333;
+  cursor: pointer;
+
+  &.btn-primary, &.btn-primary:hover, &.btn-primary:active {
+  	background-color: $color;
+  	color: #fff;
+  }
+  &.btn-secondary, &.btn-secondary:hover, &.btn-secondary:active {
+  	background-color: transparent;
+    color: #000;
+    border: 2px solid #000;
+  }
+  &.disabled, &.btn-disabled:hover, &.btn-disabled:active {
+    background-color: #dfdfdf;
+    color: #333;
+  }
+  &:hover, &:active {
+    outline: none;
+  }
+  >i {
+  	font-size: 18/12*$unit;
+  	vertical-align: middle;
+    margin: 0 10/12*$unit;
+  }
+  >span {
+  	vertical-align: middle;
+  }
+}

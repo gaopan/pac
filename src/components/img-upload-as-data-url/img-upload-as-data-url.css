@@ -1,0 +1,36 @@
+.img-upload-as-data-url {
+  height: 83px;
+  border: 1px dashed #aaa;
+  padding-top: 13px;
+  padding-bottom: 12px;
+}
+
+.img-upload-as-data-url .content {
+  text-align: center;
+}
+
+.img-upload-as-data-url .content label {
+  display: block;
+  margin-bottom: 0;
+  color: #666;
+  cursor: pointer;
+}
+.img-upload-as-data-url .content label:hover {
+  color: #000;
+}
+.img-upload-as-data-url .content label i {
+  font-size: 40px;
+}
+.img-upload-as-data-url .content label span {
+  display: block;
+  font-size: 13px;
+  line-height: 15px;
+}
+.img-upload-as-data-url .content label img {
+  height: 56.889px;
+  box-shadow: 1px 1px 1px 0px #aaa;
+}
+
+.img-upload-as-data-url .content input {
+  display: none;
+}

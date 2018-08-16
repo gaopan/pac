@@ -1,0 +1,28 @@
+.casePanelTableContainer{
+	margin-top: 10px;
+	overflow-x: auto;
+}
+
+.no-timeline-data{
+	text-align: center;
+}
+
+.casePanelTableContainer table tr{
+	height: 30px;
+  display: table;
+  width: 100%;
+  table-layout: fixed;	
+}
+.casePanelTableContainer .leap-table{
+	width: 1600px;
+}
+.casePanelTableContainer table tbody{
+    overflow-y: auto;
+    display: block;
+}
+.casePanelTableContainer table tbody>tr>td{
+		overflow: hidden;
+}
+.casePanelTableContainer ::-webkit-scrollbar:horizontal {
+    height: 10px;
+} 

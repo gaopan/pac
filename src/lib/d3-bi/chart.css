@@ -1,0 +1,271 @@
+/* container */
+.bi-container {}
+.bi-container.no-data-chart text{
+  fill: #333;
+  font-size: 12px;
+}
+
+.bi-container .visual-data-shape.inactive {
+  opacity: 0.5 !important;
+}
+
+
+/* legend-groups */
+.bi-container .legend-groups {}
+
+.bi-container .legend-group {
+  cursor: pointer;
+}
+.bi-container .legend-group text {
+  fill: #666;
+  font-size: 11px;
+}
+
+.bi-container .legend-group.deleted circle,
+.bi-container .legend-group.deleted text{
+  opacity: 0.5;
+}
+
+
+/* axis-groups */
+.bi-container .axis-groups path {
+  fill: none;
+}
+
+.bi-container .axis-groups g.tick>text {
+  fill: #828282;
+  font-size: 10px;
+}
+.bi-container .xaxis-group>g.tick>text {
+  text-anchor: middle;
+}
+.bi-container .xaxis-group>g.tick>text.rotated {
+  text-anchor: end;
+}
+.bi-container .yaxis-group>g.tick>text {
+  text-anchor: end;
+}
+.bi-container .y2axis-group>g.tick>text {
+  text-anchor: start;
+}
+
+.bi-container .axis-groups text.title {
+  fill: #828282;
+  font-size: 11px;
+}
+.bi-container .yaxis-group>text.title {
+  transform: rotate(-90deg);
+}
+.bi-container .y2axis-group>text.title {
+  transform: rotate(90deg);
+}
+
+.bi-container .axis-line-groups line {
+  stroke: #ececec;
+}
+.bi-container .axis-line-groups line.origin-axis-line {
+  stroke: #c4c4c4;
+}
+
+
+/* bar-groups */
+.bi-container .bar-group > rect,
+.bi-container .stack-bar-group > rect,
+.bi-container .horizontalBar-group > rect {
+  opacity: 1;
+}
+.bi-container .bar-group > rect:hover,
+.bi-container .stack-bar-group > rect:hover,
+.bi-container .horizontalBar-group > rect:hover {
+  opacity: 0.9;
+}
+.bi-container .bar-group > rect.rotated,
+.bi-container .stack-bar-group > rect.rotated,
+.bi-container .horizontalBar-group > rect.rotated {
+  transform: rotate(180deg); 
+}
+
+.bi-container .bar-group text.bar-text,
+.bi-container .stack-bar-group text.bar-text,
+.bi-container .horizontalBar-group  text.bar-text,
+.benchmark-chart .benchmark-groups>g>text.top-title,
+.benchmark-chart .marker-group>text.marker-text {
+  fill: #666;
+  font-size: 11px;
+  text-anchor: middle;
+}
+.bi-container .stack-bar-group text.bar-text {
+  fill: #fff;
+}
+
+
+/* total-bar-group */
+.bi-container .total-bar-group rect {
+  opacity: 0;
+}
+.bi-container .total-bar-group rect:hover {
+  opacity: 0.1;
+}
+
+
+/* line-groups */
+/* old line
+.bi-container .line-group>line {
+  stroke-width: 2px;
+}
+*/
+.bi-container .line-group>path.line-path {
+  fill: none;
+  stroke-width: 2px;
+}
+.bi-container .line-group>g.area-group>path.area-path {
+  fill-opacity: 0.5;
+}
+
+.bi-container .line-tooltip .trigger-area {
+  opacity: 0;
+}
+
+.bi-container .line-tooltip.line-tooltip-line>g {
+  opacity: 0;
+}
+.bi-container .line-tooltip.line-tooltip-line line {
+  stroke: #666666;
+}
+
+/* spot-groups */
+.bi-container .spot-group circle {
+  opacity: 1;
+}
+.bi-container .spot-group circle:hover {
+  opacity: 0.9;
+}
+
+
+/* tooltip */
+.bi-tooltip {
+  position: fixed;
+  padding: 7px 10px 5px 10px;
+  color: #fff;
+  font-size: 9px;
+  font-weight: bold;
+  background-color: #333333;
+  z-index: 1000;
+}
+.bi-tooltip:after {
+  content: '';
+  display: block;
+  position: absolute;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}
+.bi-tooltip.leftTop:after{
+  top: 10px;
+  left: -10px;
+  border-right: 10px solid #333333;
+}
+.bi-tooltip.leftBottom:after{
+  bottom: 10px;
+  left: -10px;
+  border-right: 10px solid #333333;
+}
+.bi-tooltip.rightTop:after{
+  top: 10px;
+  right: -10px;
+  border-left: 10px solid #333333;
+}
+.bi-tooltip.rightBottom:after{
+  bottom: 10px;
+  right: -10px;
+  border-left: 10px solid #333333;
+}
+
+.bi-tooltip table tr td.title {
+  color: #A6A09B;
+  font-weight: 500;
+  padding-right: 10px;
+}
+
+.bi-tooltip table.style-one div.circle {
+  width: 10px;
+  height: 10px;
+  line-height: 1;
+  border-radius: 5px;
+  margin-top: 1px;
+  margin-right: 10px;
+}
+.bi-tooltip table.style-one tr:first-child td {
+  padding-bottom: 5px;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+
+/* special chart */
+
+/* benchmark-chart */
+.benchmark-chart .axis-line-groups>g>line {
+  stroke: #bbb;
+  stroke-dasharray: 3px;
+}
+.benchmark-chart .xaxis-group g.tick:first-of-type,
+.benchmark-chart .xaxis-group g.tick:last-of-type,
+.benchmark-chart .axis-line-groups .x-group line:first-of-type,
+.benchmark-chart .axis-line-groups .x-group line:last-of-type {
+  opacity: 0;
+}
+
+.benchmark-chart .background-groups>g>rect.blank-line{
+  fill: #EBEFF2;
+}
+.benchmark-chart .background-groups>g>text.top-title{
+  text-anchor: middle;
+}
+
+.benchmark-chart .marker-group>text.marker-text{
+  fill: #000;
+}
+
+
+/* dragged ruler */
+.bi-container.dragged-ruler .background-rect {
+  fill: #fff;
+}
+
+.bi-container.dragged-ruler .mail-line-wrapper .main-line {
+  stroke: #5F6B6D;
+}
+.bi-container.dragged-ruler .mail-line-wrapper .selected-line {
+  stroke: #01B8AA;
+}
+.bi-container.dragged-ruler .mail-line-wrapper .line-text,
+.bi-container.dragged-ruler .mail-line-wrapper .value-text-group  {
+  fill: #828282;
+  font-size: 10px;
+}
+.bi-container.dragged-ruler .mail-line-wrapper .value-text-group {
+  text-anchor: middle;
+}
+
+.bi-container.dragged-ruler .dragged-button-wrapper .dragged-button {
+  fill: #FD625E;
+  cursor: pointer;
+}
+.bi-container.dragged-ruler .dragged-button-wrapper.disabled .dragged-button {
+  cursor: not-allowed;
+}
+.bi-container.dragged-ruler .dragged-button-wrapper.drag .dragged-button {
+  stroke: #FCA2A2;
+  stroke-width: 3px;
+}
+
+
+
+/* the change suit command-center */
+.bi-tooltip {
+  padding: 10px 15px 8px 15px;
+  font-size: 11px;
+}
+.bi-tooltip table tr td.title {
+  padding-right: 15px;
+}

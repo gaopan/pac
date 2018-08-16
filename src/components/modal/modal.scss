@@ -1,0 +1,53 @@
+/* Implementation is base from https://vuejs.org/v2/examples/modal.html */
+.custom-modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .8);
+  display: table;
+  transition: opacity .3s ease;
+}
+
+.custom-modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.custom-modal-container {
+  width: 300px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+  transition: all .3s ease;
+}
+
+.custom-modal-header {
+  
+  position: relative;
+  
+  h3 {
+    margin-top: 0;
+    color: #000;
+  }
+
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.custom-modal-body {
+  margin: 20px 0;
+}
+
+.custom-modal-default-button {
+  float: right;
+}
+
+.custom-modal-footer{
+  border-top: 1px solid #e5e5e5;
+  text-align: right;
+  padding: 15px;
+}

@@ -1,0 +1,53 @@
+.mini-loader {
+	display: block;
+}
+
+.mini-loader>.mini-loader-bar {
+	display: block;
+	position: fixed;
+	left: 0;
+	top: 40px;
+	height: 4px;
+	opacity: 0.6;
+	background-color: $color;
+	z-index: 1000;
+	cursor: pointer;
+}
+
+.mini-loader>.mini-loader-mask {
+	display: block;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 999;
+	background-color: rgba(64, 64, 64, 0.9);
+}
+.mini-loader>.mini-loader-mask-tip {
+	font-size: 12px;
+	position: fixed;
+	display: block;
+	color: #333;
+	left: 0;
+	top: 53px;
+	z-index: 1000;
+	margin-left: -25px;
+	background-color: #fff;
+}
+.mini-loader>.mini-loader-mask-tip:after {
+	content: "";
+	position: absolute;
+	display: block;
+	top: -10px;
+	left: 20px;
+	border-style: solid;
+  border-width: 5px 5px 5px 5px;
+  border-color: transparent transparent $color transparent;
+}
+.mini-loader>.mini-loader-mask-tip .btn {
+	font-size: 12px;
+	padding: 3px 6px;
+	background-color: $color;
+	color: #333;
+}

@@ -1,0 +1,14 @@
+.m-console {
+	>section {
+		display: block;
+		position: fixed;
+		top: 40/12*$unit;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		overflow: auto;
+	}
+	>section.no-nav {
+		top: 0;
+	}
+}

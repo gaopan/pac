@@ -1,0 +1,141 @@
+.conf-panel {
+	display: block;
+
+	>.header {
+		display: flex;
+		position: relative;
+		width: 100%;
+		background-color: #000;
+		color: #fff;
+		padding: 10px;
+		justify-content: space-between;
+		align-items: center;
+		align-content: center;
+		flex-wrap: nowrap;
+
+		>span {
+			display: inline-block;
+			text-align: center;
+
+			&.prev {
+				cursor: pointer;
+				text-align: left;
+			}
+			&.next {
+				cursor: pointer;
+				text-align: right;
+			}
+			&.prev.disabled, &.next.disabled {
+				color:#CCCCCC;
+				cursor: not-allowed;
+			}
+		}
+	}
+	>.body {
+		display: block;
+		position: relative;
+		width: 100%;
+		padding: 0 15px;
+
+		>.actions {
+			display: block;
+			/* padding: 15px 0; */
+			padding-top:15px;
+			text-align: right;
+			border-bottom: 1px solid #ccc;
+			>.btn {
+				margin-left: 10px;
+				margin-bottom:10px;
+			}
+		}
+		>.content {
+			display: block;
+			position: relative;
+
+			.title {
+				display: block;
+				padding: 10px 0;
+				color: #fff;
+			}
+			>.group-list {
+				//show scroll when the list is long
+				max-height: 280px;
+    		overflow-y: auto;
+    		//
+				display: block;
+				list-style: none;
+				padding: 0;
+				margin: 0;
+
+				>li {
+					display: block;
+				}
+			}
+			>.btn {
+				margin-top: 10px;
+				display: block;
+				width: 100%;
+			}
+			>.actions {
+				margin-top: 10px;
+			}
+
+			.field-group {
+				margin-bottom: 5px;
+				>.label {
+					display: block;
+					text-align: left;
+					padding: 5px 0;
+				}
+			}
+
+			.group-by-actions{
+				.btn{
+					margin-bottom: 10px;
+				}
+			}
+		}
+	}
+}
+
+.conf-group-box {
+	display: block;
+	position: relative;
+	width: 100%;
+
+	>.conf-group {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		align-content: center;
+		background-color: #fff;
+		flex-wrap: nowrap;
+		margin-bottom: 2px;
+
+		>.conf-group-title {
+			display: inline-block;
+			padding: 5px 10px;
+			height: 30px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		>.conf-group-btn {
+			display: inline-block;
+			height: 30px;
+			padding: 5px 10px;
+			color: #000;
+			cursor: pointer;
+			margin-left: 5px;
+			// background-color: #535353;
+
+			>i {
+				vertical-align: middle;
+			}
+
+			&:hover {
+				color: #ffed00;
+			}
+		}
+	}
+}

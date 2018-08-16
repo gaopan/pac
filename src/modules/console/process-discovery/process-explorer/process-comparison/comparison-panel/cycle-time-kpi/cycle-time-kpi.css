@@ -1,0 +1,108 @@
+	.cycle-time-kpi {
+	  padding: 8px 8px 8px 8px;
+	  position: relative;
+	  height: 100%;
+	  width: 100%;
+	}
+
+	/*Adib Comment - sync UI Leap-Select*/
+	/* .cycle-time-kpi-select-box {
+	  height: 24px;
+	  display: inline-block;
+	} */
+
+	/* .cycle-time-kpi-select-box .dropdown-group .process-label {
+	  padding: 1px 2px 1px 10px;
+	  box-shadow: rgb(170, 170, 170) 0px 0px 0px 1px !important;
+	} */
+
+	/* .cycle-time-kpi-select-box .dropdown-group .process-label span {
+	  font-weight: bold;
+	  margin-top: 0;
+	}
+
+	.cycle-time-kpi-select-box .dropdown-group .dropdown-menu {
+	  box-shadow: 0 0 0 1px #000;
+	} */
+
+	/* .cycle-time-kpi-select-box .dropdown-menu .wrapper-li li {
+	  height: 30px;
+	  padding: 5px 5px 5px 10px !important;
+	} */
+
+	.cycle-detail {
+	  width: 100%;
+	  height: 70%;
+	  padding-top: 4px;
+	  border-top: 1px solid #ECECEC;
+	}
+
+	.cycle-time-kpi .buttons {
+	  display: inline-block;
+	}
+
+	.cycle-time-kpi .buttons ul {
+	  vertical-align: middle;
+	  width: auto;
+	  display: inline-block;
+	  padding: 0px 0px 0px 0px;
+	  margin: auto;
+	}
+
+	.cycle-time-kpi .buttons ul li {
+	  display: inline-block;
+	  line-height: 10px
+	}
+
+	.cycle-time-kpi .buttons ul li a {
+	  display: block;
+	  margin-left: 10px;
+	  margin-right: 10px;
+	  padding: 3px 15px;
+	  border-radius: 17px;
+	  border: 1px solid #8F8F8F;
+	  font-size: 10px;
+	  color: #8F8F8F;
+	  text-align: center;
+	  background-color: #fff;
+	  text-decoration: none;
+	}
+
+	.cycle-time-kpi .buttons ul li a:hover {
+	  color: #000;
+	  border-color: #000;
+	}
+
+	.cycle-time-kpi .buttons ul li a.active {
+	  color: #FEED01;
+	  border-color: #000;
+	  background-color: #000;
+	}
+
+	.cycle-time-kpi-hover-table {
+	  width: 400px;
+	  height: 180px;
+	}
+
+	.cycle-time-kpi-pop .firstTitle {
+	  height: auto;
+	  border-bottom: 1px solid #ccc;
+	}
+
+	.cycle-time-kpi-pop .content {
+	  height: 20px;
+	  margin-top: 4px;
+	  margin-bottom: 2px;
+	  color: #ccc;
+	  font-weight: 100;
+	}
+
+	/*Adib Comment - sync UI Leap-Select*/
+	/* .cycle-time-kpi-pop .cycle-time-kpi-select-box .dropdown-group .process-label span .label-text{
+		   max-width: 500px ;
+	} */
+@media screen and (max-width: 1360px) {
+    .cycle-time-kpi .buttons {
+        display: none;
+    }
+}

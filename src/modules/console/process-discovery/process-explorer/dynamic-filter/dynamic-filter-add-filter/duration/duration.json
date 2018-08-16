@@ -1,0 +1,250 @@
+[{
+  "durationLowerRange": "0.0",
+  "durationUpperRange": "3.0075442E8",
+  "cases": 12853
+},
+{
+  "durationLowerRange": "3.0075442E8",
+  "durationUpperRange": "6.0150884E8",
+  "cases": 4615
+},
+{
+  "durationLowerRange": "6.0150884E8",
+  "durationUpperRange": "9.0226326E8",
+  "cases": 2220
+},
+{
+  "durationLowerRange": "9.0226326E8",
+  "durationUpperRange": "1.20301768E9",
+  "cases": 976
+},
+{
+  "durationLowerRange": "1.20301768E9",
+  "durationUpperRange": "1.5037721E9",
+  "cases": 938
+},
+{
+  "durationLowerRange": "1.5037721E9",
+  "durationUpperRange": "1.80452652E9",
+  "cases": 488
+},
+{
+  "durationLowerRange": "1.80452652E9",
+  "durationUpperRange": "2.10528094E9",
+  "cases": 390
+},
+{
+  "durationLowerRange": "2.10528094E9",
+  "durationUpperRange": "2.40603536E9",
+  "cases": 285
+},
+{
+  "durationLowerRange": "2.40603536E9",
+  "durationUpperRange": "2.70678978E9",
+  "cases": 253
+},
+{
+  "durationLowerRange": "2.70678978E9",
+  "durationUpperRange": "3.0075442E9",
+  "cases": 107
+},
+{
+  "durationLowerRange": "3.0075442E9",
+  "durationUpperRange": "3.30829862E9",
+  "cases": 159
+},
+{
+  "durationLowerRange": "3.30829862E9",
+  "durationUpperRange": "3.60905304E9",
+  "cases": 121
+},
+{
+  "durationLowerRange": "3.60905304E9",
+  "durationUpperRange": "3.90980746E9",
+  "cases": 120
+},
+{
+  "durationLowerRange": "3.90980746E9",
+  "durationUpperRange": "4.21056188E9",
+  "cases": 146
+},
+{
+  "durationLowerRange": "4.21056188E9",
+  "durationUpperRange": "4.5113163E9",
+  "cases": 98
+},
+{
+  "durationLowerRange": "4.5113163E9",
+  "durationUpperRange": "4.81207072E9",
+  "cases": 95
+},
+{
+  "durationLowerRange": "4.81207072E9",
+  "durationUpperRange": "5.11282514E9",
+  "cases": 89
+},
+{
+  "durationLowerRange": "5.11282514E9",
+  "durationUpperRange": "5.41357956E9",
+  "cases": 50
+},
+{
+  "durationLowerRange": "5.41357956E9",
+  "durationUpperRange": "5.71433398E9",
+  "cases": 72
+},
+{
+  "durationLowerRange": "5.71433398E9",
+  "durationUpperRange": "6.0150884E9",
+  "cases": 36
+},
+{
+  "durationLowerRange": "6.0150884E9",
+  "durationUpperRange": "6.31584282E9",
+  "cases": 38
+},
+{
+  "durationLowerRange": "6.31584282E9",
+  "durationUpperRange": "6.61659724E9",
+  "cases": 19
+},
+{
+  "durationLowerRange": "6.61659724E9",
+  "durationUpperRange": "6.91735166E9",
+  "cases": 18
+},
+{
+  "durationLowerRange": "6.91735166E9",
+  "durationUpperRange": "7.21810608E9",
+  "cases": 74
+},
+{
+  "durationLowerRange": "7.21810608E9",
+  "durationUpperRange": "7.5188605E9",
+  "cases": 94
+},
+{
+  "durationLowerRange": "7.5188605E9",
+  "durationUpperRange": "7.81961492E9",
+  "cases": 36
+},
+{
+  "durationLowerRange": "7.81961492E9",
+  "durationUpperRange": "8.12036934E9",
+  "cases": 14
+},
+{
+  "durationLowerRange": "8.12036934E9",
+  "durationUpperRange": "8.42112376E9",
+  "cases": 57
+},
+{
+  "durationLowerRange": "8.42112376E9",
+  "durationUpperRange": "8.72187818E9",
+  "cases": 16
+},
+{
+  "durationLowerRange": "8.72187818E9",
+  "durationUpperRange": "9.0226326E9",
+  "cases": 13
+},
+{
+  "durationLowerRange": "9.0226326E9",
+  "durationUpperRange": "9.32338702E9",
+  "cases": 13
+},
+{
+  "durationLowerRange": "9.32338702E9",
+  "durationUpperRange": "9.62414144E9",
+  "cases": 10
+},
+{
+  "durationLowerRange": "9.62414144E9",
+  "durationUpperRange": "9.92489586E9",
+  "cases": 5
+},
+{
+  "durationLowerRange": "9.92489586E9",
+  "durationUpperRange": "1.022565028E10",
+  "cases": 5
+},
+{
+  "durationLowerRange": "1.022565028E10",
+  "durationUpperRange": "1.05264047E10",
+  "cases": 1
+},
+{
+  "durationLowerRange": "1.05264047E10",
+  "durationUpperRange": "1.082715912E10",
+  "cases": 10
+},
+{
+  "durationLowerRange": "1.082715912E10",
+  "durationUpperRange": "1.112791354E10",
+  "cases": 8
+},
+{
+  "durationLowerRange": "1.112791354E10",
+  "durationUpperRange": "1.142866796E10",
+  "cases": 1556
+},
+{
+  "durationLowerRange": "1.142866796E10",
+  "durationUpperRange": "1.172942238E10",
+  "cases": 555
+},
+{
+  "durationLowerRange": "1.172942238E10",
+  "durationUpperRange": "1.20301768E10",
+  "cases": 20
+},
+{
+  "durationLowerRange": "1.20301768E10",
+  "durationUpperRange": "1.233093122E10",
+  "cases": 0
+},
+{
+  "durationLowerRange": "1.233093122E10",
+  "durationUpperRange": "1.263168564E10",
+  "cases": 1000
+},
+{
+  "durationLowerRange": "1.263168564E10",
+  "durationUpperRange": "1.293244006E10",
+  "cases": 3000
+},
+{
+  "durationLowerRange": "1.293244006E10",
+  "durationUpperRange": "1.323319448E10",
+  "cases": 300
+},
+{
+  "durationLowerRange": "1.323319448E10",
+  "durationUpperRange": "1.35339489E10",
+  "cases": 3
+},
+{
+  "durationLowerRange": "1.35339489E10",
+  "durationUpperRange": "1.383470332E10",
+  "cases": 2
+},
+{
+  "durationLowerRange": "1.383470332E10",
+  "durationUpperRange": "1.413545774E10",
+  "cases": 1
+},
+{
+  "durationLowerRange": "1.413545774E10",
+  "durationUpperRange": "1.443621216E10",
+  "cases": 2
+},
+{
+  "durationLowerRange": "1.443621216E10",
+  "durationUpperRange": "1.473696658E10",
+  "cases": 1000
+},
+{
+  "durationLowerRange": "1.473696658E10",
+  "durationUpperRange": "1.5037721E10",
+  "cases": 1900
+}]

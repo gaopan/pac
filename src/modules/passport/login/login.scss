@@ -1,0 +1,102 @@
+form {
+  padding: 30/12*$unit 50/12*$unit;
+
+  .logo {
+    text-align: center;
+
+     img {
+      display: inline-block;
+      width: 80/12*$unit;
+     }
+  }
+
+  >.title {
+    font-size: 18/12*$unit;
+    font-weight: bold;
+    text-align: center;
+    padding: 10/12*$unit 15/12*$unit;
+    margin-bottom: 10/12*$unit;
+  }
+  a {
+    color: $color;
+    cursor: pointer;
+  }
+
+  a:hover {
+    color: $color;
+  }
+
+  .form-control {
+    border-radius: 0px;
+    color: #000;
+
+    &:focus {
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+      border-color: #fff;
+    }
+
+    &::placeholder {
+      // color: #000;
+    }
+  }
+
+  .error-field,
+  .error-msg {
+    padding-top: 10px;
+    padding-left: 10px;
+    color: $errorColor;
+    display: inline-block;
+    min-width: 250px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 10px;
+    color: #000;
+  }
+
+  .info {
+    margin-top: 5%;
+
+    >span:last-child {
+      color: $color;
+      cursor: pointer;
+    }
+    >span:first-child {
+      color: #7d7d7d;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 10/12*$unit;
+    div {
+      display: block;
+      width: 100%;
+    }
+
+    .form-control {
+      display: block;
+      width: 100%;
+    }
+
+    .countdown {
+      padding-left: 10px;
+    }
+  }
+  .forgot {
+    width: 100%;
+    margin-bottom: 10px;
+
+    .forgotPassword {
+      display: inline-block;
+      width: 100%;
+      text-align: right;
+
+      a {
+        text-align: right;
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+$color: #2BA229;
+$errorColor: #d0011b;
+$fontColor: #333;
+$labelColor: #7d7d7d;
+$bgColor: #eee;
+$borderColor: #7d7d7d;
+
+$unit: (12rem/37.5);
+
+$swipeTranslateX: 100vw;
+
+@mixin remove-border-styling() {
+    box-shadow: none;
+    border-color: transparent;
+    border-radius: 0;
+}
+
+@mixin active-cta() {
+    background-color: #000000;
+    color: #ffed00;
+    cursor: pointer;
+}
+
+@mixin singleLineEllipsis() {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin multiLineEllipsis($lineHeight, $lineCount, $bgColor){
+  overflow: hidden;
+  position: relative;
+  line-height: $lineHeight;
+  max-height: $lineHeight * $lineCount; 
+  margin-right: -1em;
+  padding-right: 1em;
+  
+  &:before {
+    content: '...';
+    position: absolute;
+    right: 0;
+    bottom: 2px;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+    background: $bgColor;
+  }
+}
+
+.swipe-left-enter-active, .swipe-left-leave-active {
+  transition: transform .5s;
+  -webkit-transition: transform .5s;
+}
+
+.swipe-left-enter, .swipe-left-leave-to {
+  transform: translate(-1 * $swipeTranslateX)!important;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+  -webkit-transition: opacity .5s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0!important;
+}

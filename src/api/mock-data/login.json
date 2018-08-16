@@ -1,0 +1,12 @@
+{
+	"access_token": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC93d3cuaHBlLmNvbSIsImV4cCI6MTUwNDc1NjQ5NSwidXNlcm5hbWUiOiJhZG1pbjFAaHBlLmNvbSJ9.0ZNJBnGbFFhPaCh0tXBG-IZIqCzltONN7ZwNNHB38Fu3thrTQZr7WRh-E9kJSIOV5La81b1iQO31pADscvYnXMM5VC92TWDAgwFQ8stBlNHsLSFhJdrAQcapk8xnMk1daIlyGoQF-7UJyAjPb2z-5K6mUGGH_hUERe0uYN0SsWKulHBdE8S87YKq5yAmC81CrsjYB50m5ydAoiyD2RsRSKgsg88wTf2IhJeXJGVPdQaSQoo18BCLlak1o6HmfcOzDsT-0s5cAMv62F1CF5YaIc9gebtOli-h6JIPUYJv9XaY78_1erApTMGVwyH9Hws9mBGsHu7X4wd6gS8JHga_8A",
+	"auth_type": "Bearer",
+	"user": {
+		"id": "12345a789",
+		"email": "admin1@dxc.com",
+		"firstName": "Admin",
+		"lastName": "DXC",
+		"businessUnit": "GIT",
+		"processIds": ["0987c6543","2134r5678"]
+	}
+}
