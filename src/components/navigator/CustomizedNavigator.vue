@@ -5,7 +5,7 @@
         <button class="btn btn-primary" @click="isShowMenus=true"><i class="icon-list"></i><span>导航</span></button>
       </span>
       <ol class="crumb">
-        <li v-for="(crumb, index) in breadcrumbs" :class="{'active':index==breadcrumbs.length-1}">
+        <li v-for="(crumb, index) in breadcrumbs" :class="{'active':index==breadcrumbs.length-1}" v-if="crumb.name&&crumb.name.length>0">
           {{crumb.name}}
         </li>
       </ol>

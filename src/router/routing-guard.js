@@ -24,6 +24,12 @@ function componentRule(to, from, next) {
       next({ path: '/console/selection' });
     }
 
+  } else if(to.name == 'Customization') {
+    let userProfile = store.getters.userProfile;
+
+    if(userProfile.isLeapAdmin || userProfile.isBoss) {
+      next({path: '/console/cust/company'});
+    }
   } else {
     next();
   }

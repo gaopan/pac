@@ -3,15 +3,15 @@ export default [{
   childNodes: [{
     name: '中海庭',
     route: 'Customization Dashboard',
-    params: {company: 'zht'},
+    params: { company: 'zht' },
     childNodes: [{
       name: '总览',
       route: 'Customization Dashboard Overview',
-      params: {company: 'zht'}
+      params: { company: 'zht' }
     }, {
       name: '报告',
       route: 'Customization Dashboard Report',
-      params: {company: 'zht'}
+      params: { company: 'zht' }
     }]
   }]
 }, {
@@ -19,6 +19,6 @@ export default [{
   childNodes: [{
     name: '工时跟踪',
     route: 'Statistic Dashboard',
-    params: {type: 'gs'}
+    params: { type: 'gs' }
   }]
 }]

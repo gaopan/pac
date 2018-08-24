@@ -86,8 +86,14 @@ let routerTable = {
           import ('@/modules/console/customization/Customization.vue')
       },
       meta: configMeta("Customization Dashboard", false),
-      redirect: '/console/cust/monthly/zht',
       children: [{
+        name: 'Customization Company',
+        path: 'company',
+        components: {
+          default: () => import('@/modules/console/customization/company/Company.vue')
+        },
+        meta: configMeta("Customization Company", false)
+      }, {
         name: 'Customization Dashboard',
         path: 'monthly/:company',
         components: {

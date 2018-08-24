@@ -27,7 +27,7 @@
 
   .avatar {
     font-size: 36/12*$unit;
-    padding: 20/12*$unit 20/12*$unit 0;
+    padding: 30/12*$unit 20/12*$unit 0;
     text-align: center;
   }
 
@@ -35,7 +35,7 @@
     padding: 20/12*$unit 0;
 
     .module-name {
-      font-size: 14/12*$unit;
+      font-size: 24/12*$unit;
       text-align: center;
     }
   }
@@ -87,8 +87,6 @@
 
       &>div {
         display: inline-block;
-        height: 0;
-        line-height: 0;
       }
     }
   }

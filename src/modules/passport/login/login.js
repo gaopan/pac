@@ -102,7 +102,11 @@ export default {
             // vm.$router.replace('/console');
             // Customization
             vm.$router.replace('/console/cust');
-          } else if (user.isCustomerLeadership) {
+          } else if(user.isBoss){
+            vm.$router.replace('/console/cust');
+          } else if(user.isAA){
+            vm.$router.replace('/console/cust/monthly/zht');
+          }else if (user.isCustomerLeadership) {
             var cusId = vm.$store.getters.userProfile.userFe.customerIdList[0];
             CustomerApi.getCustomer(cusId).then(function(res) {
               if (res.data.serviceTypes.indexOf('RAAS_Service') == !-1) {

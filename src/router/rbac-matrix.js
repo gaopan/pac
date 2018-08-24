@@ -15,7 +15,10 @@ export default {
   "Selection": {
     rolesRequired: ["admin", "leap_practitioner", "customer_leadership", "customer_practitioner", "customer_general_participant", "leap_raas_operator", "customer_raas_operator", "leap_raas_admin", "leap_account_owner"]
   },
+  "Customization Company": {
+    rolesRequired: ["admin", "boss"]
+  },
   "Customization Dashboard": {
-    rolesRequired: ["admin", "leap_practitioner", "customer_leadership", "customer_practitioner", "customer_general_participant", "leap_raas_operator", "customer_raas_operator", "leap_raas_admin", "leap_account_owner"]
+    rolesRequired: ["admin", "aa", "boss"]
   }
 }
