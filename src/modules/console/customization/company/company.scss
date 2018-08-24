@@ -1,0 +1,29 @@
+.company-container {
+  padding: 5% 0;
+
+  .company {
+    display: block;
+    width: 100%;
+    position: relative;
+    border: 1px solid $borderColor;
+    margin-bottom: 30/12*$unit;
+    cursor: pointer;
+    background-color: $bgColor;
+    color: $fontColor;
+
+    .company-name {
+      display: block;
+      padding: 80/12*$unit 0;
+      font-size: 48/12*$unit;
+      line-height: 1.5;
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+
+  .company:hover {
+    border-color: $color;
+    box-shadow: 0 0 1px 1px rgba(43, 162, 41, .45);
+    -webkit-box-shadow: 0 0 1px 1px rgba(43, 162, 41, .45);
+  }
+}
