@@ -15,10 +15,10 @@
             </div>
             <div class="comments">
               <div class="actions">
-                <button class="btn btn-primary" @click.stop="toEditData(m)" title="编辑数据"><i class="icon-edit-2"></i></button>
-                <button class="btn btn-primary" title="查看往月记录"><i class="icon-clipboard"></i></button>
-                <button class="btn btn-primary" title="编辑提醒"><i class="icon-message-square"></i></button>
-                <button class="btn btn-primary" title="支持和决策"><i class="icon-feather"></i></button>
+                <button class="btn btn-primary" @click.stop="toEditData(m)" v-if="user.isAA || user.isAdmin">编辑数据</button>
+                <button class="btn btn-primary" v-if="user.isAA || user.isAdmin || user.isBoss">查看往月记录</button>
+                <button class="btn btn-primary" v-if="user.isAA">编辑提醒</button>
+                <button class="btn btn-primary" v-if="user.isBoss">支持决策</button>
               </div>
               <div class="content">
                 <ul v-if="m.curMonthData.comments && m.curMonthData.comments.length > 0">

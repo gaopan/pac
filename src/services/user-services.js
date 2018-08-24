@@ -108,6 +108,7 @@ let service = {
     var roleType = userProfile.userFe.roleType;
     userProfile.isSales = roleType == 'Sales';
     userProfile.isLeapAdmin = roleType == 'admin';
+    userProfile.isAdmin = roleType == 'admin';
     userProfile.isBoss = roleType == 'boss';
     userProfile.isAA = roleType == 'aa';
     userProfile.isLeapPractitioner = roleType == 'LEAP_Practitioner';

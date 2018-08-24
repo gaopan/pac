@@ -17,6 +17,7 @@ export default {
   },
   components: { ReportInput },
   created() {
+    this.user = this.$store.getters.userProfile;
     this.refresh();
   },
   computed: {
