@@ -15,7 +15,8 @@ export default {
     return {
       isShowMenus: false,
       navs: null,
-      breadcrumbs: []
+      breadcrumbs: [],
+      user: this.$store.getters.userProfile.userFe
     };
   },
   watch: {

@@ -19,6 +19,20 @@
     display: inline-block;
     height: 100%;
     background-color: #2d51a3;
+    white-space: nowrap;
+
+    &>.user-profile {
+      display: inline-block;
+      height: 100%;
+      color: #fff;
+      border: 1px solid #fff;
+      vertical-align: middle;
+
+      &>span {
+        display: inline-block;
+        padding: 10/12*$unit 10/12*$unit;
+      }
+    }
 
     img {
       display: inline-block;

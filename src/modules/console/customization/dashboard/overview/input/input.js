@@ -112,6 +112,8 @@ export default {
       let vm = this;
       let prepareDataToSave = function() {
         let _data = { name: vm.currentModule.key, month: vm.curMonth, value: {} };
+        _data.value['remind'] = vm.currentModule.monthData[vm.curMonth].remind;
+        _data.value['support'] = vm.currentModule.monthData[vm.curMonth].support;
         vm.currentModule.editConfig.fields.forEach(f => {
           if(f.list) {
             f.value = [];

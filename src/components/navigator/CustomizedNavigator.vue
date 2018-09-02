@@ -11,6 +11,9 @@
       </ol>
     </div>
     <div class="logo">
+      <div class="user-profile">
+        <span>{{user.firstName}} {{user.lastName}}</span>
+      </div>
       <img :src="imgUrl('knight.png')" />
     </div>
     <transition name="swipe-left">
