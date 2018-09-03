@@ -2,7 +2,7 @@ import Vue from 'vue'
 import CommonUtils from '@/utils/common-utils.js'
 import TypeChecker from '@/utils/type-checker.js'
 import LeapSelect from '@/components/leap-select/LEAPSelect.vue'
-
+import Noty from '@/utils/noty-operation.js'
 import DashboardApi from '@/api/customization/dashboard.js'
 
 import CommonGenerators from '@/utils/common-generators.js'
@@ -144,7 +144,10 @@ export default {
       };
       let saveTable = function(data) {
         DashboardApi.saveReport(data).then(res => {
+          Noty.notifySuccess({text: '保存数据成功！'});
           vm.$emit('submitted');
+        }, err => {
+          Noty.notifyError({text: '保存数据失败！'});
         });
       };
 

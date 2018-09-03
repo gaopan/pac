@@ -128,7 +128,7 @@ export default {
         month: m.curMonthData.month,
         value: m.curMonthData
       }).then(res => {
-        // Noty.notifySuccess({text: '提交提醒成功！'});
+        Noty.notifySuccess({text: '提交提醒成功！'});
         this.$set(m, 'isEditRemind', false);
       }, err => {
         Noty.notifyError({text: '提交提醒失败！'});
@@ -146,7 +146,7 @@ export default {
         month: m.curMonthData.month,
         value: m.curMonthData
       }).then(res => {
-        // Noty.notifySuccess({text: '提交决策成功！'});
+        Noty.notifySuccess({text: '提交决策成功！'});
         this.$set(m, 'isEditSupport', false);
       }, err => {
         Noty.notifyError({text: '提交决策失败！'});
