@@ -13,7 +13,16 @@ export default {
       modules: null,
       configuredModules: Modules,
       editingModule: null,
-      moduleCreating: false
+      moduleCreating: false,
+      isEditRemind: false,
+      isEditSupport: false,
+      isViewPastRS: false,
+      rs: {
+        key: 'rs',
+        curMonthData: { remind: null, support: null },
+        pastData: null,
+        data: null
+      }
     }
   },
   components: { ReportInput },
@@ -60,11 +69,48 @@ export default {
               res.data.forEach(d => {
                 d.monthData = _oData[d.name].months;
               });
+              res.data.forEach(d => {
+                d.monthData = _oData[d.name].months;
+                if (TypeChecker.isObject(d.monthData)) {
+                  for (let key in d.monthData) {
+                    if (d.monthData.hasOwnProperty(key)) {
+                      let theMonthData = d.monthData[key];
+                      if (TypeChecker.isString(theMonthData)) {
+                        d.monthData[key] = JSON.parse(theMonthData);
+                      }
+                    }
+                  }
+                }
+              });
             }
+
+            if (oData[this.rs.key]) {
+              this.rs.data = oData[this.rs.key];
+              if (TypeChecker.isObject(this.rs.data.monthData)) {
+                if (TypeChecker.isObject(this.rs.data.monthData[curMonth])) {
+                  this.rs.curMonthData.remind = this.rs.data.monthData[curMonth].remind;
+                  this.rs.curMonthData.support = this.rs.data.monthData[curMonth].support;
+                }
+
+                this.rs.pastData = [];
+                for (let month in this.rs.data.monthData) {
+                  if (parseInt(month) < parseInt(curMonth)) {
+                    let _monthData = this.rs.data.monthData[month];
+                    if (TypeChecker.isObject(_monthData)) {
+                      this.rs.pastData.push({
+                        month: month,
+                        remind: _monthData.remind,
+                        support: _monthData.support
+                      });
+                    }
+                  }
+                }
+              }
+            }
+            console.log(this.rs);
 
             modules.forEach(m => {
               let oM = oData[m.key];
-              m.pastRS = [];
               if (oM) {
                 m['monthData'] = oM['monthData'];
                 if (TypeChecker.isObject(m["monthData"])) {
@@ -73,21 +119,6 @@ export default {
                   } else if (TypeChecker.isObject(m['monthData'][curMonth])) {
                     m['curMonthData'] = m["monthData"][curMonth];
                   }
-
-                  for(let month in m['monthData']) {
-                    if(m['monthData'].hasOwnProperty(month) && parseInt(month) < parseInt(curMonth)) {
-                      let _monthData = m['monthData'][month];
-                      if(TypeChecker.isString(_monthData)) {
-                        _monthData = JSON.parse(_monthData);
-                      }
-                      m.pastRS.push({
-                        month: month,
-                        remind: _monthData.remind,
-                        support: _monthData.support
-                      });
-                    }
-                  }
-                  m.pastRS.sort((a, b) => parseInt(a.month) > parseInt(b.month));
                 }
               } else {
                 m['curMonthData'] = {};
@@ -119,47 +150,47 @@ export default {
       this.refresh();
       this.editingModule = null;
     },
-    toEditRemind(m){
-      this.$set(m, 'isEditRemind', true);
+    toEditRemind() {
+      this.isEditRemind = true;
     },
-    submitRemind(m){
+    submitRemind(m) {
       DashboardApi.saveReport({
-        name: m.key,
-        month: m.curMonthData.month,
-        value: m.curMonthData
+        name: this.rs.key,
+        month: this.curMonth,
+        value: this.rs.curMonthData
       }).then(res => {
-        Noty.notifySuccess({text: '提交提醒成功！'});
-        this.$set(m, 'isEditRemind', false);
+        Noty.notifySuccess({ text: '提交提醒成功！' });
+        this.isEditRemind = false;
       }, err => {
-        Noty.notifyError({text: '提交提醒失败！'});
+        Noty.notifyError({ text: '提交提醒失败！' });
       });
     },
-    cancelEditRemind(m){
-      this.$set(m, 'isEditRemind', false);
+    cancelEditRemind() {
+      this.isEditRemind = false;
     },
-    toEditSupport(m){
-      this.$set(m, 'isEditSupport', true);
+    toEditSupport() {
+      this.isEditSupport = true;
     },
-    submitSupport(m){
+    submitSupport(m) {
       DashboardApi.saveReport({
-        name: m.key,
-        month: m.curMonthData.month,
-        value: m.curMonthData
+        name: this.rs.key,
+        month: this.curMonth,
+        value: this.rs.curMonthData
       }).then(res => {
-        Noty.notifySuccess({text: '提交决策成功！'});
-        this.$set(m, 'isEditSupport', false);
+        Noty.notifySuccess({ text: '提交决策成功！' });
+        this.isEditSupport = false;
       }, err => {
-        Noty.notifyError({text: '提交决策失败！'});
+        Noty.notifyError({ text: '提交决策失败！' });
       });
     },
-    cancelEditSupport(m){
-      this.$set(m, 'isEditSupport', false);
+    cancelEditSupport(m) {
+      this.isEditSupport = false;
     },
-    toViewPastRemindAndSupport (m){
-      this.$set(m, 'isViewPastRS', true);
+    toViewPastRemindAndSupport(m) {
+      this.isViewPastRS = true;
     },
-    cancelViewPastRS(m){
-      this.$set(m, 'isViewPastRS', false);
+    cancelViewPastRS(m) {
+      this.isViewPastRS = false;
     }
   }
 }

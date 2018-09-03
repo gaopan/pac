@@ -1,4 +1,6 @@
-.cust-dashboard {}
+.cust-dashboard {
+  
+}
 
 .module {
   display: block;
@@ -11,21 +13,48 @@
 
   &>.head {
     cursor: pointer;
+
+    &>.actions {
+      display: none;
+      position: absolute;
+      right: 10/12*$unit;
+      top: 10/12*$unit;
+      z-index: 1;
+      color: #333;
+
+      &>span+span {
+        margin-left: 10/12*$unit;
+      }
+
+      &>span {
+        cursor: pointer;
+        font-size: 18/12*$unit;
+        &:hover {
+          color: $color;
+        }
+      }
+    }
+  }
+
+  &>.head:hover {
+    &>.actions {
+      display: block;
+    }
   }
 
   &.red>.head {
-  	background-color: #D9534F;
-  	color: #fff;
+    background-color: #D9534F;
+    color: #fff;
   }
 
   &.green>.head {
-  	background-color: #449D44;
-  	color: #fff;
+    background-color: #449D44;
+    color: #fff;
   }
 
   &.yellow>.head {
-  	background-color: #F0AD4E;
-  	color: #fff;
+    background-color: #F0AD4E;
+    color: #fff;
   }
 
   .avatar {
@@ -56,8 +85,8 @@
     padding: 5/12*$unit 10/12*$unit;
 
     &>.btn {
-    	background-color: #fff;
-    	color: $fontColor;
+      background-color: #fff;
+      color: $fontColor;
     }
 
     .btn+.btn {
@@ -73,19 +102,18 @@
     height: 260/12*$unit;
 
     &>.actions {
-    	padding: 5/12*$unit 5/12*$unit 0;
-    	background-color: #fff;
-    	.btn {
+      padding: 5/12*$unit 5/12*$unit 0;
+      background-color: #fff;
+      .btn {
         margin-bottom: 5/12*$unit;
-    		padding: 5/12*$unit;
-    	}
-      // .btn+.btn {
+        padding: 5/12*$unit;
+      } // .btn+.btn {
       //   margin-left: 5/12*$unit;
       // }
     }
 
     &>.content {
-    	padding: 10/12*$unit;
+      padding: 10/12*$unit;
       overflow-y: auto;
       flex-grow: 1;
 
@@ -121,31 +149,6 @@
         }
       }
 
-      &>ul {
-        display: block;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-
-        &>li {
-          display: flex;
-
-          &>div:first-child {
-            width: 50/12*$unit;
-            flex-grow: 0;
-            display: flex;
-            color: #fff;
-            justify-content: space-around;
-            align-items: center;
-            background-color: $color;
-          }
-
-          &>div:nth-child(2) {
-            flex-grow: 1;
-          }
-        }
-      }
-
       &>div {
         display: inline-block;
       }
@@ -158,7 +161,7 @@
   box-shadow: 0 0 1px 1px rgba(43, 162, 41, .45);
   -webkit-box-shadow: 0 0 1px 1px rgba(43, 162, 41, .45);
 
-	&>.actions {
-		display: flex;
-	}
+  &>.actions {
+    display: flex;
+  }
 }

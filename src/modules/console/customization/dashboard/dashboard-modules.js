@@ -1,4 +1,16 @@
-export default [{
+
+function findDataWithKeyPrefixs(keyPrefixs, data){
+  let _data = [];
+  let parent = data;
+  do {
+    let keyPrefix = keyPrefixs[0];
+    p
+  } while(keyPrefixs.length);
+  return _data;
+}
+
+let modules = [];
+let quality = {
   icon: 'icon-aperture',
   name: '质量',
   key: "quality",
@@ -114,7 +126,19 @@ export default [{
       }]
     }]
   }
-}, {
+};
+// quality.adapt = function(remoteData){
+//   let data = {up: [], down: []};
+//   let upDataKeys = ["外业批次", "区域", "总里程", "合格里程", "合格率", "对策", "合格标准"];
+//   let upDataKeyPrefixs = ["外业合格率", "批次"]: 
+//   let downDataKeys = ["错误发生率", "错误发生率标准", "错误流出率", "错误流出率标准"];
+//   let downDataKeyPrefixs = ["内业错误率", "类型"];
+
+
+
+// };
+
+let cost = {
   icon: 'icon-box',
   name: '成本',
   key: 'cost',
@@ -217,7 +241,9 @@ export default [{
       }]
     }]
   }
-}, {
+};
+
+let hr = {
   icon: 'icon-users',
   name: '人力资源',
   key: 'hr',
@@ -306,7 +332,9 @@ export default [{
       }]
     }]
   }
-}, {
+};
+
+let safty = {
   icon: 'icon-alert-triangle',
   name: '安全',
   key: 'safty',
@@ -361,7 +389,9 @@ export default [{
       }]
     }]
   }
-}, {
+};
+
+let operation = {
   icon: 'icon-server',
   name: '运营情况',
   key: 'operation',
@@ -445,7 +475,9 @@ export default [{
       }]
     }]
   }
-}, {
+};
+
+let respond = {
   icon: 'icon-zap',
   name: '响应',
   key: 'respond',
@@ -496,7 +528,9 @@ export default [{
     }],
 
   }
-}, {
+};
+
+let leadership = {
   icon: 'icon-crosshair',
   name: '领导关注和支持事项',
   key: 'leadership',
@@ -536,4 +570,14 @@ export default [{
       }]
     }]
   }
-}]
+};
+
+modules.push(quality);
+modules.push(cost);
+modules.push(hr);
+modules.push(safty);
+modules.push(operation);
+modules.push(respond);
+modules.push(leadership);
+
+export default modules
