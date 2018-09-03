@@ -11,7 +11,7 @@
       </ol>
     </div>
     <div class="logo">
-      <div class="user-profile">
+      <div class="user-profile" @click="logout">
         <span>{{user.firstName}} {{user.lastName}}</span>
       </div>
       <img :src="imgUrl('knight.png')" />

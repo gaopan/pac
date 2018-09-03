@@ -95,6 +95,9 @@ export default {
     },
     imgUrl(path) {
       return images('./' + path);
+    },
+    logout(){
+      this.$router.push('/passport/login');
     }
   },
   components: { MiniLoader }
