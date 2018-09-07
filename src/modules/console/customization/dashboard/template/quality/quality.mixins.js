@@ -3,11 +3,19 @@ import * as d3BI from '@/lib/d3-bi/index.js'
 import TypeChecker from '@/utils/type-checker.js'
 import CommonUtils from '@/utils/common-utils.js'
 import LeapSelect from '@/components/leap-select/LEAPSelect.vue'
+import PeriodSelector from '../../../period-selector/PeriodSelector.vue'
+import PeriodUtils from '../../../period-utils.js'
+import DataUtils from '@/utils/data-utils.js'
 import shared from '@/shared.js'
 let eventHub = shared.eventHub;
 export default {
   template: `<div class="container-fluid" ref="container">
-    <div class="row">
+      <div class="row">
+        <div class="col-xs-12">
+          <period-selector :periods="periods" @change="changedPeriod"></period-selector>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-xs-12">
           <div class="chart-title"><span>合格</span></div>
           <div class="chart-container" ref="qUContainer"></div>
@@ -40,28 +48,22 @@ export default {
   data() {
     return {
       data: null,
+      periods: {years: null, quarters: null, months: null},
       qUData: null,
       qDData: null,
-      selectedQDOption: "路网",
-      qDOptions: [{
-        name: "路网",
-        value: "路网"
-      }, {
-        name: "地物",
-        value: "地物"
-      }]
+      selectedQDOption: null,
+      qDOptions: []
     };
   },
   created() {
     eventHub.$on("tile-window-resized", this.windowResized);
     eventHub.$on("tile-full-screen-inner", this.toggleFullScreen);
-    this.parseData(this.conf.data);
+    this.parseMonths(this.conf.months);
   },
-  components: { LeapSelect },
+  components: { LeapSelect, PeriodSelector },
   mounted() {
     this.container = this.$refs.container;
     this.init();
-    this.draw();
   },
   methods: {
     init() {
@@ -88,12 +90,12 @@ export default {
     },
     selectQDOption(args) {
       this.selectedQDOption = args.value;
-      this.parseData(this.conf.data);
+      this.parseData(this.massagedData);
       this.drawQDChart();
     },
-    drawQUChart(){
+    drawQUChart() {
       let vm = this,
-        chartHeight = (vm.container.parentNode.clientHeight - 53 - 34) / 2 + 'px';
+        chartHeight = (vm.container.parentNode.clientHeight - 53 - 38 - 52) / 2 + 'px';
       vm.qUContainer.style('height', chartHeight);
       if (vm.qUContainer.select('svg').size()) {
         vm.qUContainer
@@ -107,9 +109,9 @@ export default {
           .call(vm.qUChart);
       }
     },
-    drawQDChart(){
+    drawQDChart() {
       let vm = this,
-        chartHeight = (vm.container.parentNode.clientHeight - 53 - 34) / 2 + 'px';
+        chartHeight = (vm.container.parentNode.clientHeight - 53 - 38 - 52) / 2 + 'px';
       vm.qDContainer.style('height', chartHeight);
       if (vm.qDContainer.select('svg').size()) {
         vm.qDContainer
@@ -210,7 +212,7 @@ export default {
         this.draw();
       };
     },
-    toggleFullScreen(args){
+    toggleFullScreen(args) {
       if (args.id == this.$props.tileId) {
         this.draw();
       };
@@ -295,6 +297,49 @@ export default {
       if (!TypeChecker.isObject(data)) return;
       this.parseUData(data);
       this.parseDData(data);
+    },
+    parseMonths(months) {
+      let periods = PeriodUtils.parsePeriodsFromMonths(months);
+
+      this.periods.months = periods.months;
+      this.periods.quarters = periods.quarters;
+      this.periods.years = periods.years;
+    },
+    changedPeriod(args){
+      let selectedMonths = args.map(m => m.year + '-' + m.month);
+      let data = this.massagedData = {up: [], down: {}};
+
+      if(TypeChecker.isArray(this.$props.conf.data.up)) {
+        this.$props.conf.data.up.filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
+          data.up = data.up.concat(item.data);
+          data.up.forEach(_item => {
+            _item['合格率'] = Number(_item['合格里程']) / Number(_item['总里程']);
+          });
+        });
+      }
+
+      if(TypeChecker.isArray(this.$props.conf.data.down)) {
+        let filteredDownData = [];
+        this.$props.conf.data.down.filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
+          item.data.forEach(_item => {
+            _item['月'] = item.month;
+          });
+          filteredDownData = filteredDownData.concat(item.data);
+        });
+        data.down = DataUtils.groupBy(filteredDownData, '类型');
+
+        this.qDOptions = Object.keys(data.down).map(k => {
+          return {
+            name: k,
+            value: k
+          };
+        });
+        if(this.qDOptions.length > 0) {
+          this.selectedQDOption = this.qDOptions[0].value;
+        }
+      }
+      this.parseData(data);
+      this.draw();
     }
   },
   beforeDestroy: function() {

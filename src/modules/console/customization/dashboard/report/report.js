@@ -1,3 +1,4 @@
+import TypeChecker from '@/utils/type-checker.js'
 import TilePanelMixins from '@/components/tile/tile-panel-mixins.js'
 import TileConfigurer from '@/components/tile/tile-configurer.js'
 import Modules from '../dashboard-modules.js'
@@ -41,11 +42,12 @@ export default {
     }
   },
   created() {
-    // this.refreshData();
-    this.configTiles();
+    this.refreshData(function(){
+      this.initTiles();
+    });
   },
   methods: {
-    refreshData() {
+    refreshData(cb) {
       let modules = CommonUtils.deepClone(Modules);
       let curMonth = this.curMonth = new Date().getMonth() + 1 + "";
       DashboardApi.getReportOverview().then(res => {
@@ -83,32 +85,18 @@ export default {
 
             modules.forEach(m => {
               let oM = oData[m.key];
-              m.pastRS = [];
               if (oM) {
+                m['months'] = oM['months'];
                 m['monthData'] = oM['monthData'];
                 if (TypeChecker.isObject(m["monthData"])) {
                   m['curMonthData'] = m["monthData"][curMonth];
-
-                  for (let month in m['monthData']) {
-                    if (m['monthData'].hasOwnProperty(month) && parseInt(month) < parseInt(curMonth)) {
-                      let _monthData = m['monthData'][month];
-                      if (TypeChecker.isString(_monthData)) {
-                        _monthData = JSON.parse(_monthData);
-                      }
-                      m.pastRS.push({
-                        month: month,
-                        remind: _monthData.remind,
-                        support: _monthData.support
-                      });
-                    }
-                  }
-                  m.pastRS.sort((a, b) => parseInt(a.month) > parseInt(b.month));
                 }
               } else {
                 m['curMonthData'] = {};
               }
             });
             this.modules = modules;
+            cb.call(this);
           });
         } else {
           this.modules = modules;
@@ -118,85 +106,17 @@ export default {
     initTiles() {
       var vm = this;
 
-      this.qualityConf = TileConfigurer.defaultConfigurer()
-        .type('QualityChart').title("质量")
-        .width({ xs: 4 })
-        .height({ xs: 6 })
-        .transform({ xs: { x: 0, y: 0 } })
+      this.modules.forEach(m => {
+        m.tileConfig = TileConfigurer.defaultConfigurer()
+        .type(m.dashboardConfig.type).title(m.dashboardConfig.title)
+        .width(m.dashboardConfig.width).height(m.dashboardConfig.height)
+        .transform(m.dashboardConfig.transform)
         .chart({
-          data: null
+          data: m.dashboardConfig.adaptData(m.monthData, m.months),
+          months: m.months
         }).react();
-      this.tiles.push(this.qualityConf);
-
-      this.costConf = TileConfigurer.defaultConfigurer()
-        .type('CostChart').title("成本")
-        .width({ xs: 4 })
-        .height({ xs: 6 })
-        .transform({ xs: { x: 4, y: 0 } })
-        .chart({
-          data: null
-        }).react();
-      this.tiles.push(this.costConf);
-
-      this.hrConf = TileConfigurer.defaultConfigurer()
-        .type('HrChart').title("人力资源")
-        .width({ xs: 4 })
-        .height({ xs: 6 })
-        .transform({ xs: { x: 8, y: 0 } })
-        .chart({
-          data: null
-        }).react();
-      this.tiles.push(this.hrConf);
-
-      this.securityConf = TileConfigurer.defaultConfigurer()
-        .type('TableChart').title("安全")
-        .width({ xs: 3 })
-        .height({ xs: 6 })
-        .transform({ xs: { x: 0, y: 6 } })
-        .chart({
-          title: "安全状态",
-          monthOptions: this.monthOptions,
-          data: null
-        }).react();
-      this.tiles.push(this.securityConf);
-
-
-      this.reactionConf = TileConfigurer.defaultConfigurer()
-        .type('TableChart').title("响应")
-        .width({ xs: 3 })
-        .height({ xs: 6 })
-        .transform({ xs: { x: 3, y: 6 } })
-        .chart({
-          title: "响应状态",
-          monthOptions: this.monthOptions,
-          data: null
-        }).react();
-      this.tiles.push(this.reactionConf);
-
-
-      this.operationConf = TileConfigurer.defaultConfigurer()
-        .type('TableChart').title("运营")
-        .width({ xs: 3 })
-        .height({ xs: 6 })
-        .transform({ xs: { x: 6, y: 6 } })
-        .chart({
-          title: "运营情况",
-          monthOptions: this.monthOptions,
-          data: null
-        }).react();
-      this.tiles.push(this.operationConf);
-
-      this.leadershipConf = TileConfigurer.defaultConfigurer()
-        .type('TableChart').title("领导关注和支持")
-        .width({ xs: 3 })
-        .height({ xs: 6 })
-        .transform({ xs: { x: 9, y: 6 } })
-        .chart({
-          title: "领导关注和支持事项",
-          monthOptions: this.monthOptions,
-          data: null
-        }).react();
-      this.tiles.push(this.leadershipConf);
+        this.tiles.push(m.tileConfig);
+      });
     },
     configTiles() {
       var vm = this;

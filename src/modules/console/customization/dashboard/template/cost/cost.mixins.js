@@ -3,17 +3,27 @@ import * as d3BI from '@/lib/d3-bi/index.js'
 import TypeChecker from '@/utils/type-checker.js'
 import CommonUtils from '@/utils/common-utils.js'
 import LeapSelect from '@/components/leap-select/LEAPSelect.vue'
+import PeriodSelector from '../../../period-selector/PeriodSelector.vue'
+import PeriodUtils from '../../../period-utils.js'
+import DataUtils from '@/utils/data-utils.js'
 import shared from '@/shared.js'
 let eventHub = shared.eventHub;
 export default {
   template: `<div class="container-fluid" ref="container">
     <div class="row">
+      <div class="col-xs-3">
+        <div class="top-selector">
+          <leap-select :options="typeOptions" :initSelectedValue="selectedType" v-on:onSelectedValues="selectType"></leap-select>
+        </div>
+      </div>
+      <div class="col-xs-9">
+        <period-selector :periods="periods" @change="changedPeriod"></period-selector>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-xs-12">
           <div class="chart-title">
             <span>成本与里程</span>
-            <div class="selector">
-              <leap-select :options="typeOptions" :initSelectedValue="selectedType" v-on:onSelectedValues="selectType"></leap-select>
-            </div>
           </div>
           <div class="chart-container" ref="hUContainer"></div>
         </div>
@@ -41,6 +51,7 @@ export default {
   },
   data() {
     return {
+      periods: {years: null, quarters: null, months: null},
       hUData: null,
       hDData: null,
       selectedType: '内业',
@@ -50,19 +61,18 @@ export default {
   created() {
     eventHub.$on("tile-window-resized", this.windowResized);
     eventHub.$on("tile-full-screen-inner", this.toggleFullScreen);
-    this.parseData(this.conf.data);
+    this.parseMonths(this.conf.months);
   },
-  components: { LeapSelect },
+  components: { LeapSelect, PeriodSelector },
   watch: {
     selectedType(val) {
-      this.parseData(this.conf.data);
+      this.parseData(this.massagedData);
       this.draw();
     }
   },
   mounted() {
     this.container = this.$refs.container;
     this.init();
-    this.draw();
   },
   methods: {
     init() {
@@ -92,7 +102,7 @@ export default {
     },
     draw() {
       let vm = this,
-        chartHeight = (vm.container.parentNode.clientHeight - 53 - 34) / 2 + 'px';
+        chartHeight = (vm.container.parentNode.clientHeight - 38 - 38 - 52) / 2 + 'px';
       vm.hUContainer.style('height', chartHeight);
       if (vm.hUContainer.select('svg').size()) {
         vm.hUContainer
@@ -132,15 +142,15 @@ export default {
     parseUData(d, chartData) {
       let zcbData = d.map(_d => {
           return {
-            label: _d['月份'],
-            value: _d['总成本（元）']
+            label: _d['月'],
+            value: _d['总成本']
           };
         }),
         zglData = d.map(_d => {
           return {
-            label: _d['月份'],
-            value: _d['总成本（元）'],
-            y2: _d['总公里数（公里）']
+            label: _d['月'],
+            value: _d['总成本'],
+            y2: _d['总公里数']
           };
         });
 
@@ -152,39 +162,39 @@ export default {
       if(vm.selectedType == '内业') {
         sqcbData = d.map(_d => {
           return {
-            label: _d['月份'],
-            value: _d['成本（元/公里）']
+            label: _d['月'],
+            value: _d['成本']
           };
         });
         gscbData = d.map(_d => {
           return {
-            label: _d['月份'],
-            value: _d['成本目标（元/公里）']
+            label: _d['月'],
+            value: _d['成本目标']
           };
         });
       } else {
         sqcbData = d.map(_d => {
           return {
-            label: _d['月份'],
-            value: _d['市区成本（元/公里）']
+            label: _d['月'],
+            value: _d['市区成本']
           };
         });
         gscbData = d.map(_d => {
           return {
-            label: _d['月份'],
-            value: _d['高速成本（元/公里）']
+            label: _d['月'],
+            value: _d['高速成本']
           };
         });
         sqcbmbData = d.map(_d => {
           return {
-            label: _d['月份'],
-            value: _d['市区成本目标（元/公里）']
+            label: _d['月'],
+            value: _d['市区成本目标']
           };
         });
         gscbmbData = d.map(_d => {
           return {
-            label: _d['月份'],
-            value: _d['高速成本目标（元/公里）']
+            label: _d['月'],
+            value: _d['高速成本目标']
           };
         });
       }
@@ -299,6 +309,33 @@ export default {
 
       this.parseUData(d, hUChartData);
       this.parseDData(d, hDChartData);
+    },
+    parseMonths(months) {
+      let periods = PeriodUtils.parsePeriodsFromMonths(months);
+
+      this.periods.months = periods.months;
+      this.periods.quarters = periods.quarters;
+      this.periods.years = periods.years;
+    },
+    changedPeriod(args){
+      let selectedMonths = args.map(m => m.year + '-' + m.month);
+      let data = this.massagedData = {'内业': [], '外业': []};
+
+      if(TypeChecker.isArray(this.$props.conf.data['内业'])) {
+        this.$props.conf.data['内业'].filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
+          item.data['月'] = item.month;
+          data['内业'] = data['内业'].concat(item.data);
+        });
+      }
+
+      if(TypeChecker.isArray(this.$props.conf.data['外业'])) {
+        this.$props.conf.data['外业'].filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
+          item.data['月'] = item.month;
+          data['外业'] = data['外业'].concat(item.data);
+        });
+      }
+      this.parseData(data);
+      this.draw();
     }
   },
   beforeDestroy: function() {

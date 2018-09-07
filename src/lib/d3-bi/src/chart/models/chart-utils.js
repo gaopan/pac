@@ -43,7 +43,7 @@ ChartUtils.buildNoDataChart = function(container) {
   container.html('');
 
   container.iappend('text')
-    .text('No data to display')
+    .text('没有数据显示')
     .attr('x', function(){ return (parseFloat(container.style('width')) - this.getBBox().width) / 2})
     .attr('y', function(){ return (parseFloat(container.style('height')) - this.getBBox().height) / 2});
 };

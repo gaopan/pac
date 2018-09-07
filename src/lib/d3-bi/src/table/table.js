@@ -473,12 +473,12 @@ var D3table = (function() {
 
     D3table.prototype.noData = function(element) {
         var _this = this,
-            trsUpdate = this.ele.select(element + " .inner-tbody").selectAll("tr").data([{tip :"No data to display"}]),
+            trsUpdate = this.ele.select(element + " .inner-tbody").selectAll("tr").data([{tip :"没有数据显示"}]),
             trsEle = trsUpdate.enter().append("td").merge(trsUpdate);
         trsUpdate.exit().remove();
 
         var tdsUpdate = trsEle.selectAll("td")
-                        .data(["No data to display"])
+                        .data(["没有数据显示"])
                          
         tdsUpdate.enter().append("td")
             .merge(tdsUpdate)

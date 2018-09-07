@@ -3,11 +3,19 @@ import * as d3BI from '@/lib/d3-bi/index.js'
 import TypeChecker from '@/utils/type-checker.js'
 import CommonUtils from '@/utils/common-utils.js'
 import LeapSelect from '@/components/leap-select/LEAPSelect.vue'
+import PeriodSelector from '../../../period-selector/PeriodSelector.vue'
+import PeriodUtils from '../../../period-utils.js'
+import DataUtils from '@/utils/data-utils.js'
 import shared from '@/shared.js'
 let eventHub = shared.eventHub;
 export default {
   template: `<div class="container-fluid" ref="container">
-    <div class="row">
+      <div class="row">
+        <div class="col-xs-12">
+          <period-selector :periods="periods" @change="changedPeriod"></period-selector>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-xs-12">
           <div class="chart-title"><span>学历构成</span></div>
           <div class="chart-container" ref="hUContainer"></div>
@@ -36,6 +44,7 @@ export default {
   },
   data() {
     return {
+      periods: { years: null, quarters: null, months: null },
       data: null,
       hUData: null,
       hDData: null
@@ -44,13 +53,12 @@ export default {
   created() {
     eventHub.$on("tile-window-resized", this.windowResized);
     eventHub.$on("tile-full-screen-inner", this.toggleFullScreen);
-    this.parseData(this.conf.data);
+    this.parseMonths(this.conf.months);
   },
-  components: { LeapSelect },
+  components: { LeapSelect, PeriodSelector },
   mounted() {
     this.container = this.$refs.container;
     this.init();
-    this.draw();
   },
   methods: {
     init() {
@@ -58,7 +66,7 @@ export default {
       vm.hUContainer = d3.select(vm.$refs.hUContainer);
       this.hUChart = d3BI.pieChart();
       this.hUChart.legend.visibility(true);
-      this.hUChart.margin({bottom:40});
+      this.hUChart.margin({ bottom: 40 });
       this.hUChart.donutRadius(0);
       this.hUChart.tooltip.setContent(function(args) {
         var str =
@@ -81,7 +89,7 @@ export default {
     },
     draw() {
       let vm = this,
-        chartHeight = (vm.container.parentNode.clientHeight - 34 - 34) / 2 + 'px';
+        chartHeight = (vm.container.parentNode.clientHeight - 34 - 34 - 52) / 2 + 'px';
       vm.hUContainer.style('height', chartHeight);
       if (vm.hUContainer.select('svg').size()) {
         vm.hUContainer
@@ -110,26 +118,26 @@ export default {
     },
     parseUData(data) {
       let vm = this;
-      if(!TypeChecker.isObject(data) || TypeChecker.isArray(data.degree)) {
+      if (!TypeChecker.isObject(data) || TypeChecker.isObject(data.degree)) {
         vm.hUData = [];
       }
-      let d = [], total = 0;
-      data.degree.forEach(_d => {
-        _d.total = _d['1月人数'] + _d['2月人数'] + _d['3月人数'] + _d['4月人数'];
-        total += _d.total;
+      let d = [],
+        total = 0;
+      Object.keys(data.degree).forEach(key => {
+        total += data.degree[key];
       });
-      data.degree.forEach(_d => {
+      Object.keys(data.degree).forEach(key => {
         d.push({
-          label: _d['学历'],
-          value: _d.total,
-          percentage: Math.round(_d.total / total * 100)
+          label: key,
+          value: data.degree[key],
+          percentage: Math.round(data.degree[key] / total * 100)
         });
       });
       vm.hUData = d;
     },
     parseDData(data) {
       let vm = this;
-      if(!TypeChecker.isObject(data) || TypeChecker.isArray(data.recruit)) {
+      if (!TypeChecker.isObject(data) || TypeChecker.isArray(data.recruit)) {
         vm.hDData = [];
       }
       let chartData = function(_yjdgData, _sjdgData) {
@@ -157,16 +165,17 @@ export default {
       };
 
       let yjdgData = data.recruit.map(d => {
-        return {
-          label: d['月份'],
-          value: d['本月预计到岗人数']
-        }
-      }), sjdgData = data.recruit.map(d => {
-        return {
-          label: d['月份'],
-          value: d['本月实际到岗人数']
-        }
-      });
+          return {
+            label: d['月份'],
+            value: d['本月预计到岗人数']
+          }
+        }),
+        sjdgData = data.recruit.map(d => {
+          return {
+            label: d['月份'],
+            value: d['本月实际到岗人数']
+          }
+        });
 
       vm.hDData = chartData(yjdgData, sjdgData);
     },
@@ -175,7 +184,7 @@ export default {
         this.draw();
       };
     },
-    toggleFullScreen(args){
+    toggleFullScreen(args) {
       if (args.id == this.$props.tileId) {
         this.draw();
       };
@@ -184,6 +193,39 @@ export default {
       if (!TypeChecker.isObject(data)) return;
       this.parseUData(data);
       this.parseDData(data);
+    },
+    parseMonths(months) {
+      let periods = PeriodUtils.parsePeriodsFromMonths(months);
+      this.periods.months = periods.months;
+      this.periods.quarters = periods.quarters;
+      this.periods.years = periods.years;
+    },
+    changedPeriod(args) {
+      let selectedMonths = args.map(m => m.year + '-' + m.month);
+      let data = this.massagedData = { degree: {}, recruit: [] };
+
+      if (TypeChecker.isArray(this.$props.conf.data.degree)) {
+        this.$props.conf.data.degree.filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
+          Object.keys(item.data).forEach(key => {
+            if (TypeChecker.isNumber(item.data[key])) {
+              if (!TypeChecker.isNumber(data.degree[key])) {
+                data.degree[key] = item.data[key];
+              } else {
+                data.degree[key] += item.data[key];
+              }
+            }
+          });
+        });
+      }
+
+      if (TypeChecker.isArray(this.$props.conf.data.recruit)) {
+        this.$props.conf.data.recruit.filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
+          item.data['月'] = item.month;
+          data.recruit = data.recruit.concat(item.data);
+        });
+      }
+      this.parseData(data);
+      this.draw();
     }
   },
   beforeDestroy: function() {

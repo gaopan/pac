@@ -47,7 +47,7 @@ export default {
   methods: {
     refresh() {
       let modules = CommonUtils.deepClone(Modules);
-      let curMonth = this.curMonth = new Date().getMonth() + 1 + "";
+      let curMonth = this.curMonth = new Date().getFullYear() + "-" + (new Date().getMonth() + 1);
       DashboardApi.getReportOverview().then(res => {
         let oData = {};
         if (TypeChecker.isArray(res.data) && res.data.length > 0) {
@@ -107,7 +107,6 @@ export default {
                 }
               }
             }
-            console.log(this.rs);
 
             modules.forEach(m => {
               let oM = oData[m.key];

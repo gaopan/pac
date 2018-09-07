@@ -42,8 +42,9 @@
                               <div class="form-group" v-for="f in field.fields">
                                 <label class="col-sm-2 control-label">{{f.name}}</label>
                                 <div class="col-sm-10">
-                                  <input :disabled="f.type=='current_month'" :name="f.name" v-model="currentModule.form[f.key]" v-validate="f.validate" type="text" class="form-control" :placeholder="f.name" v-if="!f.texteara&&!f.list" :class="{'has-error':errors.has(f.name)}">
+                                  <input :disabled="f.type=='current_month'" :name="f.name" v-model="currentModule.form[f.key]" v-validate="f.validate" type="text" class="form-control" :placeholder="f.name" v-if="!f.texteara&&!f.list&&!f.select" :class="{'has-error':errors.has(f.name)}">
                                   <textarea :disabled="f.type=='current_month'" v-validate="f.validate" v-model="currentModule.form[f.key]" class="form-control" :placeholder="f.name" :class="{'has-error':errors.has(f.name)}" v-if="f.texteara"></textarea>
+                                  <leap-select v-if="f.select" :options="f.options" :initSelectedValue="f.value" v-on:onSelectedValues="(args)=>{f.value=args.value}"></leap-select>
                                   <table v-if="f.list" class="leap-table">
                                     <thead>
                                       <th v-for="_f in f.fields">{{_f.name}}</th>
@@ -112,8 +113,9 @@
                 <div class="form-group" v-for="field in moduleTable.fields">
                   <label class="col-sm-2 control-label">{{field.name}}</label>
                   <div class="col-sm-10">
-                    <input :disabled="field.type=='current_month'" :name="field.name" v-model="field.value" v-validate="field.validate" type="text" class="form-control" :placeholder="field.name" v-if="!field.texteara&&!field.list" :class="{'has-error':errors.has(field.name)}">
-                    <textarea :disabled="field.type=='current_month'" v-validate="field.validate" v-model="field.value" class="form-control" :placeholder="field.name" :class="{'has-error':errors.has(field.name)}" v-if="field.texteara"></textarea>
+                    <input :disabled="field.type=='current_month'" :name="moduleTable.name + '-' + field.name" v-model="field.value" v-validate="field.validate" type="text" class="form-control" :placeholder="field.name" v-if="!field.texteara&&!field.list" :class="{'has-error':errors.has(moduleTable.name + '-' + field.name)}">
+                    <textarea :disabled="field.type=='current_month'" v-validate="field.validate" v-model="field.value" class="form-control" :placeholder="field.name" :name="moduleTable.name + '-' + field.name" :class="{'has-error':errors.has(moduleTable.name + '-' + field.name)}" v-if="field.texteara"></textarea>
+                    <leap-select v-if="field.select" :options="field.options" :initSelectedValue="field.value" v-on:onSelectedValues="(args)=>{field.value=args.value}"></leap-select>
                     <table v-if="field.list" class="leap-table">
                       <thead>
                         <th v-for="f in field.fields">{{f.name}}</th>
@@ -142,8 +144,9 @@
                                 <div class="form-group" v-for="f in field.fields">
                                   <label class="col-sm-2 control-label">{{f.name}}</label>
                                   <div class="col-sm-10">
-                                    <input :disabled="f.type=='current_month'" :name="f.name" v-model="moduleTable.form[f.key]" v-validate="f.validate" type="text" class="form-control" :placeholder="f.name" v-if="!f.texteara&&!f.list" :class="{'has-error':errors.has(f.name)}">
+                                    <input :disabled="f.type=='current_month'" :name="f.name" v-model="moduleTable.form[f.key]" v-validate="f.validate" type="text" class="form-control" :placeholder="f.name" v-if="!f.texteara&&!f.list&&!f.select" :class="{'has-error':errors.has(f.name)}">
                                     <textarea :disabled="f.type=='current_month'" v-validate="f.validate" v-model="moduleTable.form[f.key]" class="form-control" :placeholder="f.name" :class="{'has-error':errors.has(f.name)}" v-if="f.texteara"></textarea>
+                                    <leap-select v-if="f.select" :options="f.options" :initSelectedValue="moduleTable.form[f.key]" v-on:onSelectedValues="(args)=>{moduleTable.form[f.key]=args.value}"></leap-select>
                                   </div>
                                 </div>
                                 <div class="form-group">

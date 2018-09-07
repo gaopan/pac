@@ -1,0 +1,10 @@
+.period-selector {
+	display: flex;
+	padding: 10px 0;
+	justify-content: flex-end;
+	align-items: center;
+
+	&>div+div {
+		margin-left: 15px;
+	}
+}

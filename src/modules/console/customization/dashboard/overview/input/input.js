@@ -32,33 +32,33 @@ export default {
       this.isEditing = true;
 
       let curRemoteMonthData = this.currentModule.monthData,
-        curMonth = this.curMonth = new Date().getMonth() + 1 + '',
+        curMonth = this.curMonth = new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
         curMonthData = null;
       if (TypeChecker.isObject(curRemoteMonthData)) {
         curMonthData = curRemoteMonthData[curMonth];
 
-        if(TypeChecker.isString(curMonthData)) {
+        if (TypeChecker.isString(curMonthData)) {
           curMonthData = JSON.parse(curMonthData);
         }
-      } 
+      }
       this.currentModule.editConfig.fields.forEach(f => {
         if (f.type == 'current_month') {
           f.value = curMonth;
         } else if (f.list) {
           f.listData = [];
           f.fields.forEach(_f => {
-            if(_f.list) {
+            if (_f.list) {
               _f.listData = [];
             }
           });
           if (TypeChecker.isObject(curMonthData) && TypeChecker.isArray(curMonthData[f.key])) {
             curMonthData[f.key].forEach(row => {
-              let d = {};
+              let d = { id: UUIDGenerator.purchase() };
               f.fields.forEach(_f => {
-                if(_f.list) {
-                  if(TypeChecker.isArray(row[_f.key])) {
+                if (_f.list) {
+                  if (TypeChecker.isArray(row[_f.key])) {
                     row[_f.key].forEach(_row => {
-                      let _d = {};
+                      let _d = { id: UUIDGenerator.purchase() };
                       _f.fields.forEach(__f => {
                         _d[__f.key] = _row[__f.key];
                       });
@@ -90,7 +90,7 @@ export default {
             field.listData = [];
             if (TypeChecker.isObject(tableData) && TypeChecker.isArray(tableData[field.key])) {
               tableData[field.key].forEach(row => {
-                let d = {};
+                let d = { id: UUIDGenerator.purchase() };
                 field.fields.forEach(f => {
                   d[f.key] = row[f.key];
                 });
@@ -112,10 +112,8 @@ export default {
       let vm = this;
       let prepareDataToSave = function() {
         let _data = { name: vm.currentModule.key, month: vm.curMonth, value: {} };
-        _data.value['remind'] = vm.currentModule.monthData[vm.curMonth].remind;
-        _data.value['support'] = vm.currentModule.monthData[vm.curMonth].support;
         vm.currentModule.editConfig.fields.forEach(f => {
-          if(f.list) {
+          if (f.list) {
             f.value = [];
             f.listData.forEach(d => {
               f.value.push(d);
@@ -144,10 +142,10 @@ export default {
       };
       let saveTable = function(data) {
         DashboardApi.saveReport(data).then(res => {
-          Noty.notifySuccess({text: '保存数据成功！'});
+          Noty.notifySuccess({ text: '保存数据成功！' });
           vm.$emit('submitted');
         }, err => {
-          Noty.notifyError({text: '保存数据失败！'});
+          Noty.notifyError({ text: '保存数据失败！' });
         });
       };
 
@@ -166,7 +164,20 @@ export default {
         form.id = UUIDGenerator.purchase();
         field.listData.push(form);
       } else {
-
+        let index = -1;
+        field.listData.every((item, i) => {
+          if (item.id == form.id) {
+            index = i;
+            return false;
+          }
+          return true;
+        });
+        if (index > -1) {
+          let matchedItem = field.listData[index];
+          Object.keys(form).forEach(key => {
+            matchedItem[key] = form[key];
+          });
+        }
       }
       Vue.set(moduleTable, 'showForm', false);
       Vue.set(moduleTable, 'form', null);
