@@ -6,7 +6,7 @@
 		</div>
 		<div>统计</div>
 		<div class="selector" v-if="periodList">
-			<leap-select :options="periodList" :initSelectedValue="selectedPeriodItem" @onSelectedValues="changedPeriodItem"></leap-select>
+			<leap-select :options="periodList" :isMultiSelect="true" @onSelectedValues="changedPeriodItem"></leap-select>
 		</div>
 	</div>
 </template>

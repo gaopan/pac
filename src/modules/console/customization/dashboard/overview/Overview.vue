@@ -26,7 +26,7 @@
                 <p class="module-desc">{{m.desc}}</p>
               </div>
               <div class="actions">
-                <span @click.stop="toEditData(m)"><i class="icon-edit-2"></i></span>
+                <span @click.stop="toEditData(m)" v-if="user.isAdmin || !m.curMonthData.isSubmitted"><i class="icon-edit-2"></i></span>
               </div>
             </div>
           </div>

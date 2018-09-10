@@ -167,6 +167,7 @@
             </fieldset>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" class="btn btn-primary" @click="save" :disabled="errors.any()">保存</button>
                 <button type="button" class="btn btn-primary" @click="submit" :disabled="errors.any()">提交</button>
               </div>
             </div>

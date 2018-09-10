@@ -132,14 +132,14 @@ export default {
 
         //disabled dropdown when options is null
         this.$data.isOptionsNull = true;
-        this.$data.label = (!this.$data.isMultiSelect) ? Internationalization.translate("No options to select") : null;
-        this.$data.multiSelectLabel = (this.$data.isMultiSelect) ? Internationalization.translate("No options to select") : null;
+        this.$data.label = (!this.$props.isMultiSelect) ? Internationalization.translate("No options to select") : null;
+        this.$data.multiSelectLabel = (this.$props.isMultiSelect) ? Internationalization.translate("No options to select") : null;
 
       } else {
 
         this.$data.isOptionsNull = false;
 
-        this.$data.label = (!this.$data.isMultiSelect && this.$props.initSelectedValue) ?
+        this.$data.label = (!this.$props.isMultiSelect && this.$props.initSelectedValue) ?
           this.fnGetUpdatedLabel(this.$props.initSelectedValue) : this.$props.defaultLabelTitle;
 
         if (this.$props.isMultiSelect) {
@@ -216,18 +216,18 @@ export default {
       let id = 0,
         multiSelectArr = [];
 
-      //Always Select All Item
+      //总是全选 Item
       if (this.alwaysSelectAllOption) {
         let alwaysSelectAllItem = new multiSelectItemModel().model
 
-        alwaysSelectAllItem.name = 'Always Select All'
-        alwaysSelectAllItem.value = 'always select all'
+        alwaysSelectAllItem.name = '总是全选'
+        alwaysSelectAllItem.value = '总是全选'
         id++
 
         multiSelectArr.push(alwaysSelectAllItem)
       }
 
-      //Select All Item
+      //全选 Item
       let selectAllItem = new multiSelectItemModel().model;
       selectAllItem.id = id;
 
@@ -252,7 +252,7 @@ export default {
 
       let sizeOfSelectedMultiList = this.fnGetSelectedMultiSelect().length;
       let selectAllStatus = (this.$data.sizeOfMultiSelectOptions != 0 && (sizeOfSelectedMultiList == this.$data.sizeOfMultiSelectOptions)) ? true : false
-        //update the selected & hightlighted for Select All
+        //update the selected & hightlighted for 全选
       if (this.$props.alwaysSelectAllOption) {
         if (this.$props.isAlwaysSelectAll) {
           this.$data.multiSelectOptions[0].isSelected = selectAllStatus;
@@ -268,7 +268,7 @@ export default {
 
     },
     fnUpdateSelectedMultiSelectOptions(selected) {
-      if (selected.name == 'Select All') {
+      if (selected.name == '全选') {
 
         for (var index in this.$data.multiSelectOptions) {
           if (!this.$data.multiSelectOptions[index].isDisableClick) {
@@ -316,10 +316,10 @@ export default {
     },
 
     fnUpdateSelectedMultiSelectOptionsWithinAlwaysSelectAll(selected) {
-      if (selected.name == 'Always Select All') {
+      if (selected.name == '总是全选') {
         for (var index in this.$data.multiSelectOptions) {
           if (!this.$data.multiSelectOptions[index].isDisableClick) {
-            if (this.$data.multiSelectOptions[index].name === 'Select All') {
+            if (this.$data.multiSelectOptions[index].name === '全选') {
               if (this.$data.multiSelectOptions[index].isSelected) {
                 this.$data.multiSelectOptions[index].isSelected = false;
               }
@@ -337,11 +337,11 @@ export default {
           }
 
         }
-      } else if (selected.name == 'Select All') {
+      } else if (selected.name == '全选') {
 
         for (var index in this.$data.multiSelectOptions) {
           if (!this.$data.multiSelectOptions[index].isDisableClick) {
-            if (this.$data.multiSelectOptions[index].name === 'Always Select All') {
+            if (this.$data.multiSelectOptions[index].name === '总是全选') {
               if (this.$data.multiSelectOptions[index].isSelected) {
                 this.$data.multiSelectOptions[index].isSelected = false;
               }
@@ -398,7 +398,7 @@ export default {
 
       for (let obj of this.$data.multiSelectOptions) {
 
-        if (obj.isSelected && obj.name != 'Select All' && obj.name != 'Always Select All') {
+        if (obj.isSelected && obj.name != '全选' && obj.name != '总是全选') {
           // UI - using name,
           // Emitted data - using value
           (isGetValueData) ?

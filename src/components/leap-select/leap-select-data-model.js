@@ -5,7 +5,7 @@ class multiSelectItemModel {
 
 	constructor(){
     	this._id = 0;
-		this._name = 'Select All';
+		this._name = '全选';
 		this._value = 'selectAll';
     	this._isSelected = false;
     	this._isHightlighted = false;

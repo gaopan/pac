@@ -15,21 +15,24 @@ export default {
     return {
       periodOptions: null,
       selectedPeriodOption: null,
-      periodList: null,
-      selectedPeriodItem: null
+      periodList: null
     };
   },
   watch: {
   	selectedPeriodOption(val){
   		this.periodList = this[val + 's'];
+  		let selectedPeriodItem = null;
   		if(val == 'year') {
-  			this.selectedPeriodItem = this.current.year + '';
+  			selectedPeriodItem = this.current.year + '';
   		} else if(val == 'quarter') {
-  			this.selectedPeriodItem = this.current.year + '-' + this.current.quarter;
+  			selectedPeriodItem = this.current.year + '-' + this.current.quarter;
   		} else if(val == 'month') {
-  			this.selectedPeriodItem = this.current.year + '-' + this.current.month;
+  			selectedPeriodItem = this.current.year + '-' + this.current.month;
   		}
-  		this.$emit("change", PeriodUtils.convertPeriodToMonths(this.selectedPeriodItem, this.selectedPeriodOption));
+  		this.periodList.forEach(item => {
+  			item.checked = item.value == selectedPeriodItem;
+  		});
+  		this.$emit("change", PeriodUtils.convertPeriodToMonths(selectedPeriodItem, this.selectedPeriodOption));
   	}
   },
   created() {
@@ -85,8 +88,11 @@ export default {
   		this.selectedPeriodOption = args.value;
   	},
   	changedPeriodItem(args){
-  		this.selectedPeriodItem = args.value;
-  		this.$emit("change", PeriodUtils.convertPeriodToMonths(this.selectedPeriodItem, this.selectedPeriodOption));
+  		let selectedPeriodItems = args.value, months = [];
+  		selectedPeriodItems.forEach(item => {
+  			months = months.concat(PeriodUtils.convertPeriodToMonths(item, this.selectedPeriodOption));
+  		});
+  		this.$emit("change", months);
   	}
   }
 }

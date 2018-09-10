@@ -81,7 +81,6 @@ export default {
 
       if(TypeChecker.isArray(this.$props.conf.data.list)) {
         this.data = this.$props.conf.data.list.filter(item => selectedMonths.indexOf(item.month) > -1);
-        console.log(this.data);
       }
     }
   }

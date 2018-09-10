@@ -108,38 +108,42 @@ export default {
     cancel() {
       this.$emit("cancelled");
     },
-    submit() {
+    prepareDataToSave(isSubmit) {
       let vm = this;
-      let prepareDataToSave = function() {
-        let _data = { name: vm.currentModule.key, month: vm.curMonth, value: {} };
-        vm.currentModule.editConfig.fields.forEach(f => {
+      let _data = { name: vm.currentModule.key, month: vm.curMonth, value: {} };
+      if(isSubmit) {
+        _data.value.isSubmitted = !!isSubmit;
+      }
+      vm.currentModule.editConfig.fields.forEach(f => {
+        if (f.list) {
+          f.value = [];
+          f.listData.forEach(d => {
+            f.value.push(d);
+          });
+          _data.value[f.key] = f.value;
+        } else {
+          _data.value[f.key] = f.value;
+        }
+      });
+      vm.currentModule.editConfig.tables.forEach(t => {
+        let table = {};
+        t.fields.forEach(f => {
           if (f.list) {
             f.value = [];
             f.listData.forEach(d => {
               f.value.push(d);
             });
-            _data.value[f.key] = f.value;
-          } else {
-            _data.value[f.key] = f.value;
+            table[f.key] = f.value;
+          } else if (f.type != 'current_month') {
+            table[f.key] = f.value;
           }
         });
-        vm.currentModule.editConfig.tables.forEach(t => {
-          let table = {};
-          t.fields.forEach(f => {
-            if (f.list) {
-              f.value = [];
-              f.listData.forEach(d => {
-                f.value.push(d);
-              });
-              table[f.key] = f.value;
-            } else if (f.type != 'current_month') {
-              table[f.key] = f.value;
-            }
-          });
-          _data.value[t.name] = table;
-        });
-        return _data;
-      };
+        _data.value[t.name] = table;
+      });
+      return _data;
+    },
+    save() {
+      let vm = this;
       let saveTable = function(data) {
         DashboardApi.saveReport(data).then(res => {
           Noty.notifySuccess({ text: '保存数据成功！' });
@@ -148,10 +152,21 @@ export default {
           Noty.notifyError({ text: '保存数据失败！' });
         });
       };
-
-      let data = prepareDataToSave();
+      let data = this.prepareDataToSave(false);
       saveTable(data);
-
+    },
+    submit() {
+      let vm = this;
+      let saveTable = function(data) {
+        DashboardApi.saveReport(data).then(res => {
+          Noty.notifySuccess({ text: '提交数据成功！' });
+          vm.$emit('submitted');
+        }, err => {
+          Noty.notifyError({ text: '提交数据失败！' });
+        });
+      };
+      let data = this.prepareDataToSave(true);
+      saveTable(data);
     },
     addNewRow(moduleTable, field) {
       Vue.set(moduleTable, 'showForm', true);
