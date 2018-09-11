@@ -203,27 +203,38 @@ export default {
     },
     parseData(data) {
       let vm = this;
-      let hUChartData = function(_zcbData, _zglData) {
+      let hUChartData = function(_zcbData, _zglData, _ljzglData) {
         return [{
           type: 'bar',
-          name: '总成本（元）',
+          name: '总成本',
           label: {
             x: '月',
-            y: '总成本（元）',
+            y: '总成本',
             name: ''
           },
           color: 'rgb(43, 162, 41)',
           values: _zcbData
         }, {
           type: 'line',
-          name: '总公里数（公里）',
+          name: '总公里数',
           axis: 'y2',
           label: {
             x: '月',
-            y: '总公里数（公里）',
+            y: '总公里数',
             name: ''
           },
           color: 'rgb(0, 201, 255)',
+          values: _zglData
+        }, {
+          type: 'line',
+          name: '累计总公里数',
+          axis: 'y2',
+          label: {
+            x: '月',
+            y: '累计总公里数',
+            name: ''
+          },
+          color: 'rgb(0, 178, 140)',
           values: _zglData
         }];
       };
@@ -327,13 +338,18 @@ export default {
           data['内业'] = data['内业'].concat(item.data);
         });
       }
-
       if(TypeChecker.isArray(this.$props.conf.data['外业'])) {
+        let totalZgls = 0;
         this.$props.conf.data['外业'].filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
           item.data['月'] = item.month;
-          data['外业'] = data['外业'].concat(item.data);
+          data['外业'].push(item.data);
+          totalZgls += item.data['总公里数'];
+        });
+        data['外业'].forEach(item => {
+          item['累计总公里数'] = totalZgls;
         });
       }
+      console.log(data)
       this.parseData(data);
       this.draw();
     }

@@ -28,8 +28,7 @@ export default {
   </div>`,
 	props: {
     tileId: {
-      type: String,
-      required: true
+      type: String
     },
     conf: {
       validator: function(_conf){

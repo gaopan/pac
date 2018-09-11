@@ -130,7 +130,7 @@ export default {
       this.drawQDChart();
     },
     parseUData(data) {
-      let chartData = function(_hgData, _hgbzData, _zlcData, _hglcData) {
+      let chartData = function(_hgData, _hgbzData, _zlcData, _ljzlcData, _hglcData) {
         return [{
           type: 'bar',
           name: '合格率',
@@ -153,7 +153,7 @@ export default {
           values: _hgbzData
         }, {
           type: 'line',
-          name: '总里程',
+          name: '当前批次里程',
           axis: 'y2',
           label: {
             x: '批次',
@@ -162,6 +162,17 @@ export default {
           },
           color: 'rgb(178, 18, 176)',
           values: _zlcData
+        }, {
+          type: 'line',
+          name: '累计总里程',
+          axis: 'y2',
+          label: {
+            x: '批次',
+            y: '累计总里程',
+            name: ''
+          },
+          color: 'rgb(150, 10, 148)',
+          values: _ljzlcData
         }, {
           type: 'line',
           name: '合格里程',
@@ -194,18 +205,25 @@ export default {
         zlcData = data.up.map(_d => {
           return {
             label: _d['外业批次'],
-            value: _d['合格率'],
+            value: _d['总里程'],
             y2: _d['总里程']
           }
+        }),
+        ljzlcData = data.up.map(_d => {
+          return {
+            label: _d['外业批次'],
+            value: _d['累计总里程'],
+            y2: _d['累计总里程']
+          };
         }),
         hglcData = data.up.map(_d => {
           return {
             label: _d['外业批次'],
-            value: _d['合格率'],
+            value: _d['合格里程'],
             y2: _d['合格里程']
           }
         });
-      this.qUData = chartData(hglData, hgbzData, zlcData, hglcData);
+      this.qUData = chartData(hglData, hgbzData, zlcData, ljzlcData, hglcData);
     },
     windowResized: function(args) {
       if (args.id == this.$props.tileId) {
@@ -310,11 +328,16 @@ export default {
       let data = this.massagedData = {up: [], down: {}};
 
       if(TypeChecker.isArray(this.$props.conf.data.up)) {
+        let totalLC = 0;
         this.$props.conf.data.up.filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
           data.up = data.up.concat(item.data);
-          data.up.forEach(_item => {
+          item.data.forEach(_item => {
+            totalLC += Number(_item['总里程']);
             _item['合格率'] = Number(_item['合格里程']) / Number(_item['总里程']);
           });
+        });
+        data.up.forEach(item => {
+          item['累计总里程'] = totalLC;
         });
       }
 

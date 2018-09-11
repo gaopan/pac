@@ -140,7 +140,7 @@ export default {
       if (!TypeChecker.isObject(data) || TypeChecker.isArray(data.recruit)) {
         vm.hDData = [];
       }
-      let chartData = function(_yjdgData, _sjdgData) {
+      let chartData = function(_yjdgData, _sjdgData, _qnjhData, _zzData) {
         return [{
           type: "line",
           name: '预计到岗人数',
@@ -161,6 +161,26 @@ export default {
           },
           color: 'rgb(43, 162, 41)',
           values: _sjdgData
+        }, {
+          type: 'line',
+          name: '全年计划人数',
+          label: {
+            x: '月',
+            y: '全年计划人数',
+            name: ''
+          },
+          color: 'rgb(178, 18, 176)',
+          values: _qnjhData
+        }, {
+          type: 'line',
+          name: '在职人数',
+          label: {
+            x: '月',
+            y: '在职人数',
+            name: ''
+          },
+          color: 'rgb(255, 176, 58)',
+          values: _zzData
         }];
       };
 
@@ -175,9 +195,21 @@ export default {
             label: d['月份'],
             value: d['本月实际到岗人数']
           }
+        }),
+        qnjhData = data.recruit.map(d => {
+          return {
+            label: d['月份'],
+            value: d['全年计划人数']
+          }
+        }),
+        zzData = data.recruit.map(d => {
+          return {
+            label: d['月份'],
+            value: d['在职人数']
+          }
         });
 
-      vm.hDData = chartData(yjdgData, sjdgData);
+      vm.hDData = chartData(yjdgData, sjdgData, qnjhData, zzData);
     },
     windowResized: function(args) {
       if (args.id == this.$props.tileId) {

@@ -1,0 +1,74 @@
+.statistic-dashboard {
+  .form-header {
+    position: relative;
+    .form-close {
+      font-size: 24px;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      cursor: pointer;
+    }
+  }
+
+  input.form-control,
+  textarea.form-control {
+    border-radius: 0;
+  }
+
+  .form-control.has-error {
+    border-color: #D9534F;
+  }
+
+  fieldset {
+    // border: 1px solid #dfdfdf;
+    padding: 15px 20px;
+    margin: 20px 0;
+
+    legend {
+      margin: 15/12*$unit 0;
+      &>div {
+        padding: 10px;
+      }
+    }
+  }
+
+  .dropdown-group.left {
+
+    .dropdown-menu {
+      left: 0;
+      right: auto;
+    }
+  }
+
+  .chart-wrapper {
+  	height: 600px;
+  }
+  &>.table-wrapper {
+    height: auto;
+    padding: 15px 20px;
+    overflow: visible;
+    .no-data {
+      top: 104px;
+    }
+    .table-header {
+      padding: 0;
+      &>div:first-child {
+        margin: 15px 0 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .selectors {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+
+      .table-title {
+        font-weight: 800;
+      }
+    }
+  }
+}
