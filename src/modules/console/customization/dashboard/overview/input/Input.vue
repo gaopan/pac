@@ -26,10 +26,10 @@
                           <a href="javascript:void(0)" @click="removeRow(currentModule, field, row)"><i class="icon-trash-2"></i></a></td>
                       </tr>
                     </tbody>
-                    <tbody v-else v-show="!currentModule.showForm">
+                    <tbody v-show="!currentModule.showForm">
                       <tr>
                         <td :colspan="field.fields.length + 1">
-                          <div class="table-no-data">暂时还没有数据，点击
+                          <div class="table-no-data">点击
                             <button type="button" @click="addNewRow(currentModule, field)" class="btn btn-primary">新增</button> 添加数据</div>
                         </td>
                       </tr>
@@ -57,7 +57,7 @@
                                           <a href="javascript:void(0)" @click="removeRow(field, f, row)"><i class="icon-trash-2"></i></a></td>
                                       </tr>
                                     </tbody>
-                                    <tbody v-else v-show="!field.showForm">
+                                    <tbody v-show="!field.showForm">
                                       <tr>
                                         <td :colspan="f.fields.length + 1">
                                           <div class="table-no-data">暂时还没有数据，点击
@@ -128,10 +128,10 @@
                             <a href="javascript:void(0)" @click="removeRow(moduleTable, field, row)"><i class="icon-trash-2"></i></a></td>
                         </tr>
                       </tbody>
-                      <tbody v-else v-show="!moduleTable.showForm">
+                      <tbody v-show="!moduleTable.showForm">
                         <tr>
                           <td :colspan="field.fields.length + 1">
-                            <div class="table-no-data">暂时还没有数据，点击
+                            <div class="table-no-data">点击
                               <button type="button" @click="addNewRow(moduleTable, field)" class="btn btn-primary">新增</button> 添加数据</div>
                           </td>
                         </tr>

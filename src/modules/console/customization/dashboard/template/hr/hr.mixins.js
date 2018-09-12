@@ -4,6 +4,7 @@ import TypeChecker from '@/utils/type-checker.js'
 import CommonUtils from '@/utils/common-utils.js'
 import LeapSelect from '@/components/leap-select/LEAPSelect.vue'
 import PeriodSelector from '../../../period-selector/PeriodSelector.vue'
+import DashboardComment from '../../../dashboard-comment/DashboardComment.vue'
 import PeriodUtils from '../../../period-utils.js'
 import DataUtils from '@/utils/data-utils.js'
 import shared from '@/shared.js'
@@ -29,6 +30,11 @@ export default {
           <div class="chart-container" ref="hDContainer"></div>
         </div>
       </div>
+      <div class="row" v-if="ifFullScreen&&comments">
+        <div class="col-xs-12">
+        <dashboard-comment :module="conf.data.module" :comments="comments"></dashboard-comment>
+        </div>
+      </div>
   </div>`,
   props: {
     tileId: {
@@ -47,7 +53,9 @@ export default {
       periods: { years: null, quarters: null, months: null },
       data: null,
       hUData: null,
-      hDData: null
+      hDData: null,
+      comments: null,
+      ifFullScreen: false
     };
   },
   created() {
@@ -55,7 +63,7 @@ export default {
     eventHub.$on("tile-full-screen-inner", this.toggleFullScreen);
     this.parseMonths(this.conf.months);
   },
-  components: { LeapSelect, PeriodSelector },
+  components: { LeapSelect, PeriodSelector, DashboardComment },
   mounted() {
     this.container = this.$refs.container;
     this.init();
@@ -89,7 +97,10 @@ export default {
     },
     draw() {
       let vm = this,
-        chartHeight = (vm.container.parentNode.clientHeight - 34 - 34 - 52) / 2 + 'px';
+        chartHeight = (vm.container.parentNode.clientHeight - 38 - 38 - 52) / 2 + 'px';
+      if(this.ifFullScreen) {
+        chartHeight = (vm.container.parentNode.clientHeight - 38 - 38 - 52 - 215) / 2 + 'px';
+      }
       vm.hUContainer.style('height', chartHeight);
       if (vm.hUContainer.select('svg').size()) {
         vm.hUContainer
@@ -186,30 +197,31 @@ export default {
 
       let yjdgData = data.recruit.map(d => {
           return {
-            label: d['月份'],
+            label: d['月'],
             value: d['本月预计到岗人数']
           }
         }),
         sjdgData = data.recruit.map(d => {
           return {
-            label: d['月份'],
+            label: d['月'],
             value: d['本月实际到岗人数']
           }
         }),
         qnjhData = data.recruit.map(d => {
           return {
-            label: d['月份'],
+            label: d['月'],
             value: d['全年计划人数']
           }
         }),
         zzData = data.recruit.map(d => {
           return {
-            label: d['月份'],
+            label: d['月'],
             value: d['在职人数']
           }
         });
 
       vm.hDData = chartData(yjdgData, sjdgData, qnjhData, zzData);
+      console.log(vm.hDData)
     },
     windowResized: function(args) {
       if (args.id == this.$props.tileId) {
@@ -218,6 +230,7 @@ export default {
     },
     toggleFullScreen(args) {
       if (args.id == this.$props.tileId) {
+        this.ifFullScreen = args.ifFullScreen;
         this.draw();
       };
     },
@@ -234,7 +247,16 @@ export default {
     },
     changedPeriod(args) {
       let selectedMonths = args.map(m => m.year + '-' + m.month);
-      let data = this.massagedData = { degree: {}, recruit: [] };
+      let data = this.massagedData = { degree: {}, recruit: [] }, comments = this.comments = [];
+
+      if(TypeChecker.isArray(this.$props.conf.data.comments)) {
+        this.$props.conf.data.comments.filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
+          comments.push({
+            month: item.month,
+            content: item.data
+          });
+        });
+      }
 
       if (TypeChecker.isArray(this.$props.conf.data.degree)) {
         this.$props.conf.data.degree.filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {

@@ -4,6 +4,7 @@ import TypeChecker from '@/utils/type-checker.js'
 import CommonUtils from '@/utils/common-utils.js'
 import LeapSelect from '@/components/leap-select/LEAPSelect.vue'
 import PeriodSelector from '../../../period-selector/PeriodSelector.vue'
+import DashboardComment from '../../../dashboard-comment/DashboardComment.vue'
 import PeriodUtils from '../../../period-utils.js'
 import DataUtils from '@/utils/data-utils.js'
 import shared from '@/shared.js'
@@ -36,6 +37,11 @@ export default {
           <div class="chart-container" ref="hDContainer"></div>
         </div>
     </div>
+    <div class="row" v-if="ifFullScreen&&comments">
+        <div class="col-xs-12">
+        <dashboard-comment :module="conf.data.module" :comments="comments"></dashboard-comment>
+        </div>
+      </div>
   </div>`,
   props: {
     tileId: {
@@ -55,7 +61,9 @@ export default {
       hUData: null,
       hDData: null,
       selectedType: '内业',
-      typeOptions: [{ name: '内业', value: '内业' }, { name: '外业', value: '外业' }]
+      typeOptions: [{ name: '内业', value: '内业' }, { name: '外业', value: '外业' }],
+      comments: null,
+      ifFullScreen: false
     };
   },
   created() {
@@ -63,7 +71,7 @@ export default {
     eventHub.$on("tile-full-screen-inner", this.toggleFullScreen);
     this.parseMonths(this.conf.months);
   },
-  components: { LeapSelect, PeriodSelector },
+  components: { LeapSelect, PeriodSelector, DashboardComment },
   watch: {
     selectedType(val) {
       this.parseData(this.massagedData);
@@ -103,6 +111,9 @@ export default {
     draw() {
       let vm = this,
         chartHeight = (vm.container.parentNode.clientHeight - 38 - 38 - 52) / 2 + 'px';
+      if(this.ifFullScreen) {
+        chartHeight = (vm.container.parentNode.clientHeight - 38 - 38 - 52 - 215) / 2 + 'px';
+      }
       vm.hUContainer.style('height', chartHeight);
       if (vm.hUContainer.select('svg').size()) {
         vm.hUContainer
@@ -136,6 +147,7 @@ export default {
     },
     toggleFullScreen(args){
       if (args.id == this.$props.tileId) {
+        this.ifFullScreen = args.ifFullScreen;
         this.draw();
       };
     },
@@ -152,9 +164,16 @@ export default {
             value: _d['总成本'],
             y2: _d['总公里数']
           };
+        }),
+        ljzglData = d.map(_d => {
+          return {
+            label: _d['月'],
+            value: _d['总成本'],
+            y2: _d['累计总公里数']
+          };
         });
 
-      this.hUData = chartData(zcbData, zglData);
+      this.hUData = chartData(zcbData, zglData, ljzglData);
     },
     parseDData(d, chartData) {
       let vm = this;
@@ -235,7 +254,7 @@ export default {
             name: ''
           },
           color: 'rgb(0, 178, 140)',
-          values: _zglData
+          values: _ljzglData
         }];
       };
       let hDChartData = function(_sqcbData, _gscbData, _sqcbmbData, _gscbmbData) {
@@ -330,12 +349,25 @@ export default {
     },
     changedPeriod(args){
       let selectedMonths = args.map(m => m.year + '-' + m.month);
-      let data = this.massagedData = {'内业': [], '外业': []};
+      let data = this.massagedData = {'内业': [], '外业': []}, comments = this.comments = [];
 
+      if(TypeChecker.isArray(this.$props.conf.data.comments)) {
+        this.$props.conf.data.comments.filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
+          comments.push({
+            month: item.month,
+            content: item.data
+          });
+        });
+      }
       if(TypeChecker.isArray(this.$props.conf.data['内业'])) {
+        let totalZgls = 0;
         this.$props.conf.data['内业'].filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
           item.data['月'] = item.month;
           data['内业'] = data['内业'].concat(item.data);
+          totalZgls += item.data['总公里数'];
+        });
+        data['内业'].forEach(item => {
+          item['累计总公里数'] = totalZgls;
         });
       }
       if(TypeChecker.isArray(this.$props.conf.data['外业'])) {
@@ -349,7 +381,6 @@ export default {
           item['累计总公里数'] = totalZgls;
         });
       }
-      console.log(data)
       this.parseData(data);
       this.draw();
     }

@@ -57,6 +57,14 @@ function parseObjectData(dataKeyPrefixs, dataKeys, numberDataKeys, month, monthD
   });
 }
 
+function parseCommentData(month, monthData, distData) {
+  let data = monthData.comments;
+  distData.push({
+    month: month,
+    data: data
+  });
+}
+
 let modules = [];
 let quality = {
   icon: 'icon-aperture',
@@ -140,7 +148,7 @@ let quality = {
           key: '类型',
           name: '类型',
           select: true,
-          options: [{name: "路网", value: "路网"}, {name: "地物", value: "地物"}],
+          options: [{ name: "路网", value: "路网" }, { name: "地物", value: "地物" }],
           validate: {
             required: true
           }
@@ -185,7 +193,16 @@ let quality = {
   }
 };
 quality.dashboardConfig.adaptData = function(remoteData, months) {
-  let data = { up: [], down: [] };
+  let data = {
+    up: [],
+    down: [],
+    comments: [],
+    module: {
+      name: '质量',
+      key: "quality",
+      monthData: remoteData
+    }
+  };
   let upDataKeys = ["外业批次", "区域", "总里程", "合格里程", "合格率", "对策", "合格标准"];
   let upDataNumberKeys = ["总里程", "合格里程", "合格率", "合格标准"];
   let upDataKeyPrefixs = ["外业合格率", "批次"];
@@ -199,6 +216,7 @@ quality.dashboardConfig.adaptData = function(remoteData, months) {
     let month = m;
     if (m.indexOf('-') < 0) month = new Date().getFullYear() + '-' + m;
     let monthData = remoteData[m];
+    parseCommentData(month, monthData, data.comments);
     parseTableData(upDataKeyPrefixs, upDataKeys, upDataNumberKeys, month, monthData, data.up);
     parseTableData(downDataKeyPrefixs, downDataKeys, downDataNumberKeys, month, monthData, data.down);
   });
@@ -317,7 +335,14 @@ let cost = {
   }
 };
 cost.dashboardConfig.adaptData = function(remoteData, months) {
-  let data = {};
+  let data = {
+    comments: [],
+    module: {
+      name: '成本',
+      key: "cost",
+      monthData: remoteData
+    }
+  };
   let upData = data['内业'] = [],
     downData = data['外业'] = [];
   let upDataKeys = ["总成本", "总公里数", "成本", "成本目标", "备注"];
@@ -333,6 +358,7 @@ cost.dashboardConfig.adaptData = function(remoteData, months) {
     let month = m;
     if (m.indexOf('-') < 0) month = new Date().getFullYear() + '-' + m;
     let monthData = remoteData[m];
+    parseCommentData(month, monthData, data.comments);
     parseObjectData(upDataKeyPrefixs, upDataKeys, upDataNumberKeys, month, monthData, upData);
     parseObjectData(downDataKeyPrefixs, downDataKeys, downDataNumberKeys, month, monthData, downData);
   });
@@ -437,7 +463,14 @@ let hr = {
   }
 };
 hr.dashboardConfig.adaptData = function(remoteData, months) {
-  let data = {};
+  let data = {
+    comments: [],
+    module: {
+      name: '人力资源',
+      key: "hr",
+      monthData: remoteData
+    }
+  };
   let upData = data['degree'] = [],
     downData = data['recruit'] = [];
   let upDataKeys = ["博士人数", "硕士人数", "本科人数", "大专及以下人数", "备注"];
@@ -453,6 +486,7 @@ hr.dashboardConfig.adaptData = function(remoteData, months) {
     let month = m;
     if (m.indexOf('-') < 0) month = new Date().getFullYear() + '-' + m;
     let monthData = remoteData[m];
+    parseCommentData(month, monthData, data.comments);
     parseObjectData(upDataKeyPrefixs, upDataKeys, upDataNumberKeys, month, monthData, upData);
     parseObjectData(downDataKeyPrefixs, downDataKeys, downDataNumberKeys, month, monthData, downData);
   });
@@ -529,7 +563,14 @@ let safty = {
   }
 };
 safty.dashboardConfig.adaptData = function(remoteData, months) {
-  let data = {};
+  let data = {
+    comments: [],
+    module: {
+      name: '安全',
+      key: "safty",
+      monthData: remoteData
+    }
+  };
   data.headers = [{
     key: "序号",
     name: "序号",
@@ -566,6 +607,7 @@ safty.dashboardConfig.adaptData = function(remoteData, months) {
     let month = m;
     if (m.indexOf('-') < 0) month = new Date().getFullYear() + '-' + m;
     let monthData = remoteData[m];
+    parseCommentData(month, monthData, data.comments);
     parseTableData(dataKeyPrefixs, dataKeys, dataNumberKeys, month, monthData, list);
   });
   return data;
@@ -664,7 +706,14 @@ let operation = {
   }
 };
 operation.dashboardConfig.adaptData = function(remoteData, months) {
-  let data = {};
+  let data = {
+    comments: [],
+    module: {
+      name: '运营情况',
+      key: "operation",
+      monthData: remoteData
+    }
+  };
   data.headers = [{
     key: "内容",
     name: "内容",
@@ -693,6 +742,7 @@ operation.dashboardConfig.adaptData = function(remoteData, months) {
     let month = m;
     if (m.indexOf('-') < 0) month = new Date().getFullYear() + '-' + m;
     let monthData = remoteData[m];
+    parseCommentData(month, monthData, data.comments);
     parseTableData(dataKeyPrefixs, dataKeys, dataNumberKeys, month, monthData, list);
   });
   return data;
@@ -756,7 +806,14 @@ let respond = {
   }
 };
 respond.dashboardConfig.adaptData = function(remoteData, months) {
-  let data = {};
+  let data = {
+    comments: [],
+    module: {
+      name: '响应',
+      key: "respond",
+      monthData: remoteData
+    }
+  };
   data.headers = [{
     key: "项目",
     name: "项目",
@@ -785,6 +842,7 @@ respond.dashboardConfig.adaptData = function(remoteData, months) {
     let month = m;
     if (m.indexOf('-') < 0) month = new Date().getFullYear() + '-' + m;
     let monthData = remoteData[m];
+    parseCommentData(month, monthData, data.comments);
     parseTableData(dataKeyPrefixs, dataKeys, dataNumberKeys, month, monthData, list);
   });
   return data;

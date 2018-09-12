@@ -114,6 +114,7 @@ export default {
       if(isSubmit) {
         _data.value.isSubmitted = !!isSubmit;
       }
+      _data.value.comments = vm.currentModule.monthData[vm.curMonth].comments;
       vm.currentModule.editConfig.fields.forEach(f => {
         if (f.list) {
           f.value = [];

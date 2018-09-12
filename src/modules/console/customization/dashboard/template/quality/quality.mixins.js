@@ -4,6 +4,7 @@ import TypeChecker from '@/utils/type-checker.js'
 import CommonUtils from '@/utils/common-utils.js'
 import LeapSelect from '@/components/leap-select/LEAPSelect.vue'
 import PeriodSelector from '../../../period-selector/PeriodSelector.vue'
+import DashboardComment from '../../../dashboard-comment/DashboardComment.vue'
 import PeriodUtils from '../../../period-utils.js'
 import DataUtils from '@/utils/data-utils.js'
 import shared from '@/shared.js'
@@ -32,6 +33,11 @@ export default {
           <div class="chart-container" ref="qDContainer"></div>
         </div>
       </div>
+      <div class="row" v-if="ifFullScreen&&comments">
+        <div class="col-xs-12">
+        <dashboard-comment :module="conf.data.module" :comments="comments"></dashboard-comment>
+        </div>
+      </div>
   </div>`,
   props: {
     tileId: {
@@ -52,7 +58,9 @@ export default {
       qUData: null,
       qDData: null,
       selectedQDOption: null,
-      qDOptions: []
+      qDOptions: [],
+      comments: null,
+      ifFullScreen: false
     };
   },
   created() {
@@ -60,7 +68,7 @@ export default {
     eventHub.$on("tile-full-screen-inner", this.toggleFullScreen);
     this.parseMonths(this.conf.months);
   },
-  components: { LeapSelect, PeriodSelector },
+  components: { LeapSelect, PeriodSelector, DashboardComment },
   mounted() {
     this.container = this.$refs.container;
     this.init();
@@ -76,8 +84,8 @@ export default {
         .margin({ top: 15, right: 20, left: 15, bottom: 10 });
       vm.qUChart.axisLines.showAll({ x: false, y: false });
       vm.qUChart.xAxis.title("批次").textRotate(-50).maxTextLength(10);
-      vm.qUChart.yAxis.title("率").domainToZero(true).axis().ticks(5);
-      vm.qUChart.y2Axis.title("里程").axis().ticks(5);
+      vm.qUChart.yAxis.title("里程").domainToZero(true).axis().ticks(5);
+      vm.qUChart.y2Axis.title("率").axis().ticks(5);
 
       vm.qDContainer = d3.select(vm.$refs.qDContainer);
       vm.qDChart = d3BI.baseChart()
@@ -96,6 +104,9 @@ export default {
     drawQUChart() {
       let vm = this,
         chartHeight = (vm.container.parentNode.clientHeight - 53 - 38 - 52) / 2 + 'px';
+      if(this.ifFullScreen) {
+        chartHeight = (vm.container.parentNode.clientHeight - 53 - 38 - 52 - 200) / 2 + 'px';
+      }
       vm.qUContainer.style('height', chartHeight);
       if (vm.qUContainer.select('svg').size()) {
         vm.qUContainer
@@ -112,6 +123,9 @@ export default {
     drawQDChart() {
       let vm = this,
         chartHeight = (vm.container.parentNode.clientHeight - 53 - 38 - 52) / 2 + 'px';
+      if(this.ifFullScreen) {
+        chartHeight = (vm.container.parentNode.clientHeight - 53 - 38 - 52 - 215) / 2 + 'px';
+      }
       vm.qDContainer.style('height', chartHeight);
       if (vm.qDContainer.select('svg').size()) {
         vm.qDContainer
@@ -132,8 +146,9 @@ export default {
     parseUData(data) {
       let chartData = function(_hgData, _hgbzData, _zlcData, _ljzlcData, _hglcData) {
         return [{
-          type: 'bar',
+          type: 'line',
           name: '合格率',
+          axis: "y2",
           label: {
             x: '批次',
             y: '合格率',
@@ -142,8 +157,9 @@ export default {
           color: 'rgb(0, 201, 255)',
           values: _hgData
         }, {
-          type: 'bar',
+          type: 'line',
           name: '合格标准',
+          axis: "y2",
           label: {
             x: '批次',
             y: '合格标准',
@@ -152,9 +168,8 @@ export default {
           color: 'rgb(43, 162, 41)',
           values: _hgbzData
         }, {
-          type: 'line',
-          name: '当前批次里程',
-          axis: 'y2',
+          type: 'bar',
+          name: '总里程',
           label: {
             x: '批次',
             y: '总里程',
@@ -163,9 +178,8 @@ export default {
           color: 'rgb(178, 18, 176)',
           values: _zlcData
         }, {
-          type: 'line',
+          type: 'bar',
           name: '累计总里程',
-          axis: 'y2',
           label: {
             x: '批次',
             y: '累计总里程',
@@ -174,9 +188,8 @@ export default {
           color: 'rgb(150, 10, 148)',
           values: _ljzlcData
         }, {
-          type: 'line',
+          type: 'bar',
           name: '合格里程',
-          axis: 'y2',
           label: {
             x: '批次',
             y: '合格里程',
@@ -193,34 +206,33 @@ export default {
       let hglData = data.up.map(_d => {
           return {
             label: _d['外业批次'],
-            value: _d['合格率']
+            y2: _d['合格率'],
+            value: _d['合格里程']
           };
         }),
         hgbzData = data.up.map(_d => {
           return {
             label: _d['外业批次'],
-            value: _d['合格标准']
+            y2: _d['合格标准'],
+            value: _d['总里程']
           }
         }),
         zlcData = data.up.map(_d => {
           return {
             label: _d['外业批次'],
-            value: _d['总里程'],
-            y2: _d['总里程']
+            value: _d['总里程']
           }
         }),
         ljzlcData = data.up.map(_d => {
           return {
             label: _d['外业批次'],
-            value: _d['累计总里程'],
-            y2: _d['累计总里程']
+            value: _d['累计总里程']
           };
         }),
         hglcData = data.up.map(_d => {
           return {
             label: _d['外业批次'],
-            value: _d['合格里程'],
-            y2: _d['合格里程']
+            value: _d['合格里程']
           }
         });
       this.qUData = chartData(hglData, hgbzData, zlcData, ljzlcData, hglcData);
@@ -232,6 +244,7 @@ export default {
     },
     toggleFullScreen(args) {
       if (args.id == this.$props.tileId) {
+        this.ifFullScreen = args.ifFullScreen;
         this.draw();
       };
     },
@@ -325,7 +338,16 @@ export default {
     },
     changedPeriod(args){
       let selectedMonths = args.map(m => m.year + '-' + m.month);
-      let data = this.massagedData = {up: [], down: {}};
+      let data = this.massagedData = {up: [], down: {}}, comments = this.comments = [];
+
+      if(TypeChecker.isArray(this.$props.conf.data.comments)) {
+        this.$props.conf.data.comments.filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
+          comments.push({
+            month: item.month,
+            content: item.data
+          });
+        });
+      }
 
       if(TypeChecker.isArray(this.$props.conf.data.up)) {
         let totalLC = 0;

@@ -1,4 +1,30 @@
 .customization {
+	.dashboard-comment {
+		background-color: $bgColor;
+		height: 200px;
+		padding: 10px 15px;
+		overflow-y: auto;
+
+		&>div {
+			margin-bottom: 15px;
+
+			&>.comment-header {
+				border: 1px solid #dfdfdf;
+				background-color: #fff;
+				padding: 10px 15px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+
+				.comment-actions {
+					&>span {
+						padding: 5px;
+						cursor: pointer;
+					}
+				}
+			}
+		}
+	}
   .dropdown-group {
     font-size: 14/12*$unit;
     min-width: 100/12*$unit;
@@ -64,6 +90,10 @@
     	left: 0;
     	right: 0;
     	bottom: 0;
+    }
+
+    .dashboard-comment {
+    	margin-top: 15px;
     }
   }
 }
