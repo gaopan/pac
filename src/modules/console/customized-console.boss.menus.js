@@ -11,10 +11,6 @@ export default [{
     route: 'Customization Dashboard',
     params: { company: 'zht' },
     childNodes: [{
-      name: '总览',
-      route: 'Customization Dashboard Overview',
-      params: { company: 'zht' }
-    }, {
       name: '报告',
       route: 'Customization Dashboard Report',
       params: { company: 'zht' }

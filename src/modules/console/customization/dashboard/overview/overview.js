@@ -18,7 +18,7 @@ export default {
       isEditSupport: false,
       isViewPastRS: false,
       rs: {
-        key: 'rs',
+        key: '中海庭-rs',
         curMonthData: { remind: null, support: null },
         pastData: null,
         data: null
@@ -47,7 +47,9 @@ export default {
   methods: {
     refresh() {
       let modules = CommonUtils.deepClone(Modules);
-      let curMonth = this.curMonth = new Date().getFullYear() + "-" + (new Date().getMonth() + 1);
+      let nCurMonth = new Date().getMonth() + 1,
+        nCurYear = new Date().getFullYear();
+      let curMonth = this.curMonth = nCurYear + "-" + nCurMonth;
       DashboardApi.getReportOverview().then(res => {
         let oData = {};
         if (TypeChecker.isArray(res.data) && res.data.length > 0) {
@@ -94,7 +96,10 @@ export default {
 
                 this.rs.pastData = [];
                 for (let month in this.rs.data.monthData) {
-                  if (parseInt(month) < parseInt(curMonth)) {
+                  let arr = month.split('-'),
+                    nMonth = parseInt(arr[1]),
+                    nYear = parseInt(arr[0]);
+                  if (nYear < nCurYear || (nYear == nCurYear && nMonth < nCurMonth)) {
                     let _monthData = this.rs.data.monthData[month];
                     if (TypeChecker.isObject(_monthData)) {
                       this.rs.pastData.push({

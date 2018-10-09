@@ -8,6 +8,7 @@ import RbacMatrix from './rbac-matrix.js'
 function componentRule(to, from, next) {
 
   var theQuery = {};
+  let userProfile = store.getters.userProfile;
 
   for (var key in from.query) {
     if (from.query.hasOwnProperty(key)) {
@@ -25,12 +26,18 @@ function componentRule(to, from, next) {
     }
 
   } else if(to.name == 'Customization') {
-    let userProfile = store.getters.userProfile;
-
-    if(userProfile.isLeapAdmin || userProfile.isBoss) {
+    if(userProfile.isAdmin || userProfile.isBoss) {
       next({path: '/console/cust/company'});
     }
-  } else {
+  } else if(to.name == 'Customization Dashboard'){
+    if(userProfile.isAdmin || userProfile.isBoss) {
+      next({path: `/console/cust/monthly/${to.params.company}/report`});
+    } else if(userProfile.isAA) {
+      next({path: `/console/cust/monthly/${to.params.company}/overview`});
+    } else {
+      next();
+    }
+  }else {
     next();
   }
 }

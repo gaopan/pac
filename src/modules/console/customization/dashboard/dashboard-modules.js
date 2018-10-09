@@ -196,6 +196,7 @@ quality.dashboardConfig.adaptData = function(remoteData, months) {
   let data = {
     up: [],
     down: [],
+    table: {list: []},
     comments: [],
     module: {
       name: '质量',
@@ -209,6 +210,18 @@ quality.dashboardConfig.adaptData = function(remoteData, months) {
   let downDataKeys = ["类型", "错误发生率", "错误发生率标准", "错误流出率", "错误流出率标准"];
   let downDataNumberKeys = ["错误发生率", "错误发生率标准", "错误流出率", "错误流出率标准"];
   let downDataKeyPrefixs = ["内业错误率", "类型"];
+  let tableDataKeys = ["外业批次", "区域", "总里程", "合格里程", "合格率", "对策", "合格标准"];
+  let tableDataNumberKeys = ["总里程", "合格里程", "合格率", "合格标准"];
+  let tableDataKeyPrefixs = ["外业合格率", "批次"];
+  data.table.headers = [
+  {key: "外业批次", name: "外业批次", width: "10%"},
+  {key: "区域", name: "区域", width: "10%"},
+  {key: "总里程", name: "总里程", width: "10%"},
+  {key: "合格里程", name: "合格里程", width: "10%"},
+  {key: "合格率", name: "合格率", width: "10%"},
+  {key: "合格标准", name: "合格标准", width: "10%"},
+  {key: "对策", name: "对策", width: "40%"}
+  ];
 
   if (!remoteData) return data;
 
@@ -217,9 +230,11 @@ quality.dashboardConfig.adaptData = function(remoteData, months) {
     if (m.indexOf('-') < 0) month = new Date().getFullYear() + '-' + m;
     let monthData = remoteData[m];
     parseCommentData(month, monthData, data.comments);
+    parseTableData(tableDataKeyPrefixs, tableDataKeys, tableDataNumberKeys, month, monthData, data.table.list);
     parseTableData(upDataKeyPrefixs, upDataKeys, upDataNumberKeys, month, monthData, data.up);
     parseTableData(downDataKeyPrefixs, downDataKeys, downDataNumberKeys, month, monthData, data.down);
   });
+  console.log(data);
   return data;
 };
 

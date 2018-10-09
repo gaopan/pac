@@ -38,7 +38,6 @@ export default {
       securityConf: null,
       reactionConf: null,
       operationConf: null,
-      monthOptions: [{ name: "一月", value: "1" }, { name: "二月", value: "2" }, { name: "三月", value: "3" }, { name: "四月", value: "4" }]
     }
   },
   created() {

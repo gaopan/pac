@@ -3,32 +3,6 @@
     border-radius: 0;
   }
 
-  ul.past-rs {
-    display: block;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-
-    &>li {
-      display: flex;
-      border: 1px solid $color;
-
-      &>div:first-child {
-        width: 50/12*$unit;
-        flex-grow: 0;
-        display: flex;
-        color: #fff;
-        justify-content: space-around;
-        align-items: center;
-        background-color: $color;
-      }
-
-      &>div:nth-child(2) {
-        flex-grow: 1;
-      }
-    }
-  }
-
   &>.header-wrapper {
     position: relative;
     &>.header {
@@ -46,21 +20,6 @@
     textarea {
       resize: none;
       height: 300/12*$unit;
-    }
-  }
-
-  .form-static-box {
-    display: block;
-    padding: 10/12*$unit;
-    font-size: 12/12*$unit;
-    background-color: #dfdfdf;
-
-    &>div+div {
-      margin-top: 15/12*$unit;
-    }
-
-    &>div:first-child {
-      font-size: 16/12*$unit;
     }
   }
 
@@ -102,29 +61,6 @@
 
   .comments-content-actions {
     margin-top: 15/12*$unit;
-  }
-
-  .remind {
-    &>div:first-child {
-      font-size: 16/12*$unit;
-      margin-bottom: 5/12*$unit;
-    }
-    display: block;
-    width: 100%;
-    padding: 10/12*$unit;
-    font-size: 12/12*$unit;
-    background-color: #dfdfdf;
-  }
-  .support {
-    &>div:first-child {
-      font-size: 16/12*$unit;
-      margin-bottom: 5/12*$unit;
-    }
-    display: block;
-    width: 100%;
-    padding: 10/12*$unit;
-    font-size: 12/12*$unit;
-    background-color: #fff;
   }
 }
 

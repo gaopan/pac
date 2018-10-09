@@ -1,5 +1,86 @@
-.cust-dashboard {
-  
+.cust-dashboard {}
+
+ul.past-rs {
+  display: block;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  &>li {
+    display: block;
+    position: relative;
+    border: 1px solid $color;
+
+    &>div:last-child {   
+      color: #fff;
+      position: absolute;
+      right: -11px;
+      top: 0;
+
+      &>div {
+        font-size: $unit;
+        padding: 5/12*$unit;
+        background-color: $color;
+        transform: rotate(45deg);
+        text-align: center;
+      }
+    }
+
+    &>div:nth-child(1) {
+    }
+  }
+}
+
+.remind {
+  &>div:first-child {
+    font-size: 16/12*$unit;
+    margin-bottom: 5/12*$unit;
+  }
+
+  display: block;
+  width: 100%;
+  padding: 10/12*$unit 60/12*$unit 10/12*$unit 10/12*$unit;
+  font-size: 12/12*$unit;
+  background-color: #dfdfdf;
+}
+
+.support {
+  &>div:first-child {
+    font-size: 16/12*$unit;
+    margin-bottom: 5/12*$unit;
+  }
+
+  display: block;
+  width: 100%;
+  padding: 10/12*$unit;
+  font-size: 12/12*$unit;
+  background-color: #fff;
+}
+
+.form-static-box {
+  display: block;
+  font-size: 12/12*$unit;
+  background-color: #dfdfdf;
+
+  &>div {
+    padding: 10/12*$unit;
+  }
+
+  &>div:first-child:after {
+    position: absolute;
+    bottom: 0;
+    left: 10/12*$unit;
+    right: 10/12*$unit;
+    display: block;
+    content: "";
+    height: 1px;
+    background-color: $borderColor;
+  }
+
+  &>div:first-child {
+    position: relative;
+    font-weight: 700;
+  }
 }
 
 .module {
@@ -29,6 +110,7 @@
       &>span {
         cursor: pointer;
         font-size: 18/12*$unit;
+
         &:hover {
           color: #fff;
         }
@@ -104,10 +186,13 @@
     &>.actions {
       padding: 5/12*$unit 5/12*$unit 0;
       background-color: #fff;
+
       .btn {
         margin-bottom: 5/12*$unit;
         padding: 5/12*$unit;
-      } // .btn+.btn {
+      }
+
+      // .btn+.btn {
       //   margin-left: 5/12*$unit;
       // }
     }

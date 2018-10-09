@@ -29,6 +29,34 @@ body {
   font-family: "Microsoft YaHei", Arial, Helvetica, sans-serif;
 }
 
+h5, h4, h3, h2, h1 {
+  font-weight: 700;
+}
+
+h5 {
+  font-size: 16/12*$unit;
+}
+
+h4 {
+  font-size: 18/12*$unit;
+}
+
+h3 {
+  font-size: 24/12*$unit;
+}
+
+h2 {
+  font-size: 28/12*$unit;
+}
+
+h1 {
+  font-size: 32/12*$unit;
+}
+
+.form-control {
+  border-radius: 0;
+}
+
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: #7f7f7f;
   letter-spacing: normal;

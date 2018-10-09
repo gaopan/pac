@@ -101,7 +101,6 @@ let routerTable = {
             import ('@/modules/console/customization/dashboard/Dashboard.vue')
         },
         meta: configMeta("Customization Dashboard", false),
-        redirect: '/console/cust/monthly/zht/overview',
         children: [{
           name: 'Customization Dashboard Overview',
           path: 'overview',

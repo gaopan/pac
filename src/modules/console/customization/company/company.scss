@@ -7,17 +7,47 @@
     position: relative;
     border: 1px solid $borderColor;
     margin-bottom: 30/12*$unit;
-    cursor: pointer;
     background-color: $bgColor;
     color: $fontColor;
 
     .company-name {
       display: block;
-      padding: 80/12*$unit 0;
+      padding: 60/12*$unit 0;
       font-size: 48/12*$unit;
       line-height: 1.5;
       font-weight: bold;
       text-align: center;
+      border-bottom: 1px solid $borderColor;
+    }
+
+    .company-caption {
+      padding: 10/12*$unit 15/12*$unit;
+
+      &>button {
+        display: block;
+        width: 100%;
+      }
+
+      &>button+button {
+        margin-top: 10/12*$unit;
+      }
+    }
+
+    .company-panel {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow-y: auto;
+      z-index: 1;
+      background-color: #fff;
+      padding: 10/12*$unit 15/12*$unit;
+    }
+
+    .company-panel-actions {
+      margin-top: 15/12*$unit;
     }
   }
 

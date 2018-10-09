@@ -71,7 +71,6 @@
     <div class="container" v-if="isViewPastRS">
       <ul class="past-rs" v-if="rs.pastData">
         <li v-for="rs in rs.pastData">
-          <div>{{rs.month}}</div>
           <div>
             <div class="remind">
               <div>提醒：</div>
@@ -83,6 +82,7 @@
             </div>
             <div class="support" v-else>没有往月的领导关注、支持事项</div>
           </div>
+          <div><div>{{rs.month}}</div></div>
         </li>
       </ul>
       <div v-else>没有领导的回复</div>

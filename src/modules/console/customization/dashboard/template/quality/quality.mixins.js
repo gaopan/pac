@@ -33,10 +33,22 @@ export default {
           <div class="chart-container" ref="qDContainer"></div>
         </div>
       </div>
+      <div class="row" v-if="ifFullScreen&&table">
+        <table class="leap-table" style="height:160px;overflow-y:auto;margin-bottom:15px">
+            <thead>
+              <th v-for="header in table.headers">{{header.name}}</th>
+            </thead>
+            <tbody>
+              <tr v-for="d in table.list">
+                <td v-for="header in table.headers">
+                  <div>{{d[header.key]}}</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
       <div class="row" v-if="ifFullScreen&&comments">
-        <div class="col-xs-12">
         <dashboard-comment :module="conf.data.module" :comments="comments"></dashboard-comment>
-        </div>
       </div>
   </div>`,
   props: {
@@ -54,11 +66,12 @@ export default {
   data() {
     return {
       data: null,
-      periods: {years: null, quarters: null, months: null},
+      periods: { years: null, quarters: null, months: null },
       qUData: null,
       qDData: null,
       selectedQDOption: null,
       qDOptions: [],
+      table: null,
       comments: null,
       ifFullScreen: false
     };
@@ -104,8 +117,8 @@ export default {
     drawQUChart() {
       let vm = this,
         chartHeight = (vm.container.parentNode.clientHeight - 53 - 38 - 52) / 2 + 'px';
-      if(this.ifFullScreen) {
-        chartHeight = (vm.container.parentNode.clientHeight - 53 - 38 - 52 - 200) / 2 + 'px';
+      if (this.ifFullScreen) {
+        chartHeight = (vm.container.parentNode.clientHeight - 53 - 38 - 52 - 200 - 175) / 2 + 'px';
       }
       vm.qUContainer.style('height', chartHeight);
       if (vm.qUContainer.select('svg').size()) {
@@ -123,8 +136,8 @@ export default {
     drawQDChart() {
       let vm = this,
         chartHeight = (vm.container.parentNode.clientHeight - 53 - 38 - 52) / 2 + 'px';
-      if(this.ifFullScreen) {
-        chartHeight = (vm.container.parentNode.clientHeight - 53 - 38 - 52 - 215) / 2 + 'px';
+      if (this.ifFullScreen) {
+        chartHeight = (vm.container.parentNode.clientHeight - 53 - 38 - 52 - 200 - 175) / 2 + 'px';
       }
       vm.qDContainer.style('height', chartHeight);
       if (vm.qDContainer.select('svg').size()) {
@@ -336,11 +349,12 @@ export default {
       this.periods.quarters = periods.quarters;
       this.periods.years = periods.years;
     },
-    changedPeriod(args){
+    changedPeriod(args) {
       let selectedMonths = args.map(m => m.year + '-' + m.month);
-      let data = this.massagedData = {up: [], down: {}}, comments = this.comments = [];
+      let data = this.massagedData = { up: [], down: {} },
+        comments = this.comments = [], table = this.table = {};
 
-      if(TypeChecker.isArray(this.$props.conf.data.comments)) {
+      if (TypeChecker.isArray(this.$props.conf.data.comments)) {
         this.$props.conf.data.comments.filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
           comments.push({
             month: item.month,
@@ -349,7 +363,18 @@ export default {
         });
       }
 
-      if(TypeChecker.isArray(this.$props.conf.data.up)) {
+      if(TypeChecker.isObject(this.$props.conf.data.table)) {
+        table.headers = this.$props.conf.data.table.headers;
+        table.list = [];
+        this.$props.conf.data.table.list.filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
+          table.list = table.list.concat(item.data);
+          item.data.forEach(_item => {
+            _item['合格率'] = (Number(_item['合格里程']) / Number(_item['总里程'])).toFixed(2);
+          });
+        });
+      }
+
+      if (TypeChecker.isArray(this.$props.conf.data.up)) {
         let totalLC = 0;
         this.$props.conf.data.up.filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
           data.up = data.up.concat(item.data);
@@ -363,7 +388,7 @@ export default {
         });
       }
 
-      if(TypeChecker.isArray(this.$props.conf.data.down)) {
+      if (TypeChecker.isArray(this.$props.conf.data.down)) {
         let filteredDownData = [];
         this.$props.conf.data.down.filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
           item.data.forEach(_item => {
@@ -379,7 +404,7 @@ export default {
             value: k
           };
         });
-        if(this.qDOptions.length > 0) {
+        if (this.qDOptions.length > 0) {
           this.selectedQDOption = this.qDOptions[0].value;
         }
       }
