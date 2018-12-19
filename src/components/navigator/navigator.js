@@ -2,8 +2,9 @@ import Vue from 'vue'
 import CommonUtils from '@/utils/common-utils.js'
 import MiniLoader from '@/components/loader/MiniLoader.vue'
 
+var images = require.context('@/assets/imgs/', false, /\.(png|jpg)$/)
+
 export default {
-  name: 'navigator',
   props: {
     menus: {
       type: Array,
@@ -14,8 +15,8 @@ export default {
     return {
       isShowMenus: false,
       navs: null,
-      activedModule: null,
-      breadcrumbs: []
+      breadcrumbs: [],
+      user: this.$store.getters.userProfile
     };
   },
   watch: {
@@ -39,6 +40,9 @@ export default {
         found = false;
       this.navs.every(nav => {
         tmpCrumbs = [nav];
+        if (nav.route == current.name) {
+          found = true;
+        }
         if (nav.childNodes) {
           nav.childNodes.every(m => {
             tmpCrumbs.push(m);
@@ -49,13 +53,16 @@ export default {
                 m.childNodes.every(cm => {
                   tmpCrumbs.push(cm);
                   if (cm.route == current.name) found = true;
+                  if (!found) tmpCrumbs.splice(tmpCrumbs.length - 1, 1);
                   return !found;
                 });
               }
             }
+            if (!found) tmpCrumbs.splice(tmpCrumbs.length - 1, 1);
             return !found;
           });
         }
+        if (!found) tmpCrumbs.splice(tmpCrumbs.length - 1, 1);
         return !found;
       });
       if (found) {
@@ -70,43 +77,32 @@ export default {
         this.navs.forEach(m => {
           let mIndex = menuNames.indexOf(m.name);
           if (mIndex > -1) {
-            let _m = menus[mIndex],
-              cMenuNames = _m.childNodes.map(cm => cm.name);
+            let _m = menus[mIndex];
             Vue.set(m, 'isActive', _m.isActive);
 
-            m.childNodes.forEach(cm => {
-              let cmIndex = cMenuNames.indexOf(cm.name);
-              if (cmIndex > -1) {
-                let _cm = _m.childNodes[cmIndex];
-                Vue.set(cm, 'isActive', _cm.isActive);
-              }
-            });
+            if (m.childNodes && _m.childNodes) {
+              let cMenuNames = _m.childNodes.map(cm => cm.name);
+              m.childNodes.forEach(cm => {
+                let cmIndex = cMenuNames.indexOf(cm.name);
+                if (cmIndex > -1) {
+                  let _cm = _m.childNodes[cmIndex];
+                  Vue.set(cm, 'isActive', _cm.isActive);
+                }
+              });
+            }
           }
         });
       }
     },
-    toggleExpandMenu(parent, m) {
-      parent.childNodes.forEach(_m => {
-        if (m.name == _m.name && !m.isOpen) {
-          Vue.set(_m, 'isOpen', true);
-        } else {
-          Vue.set(_m, 'isOpen', false);
-        }
-      });
-    },
     clickOnMenu(cm) {
       this.isShowMenus = false;
-      this.$router.push({ name: cm.route });
+      this.$router.push({ name: cm.route, params: cm.params });
     },
-    activeModule(m) {
-      if (m.name == '流程工作台' && this.$router.currentRoute.fullPath.indexOf('/pd/') < 0) {
-        this.$router.push({ path: '/console/selection' });
-      } else {
-        this.activedModule = m;
-      }
+    imgUrl(path) {
+      return images('./' + path);
     },
-    deactiveModule() {
-      this.activedModule = null;
+    logout() {
+      this.$router.push('/passport/login');
     }
   },
   components: { MiniLoader }

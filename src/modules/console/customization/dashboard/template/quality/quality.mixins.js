@@ -34,18 +34,21 @@ export default {
         </div>
       </div>
       <div class="row" v-if="ifFullScreen&&table">
-        <table class="leap-table" style="height:160px;overflow-y:auto;margin-bottom:15px">
+        <div class="table-wrapper" style="padding: 10px 15px;">
+        <table class="leap-table">
             <thead>
               <th v-for="header in table.headers">{{header.name}}</th>
             </thead>
-            <tbody>
+            <tbody v-if="table.list.length > 0">
               <tr v-for="d in table.list">
                 <td v-for="header in table.headers">
                   <div>{{d[header.key]}}</div>
                 </td>
               </tr>
             </tbody>
+            <tbody v-else><tr><td :colspan="table.headers.length">没有数据显示</td></tr></tbody>
           </table>
+          </div>
       </div>
       <div class="row" v-if="ifFullScreen&&comments">
         <dashboard-comment :module="conf.data.module" :comments="comments"></dashboard-comment>
@@ -116,10 +119,7 @@ export default {
     },
     drawQUChart() {
       let vm = this,
-        chartHeight = (vm.container.parentNode.clientHeight - 53 - 38 - 52) / 2 + 'px';
-      if (this.ifFullScreen) {
-        chartHeight = (vm.container.parentNode.clientHeight - 53 - 38 - 52 - 200 - 175) / 2 + 'px';
-      }
+        chartHeight = this.chartHeight;
       vm.qUContainer.style('height', chartHeight);
       if (vm.qUContainer.select('svg').size()) {
         vm.qUContainer
@@ -135,10 +135,7 @@ export default {
     },
     drawQDChart() {
       let vm = this,
-        chartHeight = (vm.container.parentNode.clientHeight - 53 - 38 - 52) / 2 + 'px';
-      if (this.ifFullScreen) {
-        chartHeight = (vm.container.parentNode.clientHeight - 53 - 38 - 52 - 200 - 175) / 2 + 'px';
-      }
+        chartHeight = this.chartHeight;
       vm.qDContainer.style('height', chartHeight);
       if (vm.qDContainer.select('svg').size()) {
         vm.qDContainer
@@ -153,6 +150,7 @@ export default {
       }
     },
     draw() {
+      this.chartHeight = Math.floor((this.container.parentNode.clientHeight - 52 - 38 - 52 - 4) / 2) + 'px';
       this.drawQUChart();
       this.drawQDChart();
     },

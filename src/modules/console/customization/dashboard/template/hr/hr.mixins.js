@@ -97,10 +97,7 @@ export default {
     },
     draw() {
       let vm = this,
-        chartHeight = (vm.container.parentNode.clientHeight - 38 - 38 - 52) / 2 + 'px';
-      if(this.ifFullScreen) {
-        chartHeight = (vm.container.parentNode.clientHeight - 38 - 38 - 52 - 215) / 2 + 'px';
-      }
+        chartHeight = (vm.container.parentNode.clientHeight - 38 - 38 - 52 - 4) / 2 + 'px';
       vm.hUContainer.style('height', chartHeight);
       if (vm.hUContainer.select('svg').size()) {
         vm.hUContainer

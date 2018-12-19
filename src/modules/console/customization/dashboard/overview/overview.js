@@ -17,8 +17,8 @@ export default {
       isEditRemind: false,
       isEditSupport: false,
       isViewPastRS: false,
+      companyId: null,
       rs: {
-        key: '中海庭-rs',
         curMonthData: { remind: null, support: null },
         pastData: null,
         data: null
@@ -28,6 +28,7 @@ export default {
   components: { ReportInput },
   created() {
     this.user = this.$store.getters.userProfile;
+    this.companyId = this.$router.currentRoute.params.company.substr(this.$router.currentRoute.params.company.lastIndexOf('_') + 1);
     this.refresh();
   },
   computed: {
@@ -50,89 +51,69 @@ export default {
       let nCurMonth = new Date().getMonth() + 1,
         nCurYear = new Date().getFullYear();
       let curMonth = this.curMonth = nCurYear + "-" + nCurMonth;
-      DashboardApi.getReportOverview().then(res => {
-        let oData = {};
+      DashboardApi.getReportByCompanyId(this.companyId).then(res => {
         if (TypeChecker.isArray(res.data) && res.data.length > 0) {
-          let params = [];
+          this.rs.pastData = [];
           res.data.forEach(d => {
-            oData[d.name] = d;
-            params.push({
-              name: d.name,
-              months: d.months
-            });
-          });
-
-          DashboardApi.getReportDetail(params).then(detailRes => {
-            if (TypeChecker.isArray(detailRes.data) && detailRes.data.length > 0) {
-              let _oData = {};
-              detailRes.data.forEach(d => {
-                _oData[d.name] = d;
-              });
-              res.data.forEach(d => {
-                d.monthData = _oData[d.name].months;
-              });
-              res.data.forEach(d => {
-                d.monthData = _oData[d.name].months;
-                if (TypeChecker.isObject(d.monthData)) {
-                  for (let key in d.monthData) {
-                    if (d.monthData.hasOwnProperty(key)) {
-                      let theMonthData = d.monthData[key];
-                      if (TypeChecker.isString(theMonthData)) {
-                        d.monthData[key] = JSON.parse(theMonthData);
-                      }
-                    }
-                  }
-                }
-              });
+            let month = d.month,
+              monthData = null;
+            let arr = month.split('-'),
+              nMonth = parseInt(arr[1]),
+              nYear = parseInt(arr[0]);
+            if (TypeChecker.isString(d.responsensupport)) {
+              try {
+                monthData = JSON.parse(d.responsensupport);
+              } catch(err){
+                monthData = {};
+              }
+            } else if (TypeChecker.isObject(d.responsensupport)) {
+              monthData = d.responsensupport;
             }
-
-            if (oData[this.rs.key]) {
-              this.rs.data = oData[this.rs.key];
-              if (TypeChecker.isObject(this.rs.data.monthData)) {
-                if (TypeChecker.isObject(this.rs.data.monthData[curMonth])) {
-                  this.rs.curMonthData.remind = this.rs.data.monthData[curMonth].remind;
-                  this.rs.curMonthData.support = this.rs.data.monthData[curMonth].support;
-                }
-
-                this.rs.pastData = [];
-                for (let month in this.rs.data.monthData) {
-                  let arr = month.split('-'),
-                    nMonth = parseInt(arr[1]),
-                    nYear = parseInt(arr[0]);
-                  if (nYear < nCurYear || (nYear == nCurYear && nMonth < nCurMonth)) {
-                    let _monthData = this.rs.data.monthData[month];
-                    if (TypeChecker.isObject(_monthData)) {
-                      this.rs.pastData.push({
-                        month: month,
-                        remind: _monthData.remind,
-                        support: _monthData.support
-                      });
-                    }
-                  }
-                }
+            if (TypeChecker.isObject(monthData)) {
+              if (nYear == nCurYear && nMonth == nCurMonth) {
+                this.rs.curMonthData.remind = monthData.remind;
+                this.rs.curMonthData.support = monthData.support;
+              } else if (nYear < nCurYear || (nYear == nCurYear && nMonth < nCurMonth)) {
+                this.rs.pastData.push({
+                  month: month,
+                  remind: monthData.remind,
+                  support: monthData.support
+                });
               }
             }
-
-            modules.forEach(m => {
-              let oM = oData[m.key];
-              if (oM) {
-                m['monthData'] = oM['monthData'];
-                if (TypeChecker.isObject(m["monthData"])) {
-                  if (TypeChecker.isString(m['monthData'][curMonth])) {
-                    m['curMonthData'] = JSON.parse(m['monthData'][curMonth]);
-                  } else if (TypeChecker.isObject(m['monthData'][curMonth])) {
-                    m['curMonthData'] = m["monthData"][curMonth];
-                  }
-                }
-              } else {
-                m['curMonthData'] = {};
-              }
-            });
-            this.modules = modules;
           });
-        } else {
-          this.modules = modules;
         }
+      });
+      DashboardApi.companyModulesByMonths(this.companyId, [curMonth]).then(res => {
+        let oData = {};
+        res.data.forEach(report => {
+          if (report.reportModules) {
+            report.reportModules.forEach(m => {
+              let obj = oData[m.moduleName] = {};
+              try {
+                obj.monthData = JSON.parse(m.value);
+              } catch(err){
+                obj.monthData = {};
+              }
+              
+              obj.id = m.id;
+              obj.reportId = m.reportId;
+            });
+          }
+        });
+
+        modules.forEach(m => {
+          let oM = oData[m.key];
+          m['monthData'] = {};
+          if (oM) {
+            m['curMonthData'] = oM["monthData"];
+            m['monthData'][curMonth] = oM["monthData"];
+          } else {
+            m['curMonthData'] = {};
+          }
+        });
+
+        this.modules = modules;
       });
     },
     selectModule(m) {

@@ -12,11 +12,10 @@
 
     .company-name {
       display: block;
-      padding: 60/12*$unit 0;
-      font-size: 48/12*$unit;
+      padding: 60/12*$unit 15/12*$unit;
+      font-size: 24/12*$unit;
       line-height: 1.5;
       font-weight: bold;
-      text-align: center;
       border-bottom: 1px solid $borderColor;
     }
 

@@ -1,10 +1,10 @@
 .customization {
+  .dashboard-comment-wrapper {
+    padding: 10px 15px;
+  }
 	.dashboard-comment {
-		background-color: $bgColor;
-		height: 200px;
+    background-color: $bgColor;
 		padding: 10px 15px;
-		overflow-y: auto;
-
 		&>div {
 			margin-bottom: 15px;
 

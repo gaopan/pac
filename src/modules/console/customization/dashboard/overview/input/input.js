@@ -15,6 +15,10 @@ export default {
     module: {
       type: Object,
       required: true
+    },
+    companyId: {
+      type: String,
+      required: true
     }
   },
   data() {
@@ -108,13 +112,20 @@ export default {
     cancel() {
       this.$emit("cancelled");
     },
-    prepareDataToSave(isSubmit) {
+    prepareDataToSave(isSubmit, isApproved) {
       let vm = this;
       let _data = { name: vm.currentModule.key, month: vm.curMonth, value: {} };
       if(isSubmit) {
         _data.value.isSubmitted = !!isSubmit;
       }
-      _data.value.comments = vm.currentModule.monthData[vm.curMonth].comments;
+      if(isApproved) {
+        _data.value.isApproved = !!isApproved;
+      }
+      let curMonthData = vm.currentModule.monthData[vm.curMonth];
+      if(curMonthData && curMonthData.id) {
+          _data.id = curMonthData.id;
+        }
+      _data.value.comments = (curMonthData && curMonthData.comments) ? curMonthData.comments : [];
       vm.currentModule.editConfig.fields.forEach(f => {
         if (f.list) {
           f.value = [];
@@ -141,12 +152,22 @@ export default {
         });
         _data.value[t.name] = table;
       });
+      _data.value2 = {
+        moduleName: _data.name,
+        value: JSON.stringify(_data.value)
+      };
       return _data;
     },
     save() {
       let vm = this;
       let saveTable = function(data) {
-        DashboardApi.saveReport(data).then(res => {
+        let promise = null;
+        if(data.id) {
+          promise = DashboardApi.updateModuleByMonth(vm.companyId, vm.curMonth, data.value2);
+        } else {
+          promise = DashboardApi.addModuleByMonth(vm.companyId, vm.curMonth, data.value2);
+        }
+        promise.then(res => {
           Noty.notifySuccess({ text: '保存数据成功！' });
           vm.$emit('submitted');
         }, err => {
@@ -159,7 +180,13 @@ export default {
     submit() {
       let vm = this;
       let saveTable = function(data) {
-        DashboardApi.saveReport(data).then(res => {
+        let promise = null;
+        if(data.id) {
+          promise = DashboardApi.updateModuleByMonth(vm.companyId, vm.curMonth, data.value2);
+        } else {
+          promise = DashboardApi.addModuleByMonth(vm.companyId, vm.curMonth, data.value2);
+        }
+        promise.then(res => {
           Noty.notifySuccess({ text: '提交数据成功！' });
           vm.$emit('submitted');
         }, err => {
@@ -167,6 +194,25 @@ export default {
         });
       };
       let data = this.prepareDataToSave(true);
+      saveTable(data);
+    },
+    approve(){
+      let vm = this;
+      let saveTable = function(data) {
+        let promise = null;
+        if(data.id) {
+          promise = DashboardApi.updateModuleByMonth(vm.companyId, vm.curMonth, data.value2);
+        } else {
+          promise = DashboardApi.addModuleByMonth(vm.companyId, vm.curMonth, data.value2);
+        }
+        promise.then(res => {
+          Noty.notifySuccess({ text: '审批数据成功！' });
+          vm.$emit('submitted');
+        }, err => {
+          Noty.notifyError({ text: '审批数据失败！' });
+        });
+      };
+      let data = this.prepareDataToSave(true, true);
       saveTable(data);
     },
     addNewRow(moduleTable, field) {

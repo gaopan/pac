@@ -30,6 +30,9 @@ export default {
       fixed: {
         type: Boolean,
         required: false
+      },
+      allowScroll: {
+        type: Boolean
       }
     }
   },
@@ -99,6 +102,8 @@ export default {
   },
   mounted: function() {
     this.size = {
+      pureWidth: this.$el.clientWidth - this.padding * 2,
+      pureHeight: this.$el.clientHeight - this.padding * 2,
       width: this.$el.clientWidth - this.padding * 2,
       height: this.$el.clientHeight - this.padding * 2
     };
@@ -170,6 +175,7 @@ export default {
     },
     tilesChanged: function() {
       var bNeedScrollBar = this.checkIfNeedScrollBar();
+      this.size.pureWidth = this.$el.offsetWidth - this.padding * 2;
       if (bNeedScrollBar) {
         this.size.width = this.$el.offsetWidth - this.padding * 2 - this.scrollbarWidth;
       } else {
@@ -234,15 +240,6 @@ export default {
       }
 
       this.mode.y = this.mode.x;
-      // if (this.size.height < 768) {
-      //   this.mode.y = 'xs';
-      // } else if (this.size.height < 992) {
-      //   this.mode.y = 'sm';
-      // } else if (this.size.height < 1170) {
-      //   this.mode.y = 'md';
-      // } else {
-      //   this.mode.y = 'lg';
-      // }
     },
     handleConfigByPriority: function(conf, isTransfrom) {
       // priority: lg -> md -> sm -> xs
@@ -314,6 +311,8 @@ export default {
         } else {
           vm.size.width = vm.$el.offsetWidth - vm.scrollbarWidth - this.padding * 2;
         }
+        vm.size.pureWidth = vm.$el.offsetWidth - this.padding * 2;
+        vm.size.pureHeight = vm.$el.offsetHeight - this.padding * 2;
         vm.size.height = vm.$el.offsetHeight - this.padding * 2;
       }
       vm.updateMode();

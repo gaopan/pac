@@ -185,11 +185,12 @@ let quality = {
     }]
   },
   dashboardConfig: {
-    width: { xs: 4 },
-    height: { xs: 6 },
+    width: { xs: 6 },
+    height: { xs: 12 },
     transform: { xs: { x: 0, y: 0 } },
     type: 'QualityChart',
-    title: '质量'
+    title: '质量',
+    allowScroll: true
   }
 };
 quality.dashboardConfig.adaptData = function(remoteData, months) {
@@ -342,11 +343,12 @@ let cost = {
     }]
   },
   dashboardConfig: {
-    width: { xs: 4 },
-    height: { xs: 6 },
-    transform: { xs: { x: 4, y: 0 } },
+    width: { xs: 6 },
+    height: { xs: 12 },
+    transform: { xs: { x: 6, y: 0 } },
     type: 'CostChart',
-    title: '成本'
+    title: '成本',
+    allowScroll: true
   }
 };
 cost.dashboardConfig.adaptData = function(remoteData, months) {
@@ -470,11 +472,12 @@ let hr = {
     }]
   },
   dashboardConfig: {
-    width: { xs: 4 },
-    height: { xs: 6 },
-    transform: { xs: { x: 8, y: 0 } },
+    width: { xs: 6 },
+    height: { xs: 12 },
+    transform: { xs: { x: 0, y: 12 } },
     type: 'HrChart',
-    title: '人力资源'
+    title: '人力资源',
+    allowScroll: true
   }
 };
 hr.dashboardConfig.adaptData = function(remoteData, months) {
@@ -570,11 +573,12 @@ let safty = {
     }]
   },
   dashboardConfig: {
-    width: { xs: 4 },
-    height: { xs: 6 },
-    transform: { xs: { x: 0, y: 6 } },
+    width: { xs: 6 },
+    height: { xs: 12 },
+    transform: { xs: { x: 6, y: 12 } },
     type: 'TableChart',
-    title: '安全'
+    title: '安全',
+    allowScroll: true
   }
 };
 safty.dashboardConfig.adaptData = function(remoteData, months) {
@@ -713,11 +717,12 @@ let operation = {
     }]
   },
   dashboardConfig: {
-    width: { xs: 4 },
-    height: { xs: 6 },
-    transform: { xs: { x: 4, y: 6 } },
+    width: { xs: 6 },
+    height: { xs: 12 },
+    transform: { xs: { x: 0, y: 24 } },
     type: 'TableChart',
-    title: '运营情况'
+    title: '运营情况',
+    allowScroll: true
   }
 };
 operation.dashboardConfig.adaptData = function(remoteData, months) {
@@ -813,11 +818,12 @@ let respond = {
     }]
   },
   dashboardConfig: {
-    width: { xs: 4 },
-    height: { xs: 6 },
-    transform: { xs: { x: 8, y: 6 } },
+    width: { xs: 6 },
+    height: { xs: 12 },
+    transform: { xs: { x: 6, y: 24 } },
     type: 'TableChart',
-    title: '响应'
+    title: '响应',
+    allowScroll: true
   }
 };
 respond.dashboardConfig.adaptData = function(remoteData, months) {

@@ -110,7 +110,7 @@
         </div>
       </div>
     </div>
-    <report-input v-if="editingModule" :module="editingModule" @cancelled="cancelledEdit" @submitted="submittedEdit"></report-input>
+    <report-input v-if="editingModule" :companyId="companyId" :module="editingModule" @cancelled="cancelledEdit" @submitted="submittedEdit"></report-input>
   </div>
 </template>
 <script src="./overview.js"></script>

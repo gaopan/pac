@@ -26,59 +26,9 @@ let routerTable = {
       default: () =>
         import ('@/modules/console/Console.vue')
     },
-    meta: configMeta("Selection", false),
-    redirect: "/console/selection",
+    meta: configMeta("Customization Dashboard", false),
+    redirect: "/console/cust",
     children: [{
-      path: 'selection',
-      name: 'Selection',
-      components: {
-        default: () =>
-          import ('@/modules/console/selection/Selection.vue')
-      },
-      meta: configMeta("Selection", false)
-    }, {
-      path: 'pd',
-      name: 'Process Discovery',
-      components: {
-        default: () =>
-          import ('@/modules/console/process-discovery/ProcessDiscovery.vue')
-      },
-      meta: configMeta("Selection", false),
-      children: [{
-        path: 'pe',
-        name: 'Process Explorer',
-        components: {
-          default: () =>
-            import ('@/modules/console/process-discovery/process-explorer/ProcessExplorer.vue')
-        },
-        meta: configMeta("Process Discovery/Process Explorer", true),
-        children: [{
-          path: 'pf',
-          name: 'Process Flow',
-          components: {
-            default: () =>
-              import ('@/modules/console/process-discovery/process-explorer/process-flow/ProcessFlow.vue')
-          },
-          meta: configMeta("Process Discovery/Process Explorer", true)
-        }, {
-          path: 'pc',
-          name: 'Process Comparison',
-          components: {
-            default: () =>
-              import ('@/modules/console/process-discovery/process-explorer/process-comparison/ProcessComparison.vue')
-          },
-          meta: configMeta("Process Discovery/Process Explorer", true)
-        }, {
-          path: 'pa',
-          name: 'Process Analysis',
-          components: {
-            default: () =>
-              import ('@/modules/console/process-discovery/process-explorer/analysis/Analysis.vue')
-          },
-          meta: configMeta("Process Discovery/Process Explorer", true)
-        }]
-      }]
-    }, {
       path: 'cust',
       name: 'Customization',
       components: {

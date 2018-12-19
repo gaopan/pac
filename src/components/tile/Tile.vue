@@ -8,7 +8,7 @@
         <slot></slot>
       </div>
       <div class="tile-actions" :style="styles.actions">
-        <div class="handler" title="Full screen" v-if="!isDisabledFullScreen" :show="isHover&&!isFullScreen" v-on:click="toFullScreen">
+        <div class="handler" title="Full screen" v-if="!isDisabledFullScreen" :show="!isFullScreen" v-on:click="toFullScreen">
           <i class="icon-maximize-2"></i>
         </div>
         <div class="handler" title="Exit full screen" v-if="!isDisabledFullScreen" :show="isHover&&isFullScreen" v-on:click="exitFullScreen">

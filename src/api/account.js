@@ -14,10 +14,10 @@ let instance = axiosHelper.createAxios({
 
 export default {
   login(data) {
-    let url = baseUrl + '/login',
+    let url = baseUrl + '/public/login',
       form = new FormData();
-    form.set('email', data.email);
-    form.set('password', data.password);
+    form.append('email', data.email);
+    form.append('password', data.password);
     return axios({
       method: 'post',
       url: url,
@@ -29,6 +29,13 @@ export default {
     //   email: data.email,
     //   password: data.password
     // });
+  },
+  login2(data){
+    let url = baseUrl + '/public/login';
+    return instance.post(url, {
+      email: data.email,
+      password: data.password
+    });
   },
   logout(auth) {
     let url = 'logout';

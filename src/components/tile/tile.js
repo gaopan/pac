@@ -151,7 +151,6 @@ export default {
       //allow scroll to specific tile
       if (this.$props.conf.allowScroll != undefined && this.$props.conf.allowScroll) {
         this.$data.styles.layout.overflow = "auto";
-        this.$data.styles.actions.marginRight = "20px";
       }
     },
     broadcastResized: function() {
@@ -186,8 +185,8 @@ export default {
       this.lastPos.x = this.trans.x;
       this.lastPos.y = this.trans.y;
 
-      this.size.width = this.$parent.size.width;
-      this.size.height = this.$parent.size.height;
+      this.size.width = this.$parent.size.pureWidth;
+      this.size.height = this.$parent.size.pureHeight;
       this.trans.x = 0;
       this.trans.y = 0;
 

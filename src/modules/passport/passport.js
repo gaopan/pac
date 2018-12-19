@@ -9,10 +9,6 @@ export default {
     name: 'passport',
     data() {
         return {
-            img: {
-                "DxC": "DxC-Logo-Shape.png",
-                "LEAP": 'LEAP-logo-solid.png'
-            }
         }
     },
     components: {

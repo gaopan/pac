@@ -68,12 +68,6 @@ let axiosHelper = {
         return res;
       }, function(err) {
         if (err.response.status == 401) {
-          // FilterServices.clear();
-          const storageKey1 = 'globalFilters-data';
-          const sm = new StoreManager('session');
-          sm.deleteStorage(storageKey1);
-          store.dispatch('setSavedFilters', null);
-
           // UserServices.clearCurrentUser();
           const storageKey2 = 'logined-user';
           const tokenKey = 'LEAP-token';
@@ -85,11 +79,6 @@ let axiosHelper = {
           CookiesManager.del(tokenKey, { path: tokenCookieOpt.path });
           delete axios.defaults.headers.common['Authorization'];
           store.dispatch('setUserProfile', null);
-
-          // ProcessSelectionService.clearProcessSelection();
-          const storageKey3 = 'logined-process';
-          CookiesManager.del(storageKey3);
-          store.dispatch('setProcessSelection', null);
 
           // router redirrect
           router.replace('/passport/login');

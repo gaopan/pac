@@ -8,21 +8,50 @@ import {
 let baseUrl = process.env.baseUrl;
 
 let instance = axiosHelper.createAxios({
-  baseURL: (baseUrl + '/'),
+  baseURL: (baseUrl + '/protected'),
   timeout: 30000
 });
 
 export default {
-	getReportOverview(){
-		return instance.get('get_reports_overview');
+
+	addReport(data){
+		return instance.post('reports', data);
 	},
-	getReportDetail(data){
-		return instance.post('get_reports_detail', data);
+	getAllReports(){
+		return instance.get('reports');
 	},
-	saveReport(data){
-		return instance.post('new_or_update_report', data);
+	getReportDetail(reportId){
+		return instance.get(`reports/${reportId}`);
+	},
+	getReportByCompanyId(companyId){
+		return instance.get(`reports/companies/${companyId}`);
 	},
 	deleteReport(data){
 		return instance.post('delete_reports', data);
+	},
+	companyModulesByMonths(companyId, months){
+		let url = `reportmodules/companies/${companyId}`;
+		return instance.post(url, months);
+	},
+	updateModuleByMonth(companyId, month, data){
+		let url = `reportmodules/companies/${companyId}/months/${month}`;
+		return instance.put(url, data);
+	},
+	addModuleByMonth(companyId, month, data) {
+		let url = `reportmodules/companies/${companyId}/months/${month}`;
+		return instance.post(url, data);
+	},
+	addStatistics(data){
+		let url = `statistics`;
+		return instance.post(url, data);
+	},
+	getAllStatistics(){
+		let url = `statistics`;
+		return instance.get(url);
+	},
+	deleteStatistics(id){
+		let url = `statistics/${id}`;
+		return instance.delete(url);
 	}
+
 }

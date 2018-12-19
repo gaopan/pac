@@ -3,5 +3,5 @@ var prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  baseUrl: '"https://www.knightech.com.cn"'
+  baseUrl: '"http://ec2-18-179-5-224.ap-northeast-1.compute.amazonaws.com:8080"'
 })

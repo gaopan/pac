@@ -9,14 +9,8 @@ export default {
   "Forgot Password": {
     rolesRequired: []
   },
-  "Process Discovery/Process Explorer": {
-    rolesRequired: ["admin", "leap_practitioner", "customer_leadership", "customer_practitioner", "customer_general_participant", "leap_raas_admin", "leap_raas_operator", "customer_raas_operator", "leap_account_owner"]
-  },
-  "Selection": {
-    rolesRequired: ["admin", "leap_practitioner", "customer_leadership", "customer_practitioner", "customer_general_participant", "leap_raas_operator", "customer_raas_operator", "leap_raas_admin", "leap_account_owner"]
-  },
   "Customization Company": {
-    rolesRequired: ["admin", "boss"]
+    rolesRequired: ["admin", "boss", "aa"]
   },
   "Customization Dashboard": {
     rolesRequired: ["admin", "aa", "boss"]
