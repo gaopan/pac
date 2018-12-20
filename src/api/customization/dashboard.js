@@ -23,11 +23,14 @@ export default {
 	getReportDetail(reportId){
 		return instance.get(`reports/${reportId}`);
 	},
+	updateReport(reportId, data){
+		return instance.put(`reports/${reportId}`, data);
+	},
 	getReportByCompanyId(companyId){
 		return instance.get(`reports/companies/${companyId}`);
 	},
-	deleteReport(data){
-		return instance.post('delete_reports', data);
+	deleteReport(reportId){
+		return instance.delete(`reports/${reportId}`);
 	},
 	companyModulesByMonths(companyId, months){
 		let url = `reportmodules/companies/${companyId}`;
@@ -48,6 +51,10 @@ export default {
 	getAllStatistics(){
 		let url = `statistics`;
 		return instance.get(url);
+	},
+	updateStatistics(id, data){
+		let url = `statistics/${id}`;
+		return instance.put(url, data);
 	},
 	deleteStatistics(id){
 		let url = `statistics/${id}`;

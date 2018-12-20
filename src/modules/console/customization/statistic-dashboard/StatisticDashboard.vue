@@ -41,7 +41,7 @@
         <div v-if="!data || data.length < 1" class="no-data">没有数据显示</div>
       </div>
     </div>
-    <edit-form v-if="editCompanies" :companies="editCompanies" @submitted="submit" @cancel="cancel"></edit-form>
+    <edit-form v-if="editCompanies" :requestId="module.curMonthDataId" :companies="editCompanies" @submitted="submit" @cancel="cancel"></edit-form>
   </div>
 </template>
 <script src="./statistic-dashboard.js"></script>

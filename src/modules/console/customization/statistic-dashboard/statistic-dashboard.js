@@ -6,6 +6,7 @@ import PeriodUtils from '../period-utils.js'
 import DataUtils from '@/utils/data-utils.js'
 import Noty from '@/utils/noty-operation.js'
 import DashboardApi from '@/api/customization/dashboard.js'
+import CompanyApi from '@/api/customization/company.js'
 import DashboardData from './dashboard.data.js'
 import LeapSelect from '@/components/leap-select/LEAPSelect.vue'
 import ChartView from './chart-view/ChartView.vue'
@@ -40,6 +41,7 @@ export default {
     }
   },
   created() {
+    this.user = this.$store.getters.userProfile;
     this.refresh();
   },
   watch: {
@@ -55,49 +57,38 @@ export default {
     refresh() {
       let vm = this;
       let curMonth = this.curMonth = new Date().getFullYear() + "-" + (new Date().getMonth() + 1);
-      DashboardApi.getReportOverview().then(res => {
-        let matchedOverview = null;
-        if (TypeChecker.isArray(res.data) && res.data.length > 0) {
-          res.data.every(item => {
-            if (item.name == REQUEST_KEY) {
-              matchedOverview = item;
-              return false;
-            }
-            return true;
+      CompanyApi.userCompanies(this.user.id).then(res => {
+        this.companies = [];
+        res.data.forEach(comp => {
+          this.companies.push({
+            name: comp.name,
+            key: comp.id,
+            data: {}
           });
-          if (matchedOverview) {
-            let params = [{
-              name: matchedOverview.name,
-              months: matchedOverview.months
-            }];
-            DashboardApi.getReportDetail(params).then(detailRes => {
-              if (TypeChecker.isArray(detailRes.data) && detailRes.data.length > 0) {
-                let oData = null;
-                detailRes.data.forEach(d => {
-                  if (d.name == REQUEST_KEY) {
-                    oData = d;
-                  }
-                });
-                if (oData) {
-                  oData.monthData = oData.months;
-                  if (TypeChecker.isObject(oData.monthData)) {
-                    Object.keys(oData.monthData).forEach(key => {
-                      let theMonthData = oData.monthData[key];
-                      if (TypeChecker.isString(theMonthData)) {
-                        oData.monthData[key] = JSON.parse(theMonthData);
-                      }
-                    });
-                  }
-                  oData.curMonthData = oData.monthData[curMonth];
-                  this.months = matchedOverview.months;
-                  this.module = oData;
-                  parseByCompanies(oData.curMonthData);
-                }
-              }
-            });
-          }
-        }
-      });
+        });
+
+        DashboardApi.getAllStatistics().then(statRes => {
+          let months = [], oData = {monthData: {}};
+          statRes.data.forEach(stat => {
+            months.push(stat.month);
+            let oVal = null;
+            try{
+              oVal = JSON.parse(stat.value);
+            } catch(err){}
+            if(oVal) {
+              oData.curMonthDataId = stat.id;
+              oData.monthData[stat.month] = oVal;
+            }
+          });
+
+          oData.curMonthData = oData.monthData[curMonth];
+
+          this.months = months;
+          this.module = oData;
+
+          parseByCompanies(oData.curMonthData);
+        });
+      })
 
       function parseByCompanies(oneMonthData) {
         vm.headers = [];
@@ -122,6 +113,7 @@ export default {
       this.editCompanies = CommonUtils.deepClone(this.companies);
     },
     submit() {
+      this.periods = null;
       this.refresh();
       this.editCompanies = null;
     },

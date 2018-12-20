@@ -71,11 +71,15 @@ export default {
             }
             if (TypeChecker.isObject(monthData)) {
               if (nYear == nCurYear && nMonth == nCurMonth) {
+                this.rs.curMonthData.id = d.id;
+                this.rs.curMonthData.status = d.status;
                 this.rs.curMonthData.remind = monthData.remind;
                 this.rs.curMonthData.support = monthData.support;
               } else if (nYear < nCurYear || (nYear == nCurYear && nMonth < nCurMonth)) {
                 this.rs.pastData.push({
                   month: month,
+                  id: d.id,
+                  status: d.status,
                   remind: monthData.remind,
                   support: monthData.support
                 });
@@ -139,11 +143,22 @@ export default {
       this.isEditRemind = true;
     },
     submitRemind(m) {
-      DashboardApi.saveReport({
-        name: this.rs.key,
+      let dataToSend = {
+        companyId: this.companyId,
+        status: this.rs.curMonthData.status,
         month: this.curMonth,
-        value: this.rs.curMonthData
-      }).then(res => {
+        responsensupport: JSON.stringify({
+          remind: this.rs.curMonthData.remind,
+          support: this.rs.curMonthData.support
+        })
+      };
+      let promise = null;
+      if(this.rs.curMonthData.id) {
+        promise = DashboardApi.updateReport(this.rs.curMonthData.id, dataToSend);
+      } else {
+        promise = DashboardApi.addReport(dataToSend);
+      }
+      promise.then(res => {
         Noty.notifySuccess({ text: '提交提醒成功！' });
         this.isEditRemind = false;
       }, err => {
@@ -157,11 +172,22 @@ export default {
       this.isEditSupport = true;
     },
     submitSupport(m) {
-      DashboardApi.saveReport({
-        name: this.rs.key,
+      let dataToSend = {
+        companyId: this.companyId,
+        status: this.rs.curMonthData.status,
         month: this.curMonth,
-        value: this.rs.curMonthData
-      }).then(res => {
+        responsensupport: JSON.stringify({
+          remind: this.rs.curMonthData.remind,
+          support: this.rs.curMonthData.support
+        })
+      };
+      let promise = null;
+      if(this.rs.curMonthData.id) {
+        promise = DashboardApi.updateReport(this.rs.curMonthData.id, dataToSend);
+      } else {
+        promise = DashboardApi.addReport(dataToSend);
+      }
+      promise.then(res => {
         Noty.notifySuccess({ text: '提交决策成功！' });
         this.isEditSupport = false;
       }, err => {

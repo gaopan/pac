@@ -6,6 +6,9 @@ export default {
     companies: {
       type: Array,
       required: true
+    },
+    requestId: {
+      type: Number
     }
   },
   data() {
@@ -134,8 +137,20 @@ export default {
       return data;
     },
     save() {
+      let vm = this;
       let saveTable = function(data) {
-        DashboardApi.saveReport(data).then(res => {
+        let promise = null;
+        let _dataToSend = {
+          month: data.month,
+          value: JSON.stringify(data.value)
+        };
+        if(vm.$props.requestId) {
+          promise = DashboardApi.updateStatistics(vm.$props.requestId, _dataToSend);
+        } else {
+          promise = DashboardApi.addStatistics(_dataToSend);
+        }
+        
+        promise.then(res => {
           Noty.notifySuccess({ text: '保存数据成功！' });
           vm.$emit('submitted');
         }, err => {
@@ -146,8 +161,20 @@ export default {
       saveTable(dataToSend);
     },
     submit() {
+      let vm = this;
       let saveTable = function(data) {
-        DashboardApi.saveReport(data).then(res => {
+        let promise = null;
+        let _dataToSend = {
+          month: data.month,
+          value: JSON.stringify(data.value)
+        };
+        if(vm.$props.requestId) {
+          promise = DashboardApi.updateStatistics(vm.$props.requestId, _dataToSend);
+        } else {
+          promise = DashboardApi.addStatistics(_dataToSend);
+        }
+
+        promise.then(res => {
           Noty.notifySuccess({ text: '提交数据成功！' });
           vm.$emit('submitted');
         }, err => {

@@ -38,7 +38,7 @@ export default {
       let curRemoteMonthData = this.currentModule.monthData,
         curMonth = this.curMonth = new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
         curMonthData = null;
-      if (TypeChecker.isObject(curRemoteMonthData)) {
+      if (TypeChecker.isObject(curRemoteMonthData) && TypeChecker.isObject(curRemoteMonthData[curMonth])) {
         curMonthData = curRemoteMonthData[curMonth].monthData;
       }
       this.currentModule.editConfig.fields.forEach(f => {
@@ -111,16 +111,19 @@ export default {
     prepareDataToSave(isSubmit, isApproved) {
       let vm = this;
       let _data = { name: vm.currentModule.key, month: vm.curMonth, value: {} };
-      if(isSubmit) {
+      if (isSubmit) {
         _data.value.isSubmitted = !!isSubmit;
       }
-      if(isApproved) {
+      if (isApproved) {
         _data.value.isApproved = !!isApproved;
       }
-      let curMonthData = vm.currentModule.monthData[vm.curMonth].monthData;
-      if(vm.currentModule.monthData[vm.curMonth].id) {
+      let curMonthData = null;
+      if (vm.currentModule.monthData[vm.curMonth]) {
+        curMonthData = vm.currentModule.monthData[vm.curMonth].monthData;
+        if (vm.currentModule.monthData[vm.curMonth].id) {
           _data.id = vm.currentModule.monthData[vm.curMonth].id;
         }
+      }
       _data.value.comments = (curMonthData && curMonthData.comments) ? curMonthData.comments : "";
       vm.currentModule.editConfig.fields.forEach(f => {
         if (f.list) {
@@ -158,7 +161,7 @@ export default {
       let vm = this;
       let saveTable = function(data) {
         let promise = null;
-        if(data.id) {
+        if (data.id) {
           promise = DashboardApi.updateModuleByMonth(vm.companyId, vm.curMonth, data.value2);
         } else {
           promise = DashboardApi.addModuleByMonth(vm.companyId, vm.curMonth, data.value2);
@@ -177,7 +180,7 @@ export default {
       let vm = this;
       let saveTable = function(data) {
         let promise = null;
-        if(data.id) {
+        if (data.id) {
           promise = DashboardApi.updateModuleByMonth(vm.companyId, vm.curMonth, data.value2);
         } else {
           promise = DashboardApi.addModuleByMonth(vm.companyId, vm.curMonth, data.value2);
@@ -192,11 +195,11 @@ export default {
       let data = this.prepareDataToSave(true);
       saveTable(data);
     },
-    approve(){
+    approve() {
       let vm = this;
       let saveTable = function(data) {
         let promise = null;
-        if(data.id) {
+        if (data.id) {
           promise = DashboardApi.updateModuleByMonth(vm.companyId, vm.curMonth, data.value2);
         } else {
           promise = DashboardApi.addModuleByMonth(vm.companyId, vm.curMonth, data.value2);
