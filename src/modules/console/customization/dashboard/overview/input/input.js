@@ -39,11 +39,7 @@ export default {
         curMonth = this.curMonth = new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
         curMonthData = null;
       if (TypeChecker.isObject(curRemoteMonthData)) {
-        curMonthData = curRemoteMonthData[curMonth];
-
-        if (TypeChecker.isString(curMonthData)) {
-          curMonthData = JSON.parse(curMonthData);
-        }
+        curMonthData = curRemoteMonthData[curMonth].monthData;
       }
       this.currentModule.editConfig.fields.forEach(f => {
         if (f.type == 'current_month') {
@@ -121,11 +117,11 @@ export default {
       if(isApproved) {
         _data.value.isApproved = !!isApproved;
       }
-      let curMonthData = vm.currentModule.monthData[vm.curMonth];
-      if(curMonthData && curMonthData.id) {
-          _data.id = curMonthData.id;
+      let curMonthData = vm.currentModule.monthData[vm.curMonth].monthData;
+      if(vm.currentModule.monthData[vm.curMonth].id) {
+          _data.id = vm.currentModule.monthData[vm.curMonth].id;
         }
-      _data.value.comments = (curMonthData && curMonthData.comments) ? curMonthData.comments : [];
+      _data.value.comments = (curMonthData && curMonthData.comments) ? curMonthData.comments : "";
       vm.currentModule.editConfig.fields.forEach(f => {
         if (f.list) {
           f.value = [];

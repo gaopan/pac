@@ -54,22 +54,21 @@ export default {
       DashboardApi.getReportByCompanyId(this.companyId).then(res => {
         let months = [];
         if (TypeChecker.isArray(res.data) && res.data.length > 0) {
-          let params = [];
           res.data.forEach(d => {
             months.push(d.month);
           });
 
           DashboardApi.companyModulesByMonths(this.companyId, months).then(detailRes => {
+            let _oData = {};
             if (TypeChecker.isArray(detailRes.data) && detailRes.data.length > 0) {
-              let _oData = {};
               detailRes.data.forEach(d => {
-                let month = d.month;
+                let month = d.report.month;
 
                 if(d.reportModules) {
                   d.reportModules.forEach(rm => {
                     let obj = _oData[rm.moduleName];
                     if(!obj) obj = _oData[rm.moduleName] = {};
-                    if(!obj.months) obj.months = {};
+                    if(!obj.months) obj.months = [];
                     if(!obj.monthData) obj.monthData = {};
                     let rmValue = rm.value;
                     let rmValueObj = null;
@@ -77,7 +76,9 @@ export default {
                       rmValueObj = JSON.parse(rmValue);
                     } catch(err){}
                     if(rmValueObj && rmValueObj.isApproved) {
-                      obj.months[month] = rmValue;
+                      if(obj.months.indexOf(month)) {
+                        obj.months.push(month);
+                      }
                       obj.monthData[month] = rmValueObj;
                     }
                   });
@@ -86,7 +87,7 @@ export default {
             }
 
             modules.forEach(m => {
-              let oM = oData[m.key];
+              let oM = _oData[m.key];
               if (oM) {
                 m['months'] = oM["months"];
                 m['monthData'] = oM['monthData'];
@@ -102,6 +103,7 @@ export default {
           });
         } else {
           this.modules = modules;
+          cb.call(this);
         }
       });
     },

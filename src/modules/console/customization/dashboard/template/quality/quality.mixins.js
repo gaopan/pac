@@ -367,7 +367,7 @@ export default {
         this.$props.conf.data.table.list.filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
           table.list = table.list.concat(item.data);
           item.data.forEach(_item => {
-            _item['合格率'] = (Number(_item['合格里程']) / Number(_item['总里程'])).toFixed(2);
+            _item['合格率'] = (Number(_item['合格里程']) / Number(_item['总里程'])).toFixed(3);
           });
         });
       }
@@ -378,7 +378,7 @@ export default {
           data.up = data.up.concat(item.data);
           item.data.forEach(_item => {
             totalLC += Number(_item['总里程']);
-            _item['合格率'] = Number(_item['合格里程']) / Number(_item['总里程']);
+            _item['合格率'] = (Number(_item['合格里程']) / Number(_item['总里程'])).toFixed(3);
           });
         });
         data.up.forEach(item => {

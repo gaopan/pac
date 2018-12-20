@@ -36,13 +36,13 @@ export default {
       if (!this.modules) {
         return 0;
       }
-      return this.modules.filter(m => !!m.curMonthData && !!m.curMonthData.month);
+      return this.modules.filter(m => !!m.curMonthData && !!m.curMonthData.monthData && !!m.curMonthData.monthData.month);
     },
     unConfiguredModules() {
       if (!this.modules) {
         return [];
       }
-      return this.modules.filter(m => !m.curMonthData || !m.curMonthData.month);
+      return this.modules.filter(m => !m.curMonthData || !m.curMonthData.monthData || !m.curMonthData.monthData.month);
     }
   },
   methods: {
@@ -106,8 +106,8 @@ export default {
           let oM = oData[m.key];
           m['monthData'] = {};
           if (oM) {
-            m['curMonthData'] = oM["monthData"];
-            m['monthData'][curMonth] = oM["monthData"];
+            m['curMonthData'] = oM;
+            m['monthData'][curMonth] = oM;
           } else {
             m['curMonthData'] = {};
           }

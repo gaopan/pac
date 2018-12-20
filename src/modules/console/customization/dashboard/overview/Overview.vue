@@ -15,8 +15,8 @@
     </div>
     <div class="container" v-if="modules" v-show="!editingModule&&!moduleCreating&&!isEditRemind&&!isEditSupport&&!isViewPastRS">
       <div class="row">
-        <div class="col-xs-12 col-md-4 col-lg-4" v-for="m in modules" v-if="m.curMonthData && m.curMonthData.month">
-          <div class="module" :class="{red: m.curMonthData.status=='r',yellow:m.curMonthData.status=='y',green:m.curMonthData.status=='g'}">
+        <div class="col-xs-12 col-md-4 col-lg-4" v-for="m in modules" v-if="m.curMonthData && m.curMonthData.monthData && m.curMonthData.monthData.month">
+          <div class="module" :class="{red: m.curMonthData.monthData.status=='r',yellow:m.curMonthData.monthData.status=='y',green:m.curMonthData.monthData.status=='g'}">
             <div class="head" @click="selectModule(m)">
               <div class="avatar">
                 <i :class="m.icon"></i>

@@ -21,6 +21,7 @@ export default {
   },
   created() {
     let curMonth = this.curMonth;
+    this.companyId = this.$router.currentRoute.params.company.substr(this.$router.currentRoute.params.company.lastIndexOf('_') + 1);
     this.data = this.$props.comments.slice();
     if (this.data.filter(item => item.month == curMonth) < 1) {
       this.data.push({
@@ -59,11 +60,10 @@ export default {
       let curMonthComments = this.data.filter(item => item.month == this.curMonth)[0].content;
       curMonthData.comments = curMonthComments;
       let dataToSend = {
-        name: module.key,
-        month: this.curMonth,
-        value: curMonthData
+        moduleName: module.key,
+        value: JSON.stringify(curMonthData)
       };
-      DashboardApi.saveReport(dataToSend).then(res => {
+      DashboardApi.updateModuleByMonth(this.companyId, this.curMonth, dataToSend).then(res => {
         Noty.notifySuccess({ text: "保存数据成功！" });
         this.$set(comment, "isEditing", false);
       }, err => {

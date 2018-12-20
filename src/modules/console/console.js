@@ -18,6 +18,7 @@ export default {
       let isAA = this.$store.getters.userProfile.isAA,
         isAdmin = this.$store.getters.userProfile.isAdmin,
         isBoss = this.$store.getters.userProfile.isBoss,
+        userId = this.$store.getters.userProfile.id,
         companies = this.$store.getters.userProfile.companies;
       let _navMenus = CommonUtils.deepClone(navMenusBoss);
       // find monthly report
@@ -30,7 +31,7 @@ export default {
         return true;
       })
       if (monthlyMenu) {
-        CompanyApi.companies().then(res => {
+        CompanyApi.userCompanies(userId).then(res => {
           monthlyMenu.childNodes = [];
           if (isAA) {
             res.data.forEach(comp => {
