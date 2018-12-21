@@ -42,6 +42,7 @@ export default {
     }
   },
   created() {
+    this.user = this.$store.getters.userProfile;
     this.companyId = this.$router.currentRoute.params.company.substr(this.$router.currentRoute.params.company.lastIndexOf('_') + 1);
     this.refreshData(function(){
       this.initTiles();
@@ -75,7 +76,7 @@ export default {
                     try {
                       rmValueObj = JSON.parse(rmValue);
                     } catch(err){}
-                    if(rmValueObj && rmValueObj.isApproved) {
+                    if(rmValueObj && (this.user.isAdmin || this.user.isAA || rmValueObj.isApproved)) {
                       if(obj.months.indexOf(month)) {
                         obj.months.push(month);
                       }

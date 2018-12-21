@@ -14,7 +14,7 @@
             <div class="company-panel" v-show="company.isViewPastRS">
               <h4>{{company.name}}</h4>
               <p>关注、支持事项往月记录</p>
-              <ul class="past-rs" v-if="company.rs.pastData && company.rs.pastData.length > 0">
+              <ul class="past-rs" v-if="company.rs && company.rs.pastData && company.rs.pastData.length > 0">
                 <li v-for="rs in company.rs.pastData">
                   <div>
                     <div class="remind">
@@ -37,7 +37,7 @@
             </div>
             <div class="company-panel" v-show="company.isEditSupport">
               <h4>{{company.name}}</h4>
-              <form>
+              <form v-if="company.rs">
                 <div class="form-static-box">
                   <div>待关注、支持事项</div>
                   <div>{{company.rs.curMonthData.remind}}</div>

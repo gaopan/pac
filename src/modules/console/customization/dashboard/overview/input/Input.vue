@@ -9,8 +9,8 @@
             <fieldset>
               <legend></legend>
               <div class="form-group" v-for="field in currentModule.editConfig.fields">
-                <label class="col-sm-2 control-label">{{field.name}}</label>
-                <div class="col-sm-10">
+                <label class="col-sm-3 control-label">{{field.name}}</label>
+                <div class="col-sm-9">
                   <input :disabled="field.type=='current_month'" :name="field.name" v-model="field.value" v-validate="field.validate" type="text" class="form-control" :placeholder="field.name" v-if="!field.texteara&&!field.list&&!field.select" :class="{'has-error':errors.has(field.name)}" />
                   <textarea :disabled="field.type=='current_month'" v-validate="field.validate" v-model="field.value" class="form-control" :placeholder="field.name" :class="{'has-error':errors.has(field.name)}" v-if="field.texteara"></textarea>
                   <leap-select v-if="field.select" :options="field.options" :initSelectedValue="field.value" v-on:onSelectedValues="(args)=>{field.value=args.value}"></leap-select>
@@ -40,8 +40,8 @@
                           <div class="table-form-wrapper">
                             <form class="form-horizontal" v-if="field.list">
                               <div class="form-group" v-for="f in field.fields">
-                                <label class="col-sm-2 control-label">{{f.name}}</label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-3 control-label">{{f.name}}</label>
+                                <div class="col-sm-9">
                                   <input :disabled="f.type=='current_month'" :name="f.name" v-model="currentModule.form[f.key]" v-validate="f.validate" type="text" class="form-control" :placeholder="f.name" v-if="!f.texteara&&!f.list&&!f.select" :class="{'has-error':errors.has(f.name)}">
                                   <textarea :disabled="f.type=='current_month'" v-validate="f.validate" v-model="currentModule.form[f.key]" class="form-control" :placeholder="f.name" :class="{'has-error':errors.has(f.name)}" v-if="f.texteara"></textarea>
                                   <leap-select v-if="f.select" :options="f.options" :initSelectedValue="f.value" v-on:onSelectedValues="(args)=>{f.value=args.value}"></leap-select>
@@ -71,14 +71,14 @@
                                           <div class="table-form-wrapper">
                                             <form class="form-horizontal" v-if="f.list">
                                               <div class="form-group" v-for="_f in f.fields">
-                                                <label class="col-sm-2 control-label">{{_f.name}}</label>
-                                                <div class="col-sm-10">
+                                                <label class="col-sm-3 control-label">{{_f.name}}</label>
+                                                <div class="col-sm-9">
                                                   <input :disabled="_f.type=='current_month'" :name="_f.name" v-model="field.form[_f.key]" v-validate="_f.validate" type="text" class="form-control" :placeholder="_f.name" v-if="!_f.texteara&&!_f.list" :class="{'has-error':errors.has(_f.name)}">
                                                   <textarea :disabled="_f.type=='current_month'" v-validate="_f.validate" v-model="field.form[_f.key]" class="form-control" :placeholder="_f.name" :class="{'has-error':errors.has(_f.name)}" v-if="_f.texteara"></textarea>
                                                 </div>
                                               </div>
                                               <div class="form-group">
-                                                <div class="col-sm-offset-2 col-sm-10">
+                                                <div class="col-sm-offset-3 col-sm-9">
                                                   <button type="button" class="btn btn-primary" @click="saveNewRow(field, f)" :disabled="errors.any()">确定</button>
                                                   <button type="button" class="btn btn-secondary" @click="cancelNewRow(field, f)">取消</button>
                                                 </div>
@@ -92,7 +92,7 @@
                                 </div>
                               </div>
                               <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
+                                <div class="col-sm-offset-3 col-sm-9">
                                   <button type="button" class="btn btn-primary" @click="saveNewRow(currentModule, field)" :disabled="errors.any()">确定</button>
                                   <button type="button" class="btn btn-secondary" @click="cancelNewRow(currentModule, field)">取消</button>
                                 </div>
@@ -111,8 +111,8 @@
                 <h4>{{moduleTable.name}}</h4></legend>
               <div>
                 <div class="form-group" v-for="field in moduleTable.fields">
-                  <label class="col-sm-2 control-label">{{field.name}}</label>
-                  <div class="col-sm-10">
+                  <label class="col-sm-3 control-label">{{field.name}}</label>
+                  <div class="col-sm-9">
                     <input :disabled="field.type=='current_month'" :name="moduleTable.name + '-' + field.name" v-model="field.value" v-validate="field.validate" type="text" class="form-control" :placeholder="field.name" v-if="!field.texteara&&!field.list" :class="{'has-error':errors.has(moduleTable.name + '-' + field.name)}">
                     <textarea :disabled="field.type=='current_month'" v-validate="field.validate" v-model="field.value" class="form-control" :placeholder="field.name" :name="moduleTable.name + '-' + field.name" :class="{'has-error':errors.has(moduleTable.name + '-' + field.name)}" v-if="field.texteara"></textarea>
                     <leap-select v-if="field.select" :options="field.options" :initSelectedValue="field.value" v-on:onSelectedValues="(args)=>{field.value=args.value}"></leap-select>
@@ -142,15 +142,15 @@
                             <div class="table-form-wrapper">
                               <form class="form-horizontal" v-if="field.list">
                                 <div class="form-group" v-for="f in field.fields">
-                                  <label class="col-sm-2 control-label">{{f.name}}</label>
-                                  <div class="col-sm-10">
+                                  <label class="col-sm-3 control-label">{{f.name}}</label>
+                                  <div class="col-sm-9">
                                     <input :disabled="f.type=='current_month'" :name="f.name" v-model="moduleTable.form[f.key]" v-validate="f.validate" type="text" class="form-control" :placeholder="f.name" v-if="!f.texteara&&!f.list&&!f.select" :class="{'has-error':errors.has(f.name)}">
                                     <textarea :disabled="f.type=='current_month'" v-validate="f.validate" v-model="moduleTable.form[f.key]" class="form-control" :placeholder="f.name" :class="{'has-error':errors.has(f.name)}" v-if="f.texteara"></textarea>
                                     <leap-select v-if="f.select" :options="f.options" :initSelectedValue="moduleTable.form[f.key]" v-on:onSelectedValues="(args)=>{moduleTable.form[f.key]=args.value}"></leap-select>
                                   </div>
                                 </div>
                                 <div class="form-group">
-                                  <div class="col-sm-offset-2 col-sm-10">
+                                  <div class="col-sm-offset-3 col-sm-9">
                                     <button type="button" class="btn btn-primary" @click="saveNewRow(moduleTable, field)" :disabled="errors.any()">确定</button>
                                     <button type="button" class="btn btn-secondary" @click="cancelNewRow(moduleTable, field)">取消</button>
                                   </div>
@@ -166,10 +166,12 @@
               </div>
             </fieldset>
             <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button type="button" class="btn btn-primary" @click="save" :disabled="errors.any()">保存</button>
-                <button type="button" class="btn btn-primary" @click="submit" :disabled="errors.any()">提交</button>
-                <button type="button" class="btn btn-primary" @click="approve" :disabled="errors.any()">批准</button>
+              <div class="col-sm-offset-3 col-sm-9">
+                <button type="button" class="btn btn-primary" v-if="!currentModule.curMonthData.monthData || !currentModule.curMonthData.monthData.isSubmitted" @click="save" :disabled="errors.any()">保存</button>
+                <button type="button" class="btn btn-primary" v-if="!currentModule.curMonthData.monthData || (!currentModule.curMonthData.monthData.isApproved && !currentModule.curMonthData.monthData.isSubmitted)" @click="submit" :disabled="errors.any()">提交</button>
+                <button type="button" class="btn btn-primary" v-if="user.isAdmin && currentModule.curMonthData.monthData && currentModule.curMonthData.monthData.isSubmitted && currentModule.curMonthData.monthData.isApproved == undefined" @click="approve(true)" :disabled="errors.any()">批准</button>
+                <button type="button" class="btn btn-primary" v-if="user.isAdmin && currentModule.curMonthData.monthData && currentModule.curMonthData.monthData.isSubmitted && currentModule.curMonthData.monthData.isApproved == undefined" @click="approve(false)" :disabled="errors.any()">拒绝</button>
+                <button type="button" class="btn btn-primary" v-if="user.isAdmin && currentModule.curMonthData.monthData && currentModule.curMonthData.monthData.isApproved" @click="withdraw" :disabled="errors.any()">撤回重新编辑</button>
               </div>
             </div>
           </form>

@@ -23,11 +23,13 @@ export default {
   },
   data() {
     return {
+      user: null,
       currentModule: null
     };
   },
   components: { LeapSelect },
   created() {
+    this.user = this.$store.getters.userProfile;
     this.editModule(this.$props.module);
   },
   methods: {
@@ -111,10 +113,10 @@ export default {
     prepareDataToSave(isSubmit, isApproved) {
       let vm = this;
       let _data = { name: vm.currentModule.key, month: vm.curMonth, value: {} };
-      if (isSubmit) {
+      if (TypeChecker.isBoolean(isSubmit)) {
         _data.value.isSubmitted = !!isSubmit;
       }
-      if (isApproved) {
+      if (TypeChecker.isBoolean(isApproved)) {
         _data.value.isApproved = !!isApproved;
       }
       let curMonthData = null;
@@ -195,7 +197,7 @@ export default {
       let data = this.prepareDataToSave(true);
       saveTable(data);
     },
-    approve() {
+    approve(isApproved) {
       let vm = this;
       let saveTable = function(data) {
         let promise = null;
@@ -211,7 +213,26 @@ export default {
           Noty.notifyError({ text: '审批数据失败！' });
         });
       };
-      let data = this.prepareDataToSave(true, true);
+      let data = this.prepareDataToSave(isApproved, isApproved);
+      saveTable(data);
+    },
+    withdraw(){
+      let vm = this;
+      let saveTable = function(data) {
+        let promise = null;
+        if (data.id) {
+          promise = DashboardApi.updateModuleByMonth(vm.companyId, vm.curMonth, data.value2);
+        } else {
+          promise = DashboardApi.addModuleByMonth(vm.companyId, vm.curMonth, data.value2);
+        }
+        promise.then(res => {
+          Noty.notifySuccess({ text: '撤回成功！' });
+          vm.$emit('submitted');
+        }, err => {
+          Noty.notifyError({ text: '撤回失败！' });
+        });
+      };
+      let data = this.prepareDataToSave(false, false);
       saveTable(data);
     },
     addNewRow(moduleTable, field) {
