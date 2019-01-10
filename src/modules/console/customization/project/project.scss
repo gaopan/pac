@@ -1,0 +1,135 @@
+.project-container {
+  padding: 5% 0;
+
+  .project {
+    display: block;
+    width: 100%;
+    position: relative;
+    border: 1px solid $borderColor;
+    margin-bottom: 30/12*$unit;
+    background-color: $bgColor;
+    color: $fontColor;
+
+    &.red::before {
+      display: block;
+      position: absolute;
+      content: " ";
+      width: 20/12*$unit;
+      height: 20/12*$unit;
+      top: 10/12*$unit;
+      right: 10/12*$unit;
+      border-radius: 50%;
+      background-color: #D9534F;
+    }
+
+    &.green::before {
+      display: block;
+      position: absolute;
+      content: " ";
+      width: 20/12*$unit;
+      height: 20/12*$unit;
+      top: 10/12*$unit;
+      right: 10/12*$unit;
+      border-radius: 50%;
+      background-color: #449D44;
+    }
+
+    &.yellow::before {
+      display: block;
+      position: absolute;
+      content: " ";
+      width: 20/12*$unit;
+      height: 20/12*$unit;
+      top: 10/12*$unit;
+      right: 10/12*$unit;
+      border-radius: 50%;
+      background-color: #F0AD4E;
+    }
+
+    .project-name {
+      display: block;
+      padding: 60/12*$unit 15/12*$unit;
+      font-size: 24/12*$unit;
+      line-height: 1.5;
+      font-weight: bold;
+      border-bottom: 1px solid $borderColor;
+    }
+
+    .project-caption {
+      padding: 10/12*$unit 15/12*$unit;
+
+      &>button {
+        display: block;
+        width: 100%;
+      }
+
+      &>button+button {
+        margin-top: 10/12*$unit;
+      }
+    }
+
+    .project-panel {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow-y: auto;
+      z-index: 1;
+      background-color: #fff;
+      padding: 10/12*$unit 15/12*$unit;
+    }
+
+    .project-panel-actions {
+      margin-top: 15/12*$unit;
+    }
+  }
+
+  .project:hover {
+    border-color: $color;
+    box-shadow: 0 0 1px 1px rgba(43, 162, 41, .45);
+    -webkit-box-shadow: 0 0 1px 1px rgba(43, 162, 41, .45);
+  }
+
+  ul.project-tasks {
+    display: block;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    &>li {
+      display: block;
+      position: relative;
+      border: 1px solid $color;
+
+      &>div:last-child {
+        color: #fff;
+        position: absolute;
+        right: -11px;
+        top: 0;
+
+        &>div {
+          font-size: $unit;
+          padding: 5/12*$unit;
+          background-color: $color;
+          transform: rotate(45deg);
+          text-align: center;
+        }
+      }
+
+      &>div:nth-child(1) {}
+    }
+  }
+
+  .project-task {
+    padding: 5/12*$unit 10/12*$unit;
+  }
+
+  ul.project-task-items {
+    display: block;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+}

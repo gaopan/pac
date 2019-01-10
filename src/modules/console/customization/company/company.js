@@ -33,6 +33,9 @@ export default {
         }
       });
     },
+    toProject(company){
+      this.$router.push('/console/cust/project/' + company.name + "_" + company.key);
+    },
     toDashboard(company) {
       this.$router.push('/console/cust/monthly/' + company.name + "_" + company.key + '/report');
     },

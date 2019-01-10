@@ -11,6 +11,10 @@
       </ol>
     </div>
     <div class="logo">
+      <div class="notification" @click="toProject">
+        <span><i class="icon-bell"></i></span>
+        <div>1</div>
+      </div>
       <div class="user-profile" title="退出登陆" @click="logout">
         <span>{{user.firstName}} {{user.lastName}}</span>
       </div>

@@ -1,19 +1,7 @@
 export default [{
-  name: '月度报表',
-  childNodes: [{
-    name: '中海庭',
-    route: 'Customization Dashboard',
-    params: { company: 'zht' },
-    childNodes: [{
-      name: '总览',
-      route: 'Customization Dashboard Overview',
-      params: { company: 'zht' }
-    }, {
-      name: '报告',
-      route: 'Customization Dashboard Report',
-      params: { company: 'zht' }
-    }]
-  }]
+  name: '公司月度报表'
+}, {
+  name: '重大项目列表'
 }, {
   name: '统计报表',
   childNodes: [{

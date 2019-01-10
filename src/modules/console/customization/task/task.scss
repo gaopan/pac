@@ -1,0 +1,78 @@
+.task-container {
+  padding: 5% 0;
+
+  .task-guide {
+  	padding: 10/12*$unit;
+  	background-color: $bgColor;
+
+    span.red {
+      color: #D9534F;
+    }
+
+    span.green {
+      color: #449D44;
+    }
+
+  }
+
+  .task-title {
+    font-weight: 700;
+    font-size: 24/12*$unit;
+    margin-bottom: 40/12*$unit;
+  }
+
+  .task-month {
+    display: block;
+    position: relative;
+    padding: 30/12*$unit;
+    border: 1px solid #dfdfdf;
+    margin-bottom: 10/12*$unit;
+
+    .month-name {
+      font-weight: 700;
+      margin-bottom: 15/12*$unit;
+    }
+
+    .month-status {
+      display: block;
+      position: absolute;
+      right: 10/12*$unit;
+      top: 10/12*$unit;
+      color: #fff;
+      width: 30/12*$unit;
+      height: 30/12*$unit;
+      border-radius: 50%;
+
+      &.red {
+        background-color: #D9534F;
+      }
+
+      &.green {
+        background-color: #449D44;
+      }
+    }
+
+    .month-no-task {
+    	padding: 15/12*$unit 20/12*$unit;
+    	background-color: #7d7d7d;
+    	color: #fff;
+    	margin-top: 10/12*$unit;
+    }
+
+    ul.month-tasks {
+      display: block;
+      list-style: none;
+      margin: 10/12*$unit 0 0 0;
+      padding: 0;
+      background-color: $bgColor;
+
+      &>li {
+        padding: 15/12*$unit 20/12*$unit;
+      }
+
+      &>li+li {
+      	border-top: 1px solid #bfbfbf;
+      }
+    }
+  }
+}

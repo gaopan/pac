@@ -109,14 +109,14 @@ let quality = {
           name: '总里程(KM)',
           validate: {
             required: true,
-            decimal: 2
+            decimal: 10
           }
         }, {
           key: '合格里程',
           name: '合格里程',
           validate: {
             required: true,
-            decimal: 2
+            decimal: 10
           }
         }, {
           key: '对策',
@@ -129,7 +129,7 @@ let quality = {
           name: '合格标准',
           validate: {
             required: true,
-            decimal: true
+            decimal: 10
           }
         }]
       }]
@@ -157,28 +157,28 @@ let quality = {
           name: '错误发生率',
           validate: {
             required: true,
-            decimal: 4
+            decimal: 10
           }
         }, {
           key: '错误发生率标准',
           name: '错误发生率标准',
           validate: {
             required: true,
-            decimal: 4
+            decimal: 10
           }
         }, {
           key: '错误流出率',
           name: '错误流出率',
           validate: {
             required: true,
-            decimal: 4
+            decimal: 10
           }
         }, {
           key: '错误流出率标准',
           name: '错误流出率标准',
           validate: {
             required: true,
-            decimal: 4
+            decimal: 10
           }
         }]
       }]
@@ -197,7 +197,7 @@ quality.dashboardConfig.adaptData = function(remoteData, months) {
   let data = {
     up: [],
     down: [],
-    table: {list: []},
+    table: { list: [] },
     comments: [],
     module: {
       name: '质量',
@@ -215,13 +215,13 @@ quality.dashboardConfig.adaptData = function(remoteData, months) {
   let tableDataNumberKeys = ["总里程", "合格里程", "合格率", "合格标准"];
   let tableDataKeyPrefixs = ["外业合格率", "批次"];
   data.table.headers = [
-  {key: "外业批次", name: "外业批次", width: "10%"},
-  {key: "区域", name: "区域", width: "10%"},
-  {key: "总里程", name: "总里程", width: "10%"},
-  {key: "合格里程", name: "合格里程", width: "10%"},
-  {key: "合格率", name: "合格率", width: "10%"},
-  {key: "合格标准", name: "合格标准", width: "10%"},
-  {key: "对策", name: "对策", width: "40%"}
+    { key: "外业批次", name: "外业批次", width: "10%" },
+    { key: "区域", name: "区域", width: "10%" },
+    { key: "总里程", name: "总里程", width: "10%" },
+    { key: "合格里程", name: "合格里程", width: "10%" },
+    { key: "合格率", name: "合格率", width: "10%" },
+    { key: "合格标准", name: "合格标准", width: "10%" },
+    { key: "对策", name: "对策", width: "40%" }
   ];
 
   if (!remoteData) return data;
@@ -261,42 +261,42 @@ let cost = {
         name: "总成本（元）",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: "总公里数",
         name: "总公里数（公里）",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: "市区成本",
         name: "市区成本（元/公里）",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: "市区成本目标",
         name: "市区成本目标（元/公里）",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: "高速成本",
         name: "高速成本（元/公里）",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: "高速成本目标",
         name: "高速成本目标（元/公里）",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: '备注',
@@ -311,28 +311,28 @@ let cost = {
         name: "总成本（元）",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: "总公里数",
         name: "总公里数（公里）",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: "成本",
         name: "成本（元/公里）",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: "成本目标",
         name: "成本目标（元/公里）",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: '备注',
@@ -404,28 +404,28 @@ let hr = {
         name: "博士人数",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: "硕士人数",
         name: "硕士人数",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: "本科人数",
         name: "本科人数",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: "大专及以下人数",
         name: "大专及以下人数",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: '备注',
@@ -440,28 +440,28 @@ let hr = {
         name: "全年计划人数",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: "在职人数",
         name: "在职人数",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: "本月预计到岗人数",
         name: "本月预计到岗人数",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: "本月实际到岗人数",
         name: "本月实际到岗人数",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: '备注',
@@ -654,21 +654,21 @@ let operation = {
         name: "活期",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: "存款",
         name: "存款",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: "理财",
         name: "理财",
         validate: {
           required: true,
-          decimal: 2
+          decimal: 10
         }
       }, {
         key: "状态",

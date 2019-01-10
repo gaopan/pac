@@ -44,6 +44,30 @@ let routerTable = {
         },
         meta: configMeta("Customization Company", false)
       }, {
+        name: 'Customization Project',
+        path: 'project/:company',
+        components: {
+          default: () => import('@/modules/console/customization/project/Project.vue')
+        },
+        meta: configMeta("Customization Project", false),
+        children: [{
+          name: 'Customization Project Overview',
+          path: 'overview',
+          components: {
+            default: () =>
+              import ('@/modules/console/customization/project/overview/Overview.vue')
+          },
+          meta: configMeta('Customization Project', false)
+        }, {
+          name: 'Customization Project Task',
+          path: 'task/:projectId',
+          components: {
+            default: () =>
+              import ('@/modules/console/customization/task/Task.vue')
+          },
+          meta: configMeta('Customization Project', false)
+        }]
+      }, {
         name: 'Customization Dashboard',
         path: 'monthly/:company',
         components: {

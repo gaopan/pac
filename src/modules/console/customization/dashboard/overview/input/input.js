@@ -164,6 +164,7 @@ export default {
       let saveTable = function(data) {
         let promise = null;
         if (data.id) {
+          data.value2.id = data.id;
           promise = DashboardApi.updateModuleByMonth(vm.companyId, vm.curMonth, data.value2);
         } else {
           promise = DashboardApi.addModuleByMonth(vm.companyId, vm.curMonth, data.value2);
@@ -183,6 +184,7 @@ export default {
       let saveTable = function(data) {
         let promise = null;
         if (data.id) {
+          data.value2.id = data.id;
           promise = DashboardApi.updateModuleByMonth(vm.companyId, vm.curMonth, data.value2);
         } else {
           promise = DashboardApi.addModuleByMonth(vm.companyId, vm.curMonth, data.value2);
@@ -202,6 +204,7 @@ export default {
       let saveTable = function(data) {
         let promise = null;
         if (data.id) {
+          data.value2.id = data.id;
           promise = DashboardApi.updateModuleByMonth(vm.companyId, vm.curMonth, data.value2);
         } else {
           promise = DashboardApi.addModuleByMonth(vm.companyId, vm.curMonth, data.value2);
@@ -221,6 +224,7 @@ export default {
       let saveTable = function(data) {
         let promise = null;
         if (data.id) {
+          data.value2.id = data.id;
           promise = DashboardApi.updateModuleByMonth(vm.companyId, vm.curMonth, data.value2);
         } else {
           promise = DashboardApi.addModuleByMonth(vm.companyId, vm.curMonth, data.value2);
@@ -282,7 +286,11 @@ export default {
         return true;
       });
       if (index > -1) {
+        Vue.set(moduleTable, "showForm", true);
         field.listData.splice(index, 1);
+        setTimeout(function(){
+          Vue.set(moduleTable, "showForm", false);
+        }, 0);
       }
     }
   }

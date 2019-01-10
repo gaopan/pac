@@ -3,13 +3,15 @@ import navMenus from './console.menus.js'
 import navMenusBoss from './console.boss.menus.js'
 import CommonUtils from '@/utils/common-utils.js'
 import CompanyApi from '@/api/customization/company.js'
+import ProjectData from './customization/project/project.data.js'
+
+let pd = CommonUtils.deepClone(ProjectData)
 
 export default {
   name: 'Console',
   data() {
     return {
-      menus: null,
-      showNav: false
+      menus: null
     }
   },
   components: { Navigator },
@@ -22,39 +24,76 @@ export default {
         companies = this.$store.getters.userProfile.companies;
       let _navMenus = CommonUtils.deepClone(navMenusBoss);
       // find monthly report
-      let monthlyMenu = null;
-      _navMenus.every(menu => {
-        if (menu.name == '月度报表') {
+      let monthlyMenu = null,
+        monthlyProjectMenu = null;
+      _navMenus.forEach(menu => {
+        if (menu.name == '公司月度报表') {
           monthlyMenu = menu;
-          return false;
         }
-        return true;
+        if (menu.name == '重大项目列表') {
+          monthlyProjectMenu = menu;
+        }
       })
-      if (monthlyMenu) {
-        CompanyApi.userCompanies(userId).then(res => {
+      let _companies = null,
+        _projects = null;
+      let companyPromise = CompanyApi.userCompanies(userId).then(res => {
+        _companies = res.data;
+      });
+      companyPromise.then(res => {
+        if (monthlyMenu) {
           monthlyMenu.childNodes = [];
-          if (isAA) {
-            res.data.forEach(comp => {
-              if (companies.indexOf(comp.id) > -1) {
-                let _menu = {
-                  name: comp.name,
-                  route: 'Customization Dashboard',
-                  params: { company: comp.name + '_' + comp.id },
-                  childNodes: [{
-                    name: '总览',
-                    route: 'Customization Dashboard Overview',
-                    params: { company: comp.name + '_' + comp.id }
-                  }, {
-                    name: '报告',
-                    route: 'Customization Dashboard Report',
-                    params: { company: comp.name + '_' + comp.id }
-                  }]
+        }
+
+        if (monthlyProjectMenu) {
+          monthlyProjectMenu.childNodes = [];
+        }
+
+        if (isAA) {
+          if (monthlyMenu) {
+            _companies.forEach(comp => {
+              let _menu = {
+                name: comp.name,
+                route: 'Customization Dashboard',
+                params: { company: comp.name + '_' + comp.id },
+                childNodes: [{
+                  name: '总览',
+                  route: 'Customization Dashboard Overview',
+                  params: { company: comp.name + '_' + comp.id }
+                }, {
+                  name: '报告',
+                  route: 'Customization Dashboard Report',
+                  params: { company: comp.name + '_' + comp.id }
+                }]
+              };
+              monthlyMenu.childNodes.push(_menu);
+
+              let _projectMenu = {
+                name: comp.name,
+                route: "Customization Project",
+                params: {company: comp.name + '_' + comp.id},
+                childNodes: [{
+                  name: '总览',
+                  route: 'Customization Project Overview',
+                  params: { company: comp.name + '_' + comp.id }
+                }]
+              };
+              pd.projects.forEach(proj => {
+                let _pMenu = {
+                  name: proj.name,
+                  route: 'Customization Project Task',
+                  params: { projectId: proj.id, company: comp.name + '_' + comp.id }
                 };
-                monthlyMenu.childNodes.push(_menu);
+                _projectMenu.childNodes.push(_pMenu);
+              });
+
+              if(monthlyProjectMenu) {
+                monthlyProjectMenu.childNodes.push(_projectMenu);
               }
             });
-          } else {
-            res.data.forEach(comp => {
+          }
+        } else {
+          if (monthlyMenu) {
+            _companies.forEach(comp => {
               let _menu = {
                 name: comp.name,
                 route: 'Customization Dashboard',
@@ -73,26 +112,48 @@ export default {
                 });
               }
               monthlyMenu.childNodes.push(_menu);
+
+              let _projectMenu = {
+                name: comp.name,
+                route: "Customization Project",
+                params: {company: comp.name + '_' + comp.id},
+                childNodes: [{
+                  name: '总览',
+                  route: 'Customization Project Overview',
+                  params: { company: comp.name + '_' + comp.id }
+                }]
+              };
+              pd.projects.forEach(proj => {
+                let _pMenu = {
+                  name: proj.name,
+                  route: 'Customization Project Task',
+                  params: { projectId: proj.id, company: comp.name + '_' + comp.id }
+                };
+                _projectMenu.childNodes.push(_pMenu);
+              });
+
+              if(monthlyProjectMenu) {
+                monthlyProjectMenu.childNodes.push(_projectMenu);
+              }
             });
           }
+        }
 
-          let matchedRouteNames = to.matched.map(r => r.name);
-          _navMenus.forEach(m => {
-            m.isActive = matchedRouteNames.indexOf(m.route) > -1;
-            if (m.childNodes) {
-              m.childNodes.forEach(cm => {
-                let isActive = matchedRouteNames.indexOf(cm.route) > -1
-                if(cm.params) {
-                  isActive = JSON.stringify(cm.params) == JSON.stringify(to.params);
-                } 
-                cm.isActive = isActive;
-              });
-            }
-          });
-          this.menus = _navMenus;
-          this.showNav = to.name != 'Selection';
+        let matchedRouteNames = to.matched.map(r => r.name);
+        _navMenus.forEach(m => {
+          m.isActive = matchedRouteNames.indexOf(m.route) > -1;
+          if (m.childNodes) {
+            m.childNodes.forEach(cm => {
+              let isActive = matchedRouteNames.indexOf(cm.route) > -1
+              if (cm.params) {
+                isActive = JSON.stringify(cm.params) == JSON.stringify(to.params);
+              }
+              cm.isActive = isActive;
+            });
+          }
         });
-      }
+        this.menus = _navMenus;
+      });
     }
   },
   created: function() {

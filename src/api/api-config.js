@@ -69,10 +69,10 @@ let axiosHelper = {
       }, function(err) {
         if (err.response.status == 401) {
           // UserServices.clearCurrentUser();
-          const storageKey2 = 'logined-user';
-          const tokenKey = 'LEAP-token';
+          const storageKey2 = 'knight-sq-logined-user';
+          const tokenKey = 'knight-sq-token';
           const tokenCookieOpt = {
-            path: '/services/api/v1',
+            path: '/',
             secure: false
           };
           CookiesManager.del(storageKey2);

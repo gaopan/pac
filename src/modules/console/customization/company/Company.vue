@@ -6,6 +6,7 @@
           <div class="company">
             <div class="company-name">{{company.name}}</div>
             <div class="company-caption">
+              <button type="button" class="btn btn-primary" @click="toProject(company)">查看重大项目</button>
               <button type="button" class="btn btn-primary" @click="toDashboard(company)">查看月度报表</button>
               <button type="button" class="btn btn-primary" v-if="user.isAA || user.isAdmin" @click="toEditDashboard(company)">编辑月度报表数据</button>
               <button type="button" class="btn btn-primary" @click="toViewPastRemindAndSupport(company)">查看往月领导关注、支持记录</button>

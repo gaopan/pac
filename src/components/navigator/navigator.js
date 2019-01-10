@@ -103,6 +103,9 @@ export default {
     },
     logout() {
       this.$router.push('/passport/login');
+    },
+    toProject(){
+      this.$router.push('/console/cust/project/中海庭1_181227_223039_2435/task/1');
     }
   },
   components: { MiniLoader }

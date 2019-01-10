@@ -1,9 +1,9 @@
 <template>
 	<div class="m-console">
-		<header v-if="showNav">
+		<header>
 			<navigator :menus="menus"></navigator>
 		</header>
-		<section :class="{'no-nav': !showNav}">
+		<section>
 			<router-view></router-view>
 		</section>
 	</div>

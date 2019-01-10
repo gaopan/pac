@@ -14,5 +14,8 @@ export default {
   },
   "Customization Dashboard": {
     rolesRequired: ["admin", "aa", "boss"]
+  },
+  "Customization Project": {
+    rolesRequired: ["admin", "boss", "aa"]
   }
 }

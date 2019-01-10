@@ -23,6 +23,14 @@ function componentRule(to, from, next) {
     } else {
       next();
     }
+  } else if(to.name == 'Customization Project'){
+    if(userProfile.isAdmin || userProfile.isBoss) {
+      next({path: `/console/cust/project/${to.params.company}/overview`});
+    } else if(userProfile.isAA) {
+      next({path: `/console/cust/project/${to.params.company}/overview`});
+    } else {
+      next();
+    }
   }else {
     next();
   }
