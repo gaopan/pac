@@ -13,7 +13,7 @@ export default {
   },
   data() {
     return {
-      isShowMenus: false,
+      isShowMenus: true,
       navs: null,
       breadcrumbs: [],
       user: this.$store.getters.userProfile
@@ -95,7 +95,6 @@ export default {
       }
     },
     clickOnMenu(cm) {
-      this.isShowMenus = false;
       this.$router.push({ name: cm.route, params: cm.params });
     },
     imgUrl(path) {

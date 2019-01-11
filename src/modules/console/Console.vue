@@ -1,6 +1,6 @@
 <template>
 	<div class="m-console">
-		<header>
+		<header v-if="menus">
 			<navigator :menus="menus"></navigator>
 		</header>
 		<section>

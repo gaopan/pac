@@ -106,22 +106,23 @@
   .menus-container {
     display: block;
     position: fixed;
+    width: 240/12*$unit;
     left: 0;
-    right: 0;
-    top: 0;
+    top: 40/12*$unit;
     bottom: 0;
-    background-color: rgba(0, 0, 0, .45);
+    background-color: $bgColor;
     z-index: 100;
+    border-right: 2px solid $color;
 
     .menus {
       display: block;
-      background-color: #fff;
       position: absolute;
-      min-width: 240/12*$unit;
       font-size: 14/12*$unit;
       left: 0;
       top: 0;
       bottom: 0;
+      right: 0;
+      overflow-y: auto;
 
       >.title {
         display: block;
@@ -152,7 +153,6 @@
       .menus-group-wrapper {
         display: block;
         position: relative;
-        background-color: $bgColor;
         padding: 20/12*$unit 10/12*$unit 10/12*$unit;
 
         .module-name {

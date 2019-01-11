@@ -1,8 +1,11 @@
 <template>
   <div class="pac-nav">
     <div class="pac-nav-brand">
-      <span class="menu-btn">
+<!--       <span class="menu-btn">
         <button class="btn btn-primary" @click="isShowMenus=true"><i class="icon-list"></i><span>导航</span></button>
+      </span> -->
+      <span class="menu-btn">
+        <button class="btn btn-primary" @click="">上汽集团-月报系统 演示版</button>
       </span>
       <ol class="crumb">
         <li v-for="(crumb, index) in breadcrumbs" :class="{'active':index==breadcrumbs.length-1}" v-if="crumb.name&&crumb.name.length>0">
@@ -20,12 +23,9 @@
       </div>
       <img :src="imgUrl('knight.png')" />
     </div>
-    <transition name="swipe-left">
-      <div class="menus-container" v-show="isShowMenus" @click="isShowMenus=false">
+    <transition>
+      <div class="menus-container" v-show="isShowMenus">
         <div class="menus" @click.stop>
-          <div class="title">
-            导航
-          </div>
           <div class="menus-group-wrapper">
             <div class="menu-group" v-for="m in navs">
               <div class="menu-group-holder" :class="{active: m.isActive}" v-if="m.childNodes">
