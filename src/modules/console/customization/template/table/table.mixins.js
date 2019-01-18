@@ -8,12 +8,12 @@ import DashboardComment from '../../dashboard-comment/DashboardComment.vue'
 import shared from '@/shared.js'
 let eventHub = shared.eventHub;
 export default {
-  template: `<div class="table-wrapper">
-  <div class="table-header">
+  template: `<div class="table-wrapper" :class="{'no-selector': conf.noPeriodSelector}">
+  <div class="table-header" v-if="!conf.noPeriodSelector">
     <period-selector :periods="periods" @change="changedPeriod"></period-selector>
   </div>
   <div v-for="d in data">
-  <div class="chart-title">
+  <div class="chart-title" v-if="!conf.noPeriodSelector">
   <span>{{d.month}}</span>
   </div>
   <table class="leap-table">
@@ -56,7 +56,14 @@ export default {
     this.headers = CommonUtils.deepClone(this.conf.data.headers);
     this.parseMonths(this.conf.months);
 
-    eventHub.$on("tile-full-screen-inner", this.toggleFullScreen);
+    if (this.$props.conf.noPeriodSelector) {
+      let months = this.periods.months;
+      this.changedPeriod(months);
+    }
+
+    if (this.$props.tileId) {
+      eventHub.$on("tile-full-screen-inner", this.toggleFullScreen);
+    }
   },
   methods: {
     parseData(data) {
@@ -121,6 +128,8 @@ export default {
     }
   },
   beforeDestroy() {
-    eventHub.$off("tile-full-screen-inner", this.toggleFullScreen);
+    if (this.$props.tileId) {
+      eventHub.$off("tile-full-screen-inner", this.toggleFullScreen);
+    }
   }
 }

@@ -17,7 +17,7 @@ export default {
           <leap-select :options="typeOptions" :initSelectedValue="selectedType" v-on:onSelectedValues="selectType"></leap-select>
         </div>
       </div>
-      <div class="col-xs-9">
+      <div class="col-xs-9" v-if="!conf.noPeriodSelector">
         <period-selector :periods="periods" @change="changedPeriod"></period-selector>
       </div>
     </div>
@@ -45,8 +45,7 @@ export default {
   </div>`,
   props: {
     tileId: {
-      type: String,
-      required: true
+      type: String
     },
     conf: {
       validator: function(_conf) {
@@ -57,7 +56,7 @@ export default {
   },
   data() {
     return {
-      periods: {years: null, quarters: null, months: null},
+      periods: { years: null, quarters: null, months: null },
       hUData: null,
       hDData: null,
       selectedType: '内业',
@@ -67,8 +66,10 @@ export default {
     };
   },
   created() {
-    eventHub.$on("tile-window-resized", this.windowResized);
-    eventHub.$on("tile-full-screen-inner", this.toggleFullScreen);
+    if (this.$props.tileId) {
+      eventHub.$on("tile-window-resized", this.windowResized);
+      eventHub.$on("tile-full-screen-inner", this.toggleFullScreen);
+    }
     this.parseMonths(this.conf.months);
   },
   components: { LeapSelect, PeriodSelector, DashboardComment },
@@ -81,6 +82,11 @@ export default {
   mounted() {
     this.container = this.$refs.container;
     this.init();
+
+    if (this.$props.conf.noPeriodSelector) {
+      let months = this.periods.months;
+      this.changedPeriod(months);
+    }
   },
   methods: {
     init() {
@@ -142,7 +148,7 @@ export default {
         this.draw();
       };
     },
-    toggleFullScreen(args){
+    toggleFullScreen(args) {
       if (args.id == this.$props.tileId) {
         this.ifFullScreen = args.ifFullScreen;
         this.draw();
@@ -174,8 +180,11 @@ export default {
     },
     parseDData(d, chartData) {
       let vm = this;
-      let sqcbData = null, gscbData = null, sqcbmbData = null, gscbmbData = null;
-      if(vm.selectedType == '内业') {
+      let sqcbData = null,
+        gscbData = null,
+        sqcbmbData = null,
+        gscbmbData = null;
+      if (vm.selectedType == '内业') {
         sqcbData = d.map(_d => {
           return {
             label: _d['月'],
@@ -344,11 +353,12 @@ export default {
       this.periods.quarters = periods.quarters;
       this.periods.years = periods.years;
     },
-    changedPeriod(args){
+    changedPeriod(args) {
       let selectedMonths = args.map(m => m.year + '-' + m.month);
-      let data = this.massagedData = {'内业': [], '外业': []}, comments = this.comments = [];
+      let data = this.massagedData = { '内业': [], '外业': [] },
+        comments = this.comments = [];
 
-      if(TypeChecker.isArray(this.$props.conf.data.comments)) {
+      if (TypeChecker.isArray(this.$props.conf.data.comments)) {
         this.$props.conf.data.comments.filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
           comments.push({
             month: item.month,
@@ -356,7 +366,7 @@ export default {
           });
         });
       }
-      if(TypeChecker.isArray(this.$props.conf.data['内业'])) {
+      if (TypeChecker.isArray(this.$props.conf.data['内业'])) {
         let totalZgls = 0;
         this.$props.conf.data['内业'].filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
           item.data['月'] = item.month;
@@ -367,7 +377,7 @@ export default {
           item['累计总公里数'] = totalZgls;
         });
       }
-      if(TypeChecker.isArray(this.$props.conf.data['外业'])) {
+      if (TypeChecker.isArray(this.$props.conf.data['外业'])) {
         let totalZgls = 0;
         this.$props.conf.data['外业'].filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
           item.data['月'] = item.month;
@@ -383,7 +393,9 @@ export default {
     }
   },
   beforeDestroy: function() {
-    eventHub.$off("tile-window-resized", this.windowResized);
-    eventHub.$off("tile-full-screen-inner", this.toggleFullScreen);
+    if (this.$props.tileId) {
+      eventHub.$off("tile-window-resized", this.windowResized);
+      eventHub.$off("tile-full-screen-inner", this.toggleFullScreen);
+    }
   }
 }

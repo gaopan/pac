@@ -1,12 +1,13 @@
 export default [{
-  name: '公司月度报表'
+  name: '首页',
+  route: 'Customization Main'
 }, {
-  name: '重大项目列表'
+  name: '月度报表',
+  route: 'Customization Dashboard'
 }, {
-  name: '统计报表',
-  childNodes: [{
-    name: '工时跟踪',
-    route: 'Statistic Dashboard',
-    params: { type: 'gs' }
-  }]
+  name: '重大项目',
+  route: 'Customization Project'
+}, {
+  name: '工时跟踪',
+  route: 'Statistic Dashboard'
 }]

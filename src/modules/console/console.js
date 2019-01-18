@@ -1,11 +1,6 @@
 import Navigator from '@/components/navigator/Navigator.vue'
 import navMenus from './console.menus.js'
-import navMenusBoss from './console.boss.menus.js'
 import CommonUtils from '@/utils/common-utils.js'
-import CompanyApi from '@/api/customization/company.js'
-import ProjectData from './customization/project/project.data.js'
-
-let pd = CommonUtils.deepClone(ProjectData)
 
 export default {
   name: 'Console',
@@ -20,140 +15,82 @@ export default {
       let isAA = this.$store.getters.userProfile.isAA,
         isAdmin = this.$store.getters.userProfile.isAdmin,
         isBoss = this.$store.getters.userProfile.isBoss,
-        userId = this.$store.getters.userProfile.id,
-        companies = this.$store.getters.userProfile.companies;
-      let _navMenus = CommonUtils.deepClone(navMenusBoss);
+        userId = this.$store.getters.userProfile.id;
+      let _navMenus = CommonUtils.deepClone(navMenus);
+      if(isAA) {
+        _navMenus.splice(0, 1);
+      }
       // find monthly report
       let monthlyMenu = null,
-        monthlyProjectMenu = null;
+        projectMenu = null,
+        statisticMenu = null;
       _navMenus.forEach(menu => {
-        if (menu.name == '公司月度报表') {
+        if (menu.name == '月度报表') {
           monthlyMenu = menu;
         }
-        if (menu.name == '重大项目列表') {
-          monthlyProjectMenu = menu;
+        if (menu.name == '重大项目') {
+          projectMenu = menu;
+        }
+        if (menu.name == '工时跟踪') {
+          statisticMenu = menu;
         }
       })
-      let _companies = null,
-        _projects = null;
-      let companyPromise = CompanyApi.userCompanies(userId).then(res => {
-        _companies = res.data;
+
+      if(isAA) {
+        monthlyMenu.paramsRequired = {companyId: true};
+        monthlyMenu.route = "Customization Dashboard Input";
+        projectMenu.paramsRequired = {companyId: true};
+        projectMenu.route = "Customization Project Input";
+        statisticMenu.paramsRequired = {companyId: true};
+        statisticMenu.route = "Statistic Dashboard Input";
+      } else if(isBoss) {
+        monthlyMenu.paramsRequired = {companyId: true};
+        monthlyMenu.route = "Customization Dashboard Review";
+        projectMenu.paramsRequired = {companyId: true};
+        projectMenu.route = "Customization Project Review";
+        statisticMenu.paramsRequired = {companyId: true};
+        statisticMenu.route = "Statistic Dashboard Review";
+      } else if(isAdmin) {
+        monthlyMenu.childNodes = [{
+          name: "查看",
+          route: "Customization Dashboard Review",
+          paramsRequired: {companyId: true}
+        }, {
+          name: "编辑",
+          route: "Customization Dashboard Input",
+          paramsRequired: {companyId: true}
+        }];
+        projectMenu.childNodes = [{
+          name: "查看",
+          route: "Customization Project Review",
+          paramsRequired: {companyId: true}
+        }, {
+          name: "编辑",
+          route: "Customization Project Input",
+          paramsRequired: {companyId: true}
+        }];
+        statisticMenu.childNodes = [{
+          name: "查看",
+          route: "Statistic Dashboard Review",
+          paramsRequired: {companyId: true}
+        }, {
+          name: "编辑",
+          route: "Statistic Dashboard Input",
+          paramsRequired: {companyId: true}
+        }];
+      }
+
+      let matchedRouteNames = to.matched.map(r => r.name);
+      _navMenus.forEach(m => {
+        m.isActive = matchedRouteNames.indexOf(m.route) > -1;
+        if (m.childNodes) {
+          m.childNodes.forEach(cm => {
+            let isActive = matchedRouteNames.indexOf(cm.route) > -1
+            cm.isActive = isActive;
+          });
+        }
       });
-      companyPromise.then(res => {
-        if (monthlyMenu) {
-          monthlyMenu.childNodes = [];
-        }
-
-        if (monthlyProjectMenu) {
-          monthlyProjectMenu.childNodes = [];
-        }
-
-        if (isAA) {
-          if (monthlyMenu) {
-            _companies.forEach(comp => {
-              let _menu = {
-                name: comp.name,
-                route: 'Customization Dashboard',
-                params: { company: comp.name + '_' + comp.id },
-                childNodes: [{
-                  name: '总览',
-                  route: 'Customization Dashboard Overview',
-                  params: { company: comp.name + '_' + comp.id }
-                }, {
-                  name: '报告',
-                  route: 'Customization Dashboard Report',
-                  params: { company: comp.name + '_' + comp.id }
-                }]
-              };
-              monthlyMenu.childNodes.push(_menu);
-
-              let _projectMenu = {
-                name: comp.name,
-                route: "Customization Project",
-                params: {company: comp.name + '_' + comp.id},
-                childNodes: [{
-                  name: '总览',
-                  route: 'Customization Project Overview',
-                  params: { company: comp.name + '_' + comp.id }
-                }]
-              };
-              pd.projects.forEach(proj => {
-                let _pMenu = {
-                  name: proj.name,
-                  route: 'Customization Project Task',
-                  params: { projectId: proj.id, company: comp.name + '_' + comp.id }
-                };
-                _projectMenu.childNodes.push(_pMenu);
-              });
-
-              if(monthlyProjectMenu) {
-                monthlyProjectMenu.childNodes.push(_projectMenu);
-              }
-            });
-          }
-        } else {
-          if (monthlyMenu) {
-            _companies.forEach(comp => {
-              let _menu = {
-                name: comp.name,
-                route: 'Customization Dashboard',
-                params: { company: comp.name + '_' + comp.id },
-                childNodes: [{
-                  name: '报告',
-                  route: 'Customization Dashboard Report',
-                  params: { company: comp.name + '_' + comp.id }
-                }]
-              };
-              if (isAdmin) {
-                _menu.childNodes.splice(0, 0, {
-                  name: '总览',
-                  route: 'Customization Dashboard Overview',
-                  params: { company: comp.name + '_' + comp.id }
-                });
-              }
-              monthlyMenu.childNodes.push(_menu);
-
-              let _projectMenu = {
-                name: comp.name,
-                route: "Customization Project",
-                params: {company: comp.name + '_' + comp.id},
-                childNodes: [{
-                  name: '总览',
-                  route: 'Customization Project Overview',
-                  params: { company: comp.name + '_' + comp.id }
-                }]
-              };
-              pd.projects.forEach(proj => {
-                let _pMenu = {
-                  name: proj.name,
-                  route: 'Customization Project Task',
-                  params: { projectId: proj.id, company: comp.name + '_' + comp.id }
-                };
-                _projectMenu.childNodes.push(_pMenu);
-              });
-
-              if(monthlyProjectMenu) {
-                monthlyProjectMenu.childNodes.push(_projectMenu);
-              }
-            });
-          }
-        }
-
-        let matchedRouteNames = to.matched.map(r => r.name);
-        _navMenus.forEach(m => {
-          m.isActive = matchedRouteNames.indexOf(m.route) > -1;
-          if (m.childNodes) {
-            m.childNodes.forEach(cm => {
-              let isActive = matchedRouteNames.indexOf(cm.route) > -1
-              if (cm.params) {
-                isActive = JSON.stringify(cm.params) == JSON.stringify(to.params);
-              }
-              cm.isActive = isActive;
-            });
-          }
-        });
-        this.menus = _navMenus;
-      });
+      this.menus = _navMenus;
     }
   },
   created: function() {

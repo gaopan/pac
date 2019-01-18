@@ -6,6 +6,9 @@ export default {
       date;
 
     switch (format) {
+      case 'yyyy-MM': 
+       date = `${year}-${month.slice(-2)}`;
+        break;
       case 'MM/dd/yyyy':
         date = `${month.slice(-2)}/${day.slice(-2)}/${year}`;
         break;

@@ -37,69 +37,86 @@ let routerTable = {
       },
       meta: configMeta("Customization Dashboard", false),
       children: [{
-        name: 'Customization Company',
-        path: 'company',
+        name: 'Customization Main',
+        path: 'main',
         components: {
-          default: () => import('@/modules/console/customization/company/Company.vue')
+          default: () => import('@/modules/console/customization/main/Main.vue')
         },
         meta: configMeta("Customization Company", false)
       }, {
         name: 'Customization Project',
-        path: 'project/:company',
+        path: 'project/:companyId',
         components: {
           default: () => import('@/modules/console/customization/project/Project.vue')
         },
         meta: configMeta("Customization Project", false),
         children: [{
-          name: 'Customization Project Overview',
-          path: 'overview',
+          name: 'Customization Project Review',
+          path: 'review',
           components: {
             default: () =>
-              import ('@/modules/console/customization/project/overview/Overview.vue')
+              import ('@/modules/console/customization/project/review/Review.vue')
           },
           meta: configMeta('Customization Project', false)
         }, {
-          name: 'Customization Project Task',
-          path: 'task/:projectId',
+          name: 'Customization Project Input',
+          path: 'input',
           components: {
             default: () =>
-              import ('@/modules/console/customization/task/Task.vue')
+              import ('@/modules/console/customization/project/input/Input.vue')
           },
           meta: configMeta('Customization Project', false)
         }]
       }, {
         name: 'Customization Dashboard',
-        path: 'monthly/:company',
+        path: 'monthly/:companyId',
         components: {
           default: () =>
             import ('@/modules/console/customization/dashboard/Dashboard.vue')
         },
         meta: configMeta("Customization Dashboard", false),
         children: [{
-          name: 'Customization Dashboard Overview',
-          path: 'overview',
+          name: 'Customization Dashboard Review',
+          path: 'review',
           components: {
             default: () =>
-              import ('@/modules/console/customization/dashboard/overview/Overview.vue')
+              import ('@/modules/console/customization/dashboard/review/Review.vue')
           },
           meta: configMeta('Customization Dashboard', false)
         },{
-          name: 'Customization Dashboard Report',
-          path: 'report',
+          name: 'Customization Dashboard Input',
+          path: 'input',
           components: {
             default: () =>
-              import ('@/modules/console/customization/dashboard/report/Report.vue')
+              import ('@/modules/console/customization/dashboard/input/Input.vue')
           },
           meta: configMeta('Customization Dashboard', false)
         }]
       }, {
         name: 'Statistic Dashboard',
-        path: 'statistic/:type',
+        path: 'statistic/:companyId',
         components: {
           default: () =>
             import ('@/modules/console/customization/statistic-dashboard/StatisticDashboard.vue')
         },
-        meta: configMeta("Customization Dashboard", false)
+        meta: configMeta("Customization Dashboard", false),
+        children: [{
+          name: "Statistic Dashboard Input",
+          path: 'input',
+          components: {
+            default: () =>
+              import ('@/modules/console/customization/statistic-dashboard/input/Input.vue') 
+          },
+          meta: configMeta("Customization Dashboard", false)
+        }, {
+          name: "Statistic Dashboard Review",
+          path: 'review',
+          components: {
+            default: () =>
+              import ('@/modules/console/customization/statistic-dashboard/review/Review.vue') 
+          },
+          meta: configMeta("Customization Dashboard", false)
+        }]
       }]
     }]
   }, {

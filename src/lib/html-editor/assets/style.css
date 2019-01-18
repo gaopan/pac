@@ -1,0 +1,546 @@
+[class^="rte-action-btn"] {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+[class^="rte-action-dd"] {
+    display: inline-block;
+    padding: 0 5px;
+    margin: 0 5px;
+    width: 150px;
+}
+
+.rte-edit-pane {
+    /* width: 100%; */
+    padding: 20px 30px;
+    min-height: 100px;
+    border: 1px solid #cccccc;
+    overflow: auto;
+    font-size: 16px !important;
+}
+
+.rte-edit-pane p {
+    padding: 0;
+    margin: 0;
+}
+
+.rte-edit-pane .rte-pane-header input{
+    width: 100%;
+    min-height: 30px;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 5px 0px;
+    border: none;
+    color: #000;
+    background-color: #fff;
+}
+
+.rte-edit-pane .rte-pane-header input:focus {
+    outline: none;
+    border: none;
+}
+
+.rte-edit-pane .rte-pane-header input:disabled {
+    cursor: not-allowed;
+    background-color: transparent;
+    border: none;
+    color: #000;
+}
+
+.rte-edit-pane .rte-pane-header-errors, .rte-edit-pane .rte-pane-body-errors {
+    color: red;
+    font-size: 12px;
+}
+
+.rte-edit-pane .rte-pane-header-characters, .rte-edit-pane .rte-pane-body-characters {
+    display: block;
+    width: 100%;
+    text-align: right;
+    font-size: 12px;
+}
+
+.rte-edit-pane  hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 0;
+    border-top: 1px solid #eeeeee;
+}
+
+.rte-edit-pane .rte-pane-body-view {
+    min-height: 170px;
+}
+
+.rte-edit-pane .rte-pane-body-view:read-only{
+    cursor: not-allowed;
+}
+
+.rte-edit-pane .rte-pane-body-view:focus {
+    outline: none;
+}
+
+.rte-text-bar {
+    /* width: 100%; */
+    background-color: #E2E2E2;
+    border: 1px solid #cccccc;
+    border-bottom: 1px solid transparent;
+    padding-top: 5px;
+    position: relative;
+}
+
+.rte-text-bar.centered {
+    text-align: center;
+}
+
+.rte-text-bar > .disabled-overlay {
+    position: absolute;
+    width: 100%;
+    background-color: #cccccc;
+    opacity: 0.4;
+    top: 0;
+    height: 100%;
+    cursor: not-allowed;
+}
+
+.rte-text-bar > ul {
+    list-style-type: none;
+    margin: 3px;
+    padding: 0 5px;
+    display: inline-block;
+}
+
+.rte-text-bar > ul:before,
+.rte-text-bar > ul:after {
+    content: "";
+    display: table;
+}
+
+.rte-text-bar > ul:after {
+    clear: both;
+}
+
+.rte-text-bar > ul > li {
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+.rte-text-bar > ul > li > button {
+    background-color: #ffffff;
+    border: 0.5px solid #CCCCCC;
+}
+
+.rte-text-bar > ul > li > button.rte-action-btn-oList {
+    margin-right: 20px;
+}
+
+.rte-text-bar > ul > li > button > i {
+    color: #666666;
+}
+
+/* Active Button */
+.rte-text-bar  > ul > li > button.active {
+    background-color: #2BA229;
+    border-color: transparent;
+}
+
+.rte-text-bar  > ul > li > button.active > i {
+    color: #000000;
+}
+
+/* Button Hover */
+.rte-text-bar > ul > li > button:hover {
+    background-color: #000000;
+    border-color: transparent;
+}
+
+.rte-text-bar > ul > li > button:hover > i{
+    color: #2BA229;
+}
+
+/* Custom Dropdown Styling */
+.rte-dd-custom {
+    width: 100%;
+    position: relative;
+    background-color: white;
+    text-align: left;
+}
+
+.rte-dd-custom-select-box {
+    border: 0.5px solid #CCCCCC;
+    height: 18px;
+    padding: 5px 5px;
+    cursor: pointer;
+}
+
+.rte-dd-custom-select-box::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.rte-dd-custom-select-box > span {
+    float: left;
+    width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rte-dd-custom-select-box > i {
+    float: right;
+    width: 20%;
+    text-align: center;
+}
+
+.rte-dd-custom-option-box {
+    border: 0.5px solid #CCCCCC;
+    position: absolute;
+    top: 28px;
+    background-color: white;
+    width: 99%;
+}
+
+.rte-dd-custom-option-box.hide {
+    display: none;
+}
+
+.rte-dd-custom-option-box > ul {
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+.rte-dd-custom-option-box > ul > li {
+    list-style: none;
+    padding: 5px;
+    width: 94%;
+    height: 20px;
+    margin: 0;
+}
+
+.rte-dd-custom-option-box > ul > li > span {
+    display: block;
+    width: 100%;
+    height: 20px;
+}
+
+.rte-dd-custom-option-box > ul > li.selected {
+    background-color: slategrey;
+    color: white;
+}
+
+.rte-dd-custom-option-box > ul > li:hover {
+    background-color: blue;
+    color: white;
+}
+
+/* Custom Modal*/
+.rte-custom-modal-overlay {
+    width: 100%;
+    height: 100%;
+    background-color: #000000a3;
+    position: fixed;
+    top: 0;
+    left:0;
+    display: table;
+}
+
+.rte-custom-modal-container {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.rte-custom-modal-content {
+    width: 400px;
+    margin-bottom: 15px;
+    background-color: white;
+    margin: auto;
+}
+
+.rte-custom-modal-header {
+    padding: 5px 10px;
+    font-size: 18px;
+    background-color: #000000;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.rte-custom-modal-header > span > i{
+    margin-right: 10px;
+}
+
+.rte-custom-modal-body {
+    padding: 10px 5px;
+    text-align: center;
+}
+
+.rte-custom-modal-body > span {
+    display: block;
+    font-weight: bold;
+    margin: 5px 0px;
+}
+
+.rte-custom-modal-body > input {
+    width: 100%;
+}
+
+.rte-custom-modal-body > .file-input-container {
+    position: relative;
+    text-align: center;
+}
+
+.rte-custom-modal-body > .file-input-container .file-drop-area-disabled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #767676a3;
+    width: 100%;
+    height: 100%;
+    display: none;
+    border: 1px dashed #767676a3;
+}
+
+.rte-custom-modal-body > .file-input-container .file-drop-area {
+    width: 100%;
+    height: 120px;
+    border: 1px dashed #000000;
+}
+
+.rte-custom-modal-body > .file-input-container .file-drop-area > span {
+    font-weight: bold;
+    margin-top: 20px;
+    display: block;
+}
+
+.rte-custom-modal-body > .file-input-container .file-drop-area > span#fileChosen {
+    font-weight: normal;
+    font-style: italic;
+}
+
+.rte-custom-modal-body > .file-input-container .file-drop-area .drop-file-input {
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+/** Ref: https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ **/
+.rte-custom-modal-body > .file-input-container .file-drop-area .drop-file-input + label {
+    margin-top: 10px;
+    display: inline-block;
+    padding: 5px 10px;
+    min-width: 100px;
+}
+
+.rte-custom-modal-body > .file-input-container .file-drop-area .drop-file-input + label,
+.rte-custom-modal-body > .file-input-container .file-drop-area .drop-file-input + label:active,
+.rte-custom-modal-body > .file-input-container .file-drop-area .drop-file-input + label:focus {
+    color: #000000;
+    background-color: #2BA229;
+}
+
+.rte-custom-modal-body > .file-input-container .file-drop-area .drop-file-input + label:hover {
+    background-color: #000000;
+    color: #2BA229;
+}
+
+.rte-custom-modal-body > .file-input-container .file-drop-area .drop-file-input + label {
+	cursor: pointer;
+}
+
+.rte-custom-modal-body > .url-input-container {
+    position: relative;
+    text-align: center;
+    margin-top: 10px;
+    height: 25px;
+}
+
+.rte-custom-modal-body > .url-input-container > span {
+    display: block;
+}
+
+.rte-custom-modal-body > .url-input-container .url-input-content {
+    display: none;
+}
+
+.rte-custom-modal-cta {
+    text-align: right;
+    padding: 5px 10px;
+    background-color: #cccccc;
+}
+
+.rte-custom-modal-cta > button {
+    background-color: white;
+    border: none;
+    border: 2px solid black;
+    cursor: pointer;
+    padding: 5px 10px;
+    min-width: 100px;
+    height: 32px;
+    margin-left: 10px;
+}
+
+.rte-custom-modal-cta > button:nth-child(1){
+    border: 2px solid #2BA229;
+    background-color: #2BA229;
+}
+
+.rte-custom-modal-cta > button:nth-child(1):disabled {
+    cursor: not-allowed;
+}
+
+.rte-custom-modal-cta > button:nth-child(1):hover:not([disabled]){
+    border: 2px solid #000000;
+    background-color: #000000;
+    color: #2BA229;
+}
+
+.rte-custom-modal-cta > button:nth-child(2):hover {
+    border: 2px solid #2BA229;
+}
+/** RTE Table **/
+table[class="rte-custom-table"] {
+    border: 1px solid #b9b9b9;
+    /* width: 100%; */
+    border-collapse: collapse;
+    cursor: text!important;
+    /* table-layout: fixed; */
+}
+
+table[class="rte-custom-table"] td {
+    border: 1px solid #b9b9b9;
+    min-width: 60px;
+    width: 60px;
+    height: unset !important;
+    padding: unset !important;
+    font-size: 16px;
+}
+
+table[class="rte-custom-table"] td.topLeft{
+    border-top:1px solid red; 
+    border-left:1px solid red
+}
+
+table[class="rte-custom-table"] td.oneTrOneTd{
+    border:1px solid red;
+}
+
+table[class="rte-custom-table"] td.manyTrOneTdTop{
+    border-top:1px solid red;
+    border-left:1px solid red;
+    border-right:1px solid red;
+}
+
+table[class="rte-custom-table"] td.oneTrManyTdLeft{
+    border-bottom:1px solid red;
+    border-left:1px solid red;
+    border-top:1px solid red;
+}
+
+table[class="rte-custom-table"] td.oneTrManyTdRight{
+    border-bottom:1px solid red;
+    border-right:1px solid red;
+    border-top:1px solid red;
+}
+
+table[class="rte-custom-table"] td.oneTrManyTdMiddle{
+    border-bottom:1px solid red;
+    border-top:1px solid red;
+}
+
+table[class="rte-custom-table"] td.topRight{
+    border-top:1px solid red; 
+    border-right:1px solid red
+}
+
+table[class="rte-custom-table"] td.topMiddle{
+    border-top:1px solid red;
+}
+
+table[class="rte-custom-table"] td.bottomLeft{
+    border-bottom:1px solid red;
+    border-left:1px solid red
+}
+
+table[class="rte-custom-table"] td.bottomLeftRight{
+    border-bottom:1px solid red;
+    border-left:1px solid red;
+    border-right:1px solid red;
+}
+
+table[class="rte-custom-table"] td.bottomRight{
+    border-bottom:1px solid red;
+    border-right:1px solid red
+}
+
+table[class="rte-custom-table"] td.bottomMiddle{
+    border-bottom:1px solid red;
+}
+
+table[class="rte-custom-table"] td.left{
+    border-left:1px solid red;
+}
+
+table[class="rte-custom-table"] td.leftRight{
+    border-left:1px solid red;
+    border-right:1px solid red;
+}
+
+table[class="rte-custom-table"] td.right{
+    border-right:1px solid red;
+}
+
+table[class="rte-custom-table"] td.topRed{
+    border-top:1px solid red;
+}
+
+table[class="rte-custom-table"] td.colRight{
+    border-right:1px solid #2BA229;
+}
+
+table[class="rte-custom-table"] td.colLeft{
+    border-left:1px solid #2BA229;
+}
+
+table[class="rte-custom-table"] td.top{
+    border-top:1px solid #2BA229;
+}
+
+table[class="rte-custom-table"] td.bottom{
+    border-bottom:1px solid #2BA229;
+}
+
+/** RTE Table Action Bar **/
+.rte-table-action-bar > ul {
+    list-style-type: none;
+    margin: 3px 3px 0px 0px;
+    padding: 0 5px;
+    display: inline-block;
+    background-color: #d9d9d9;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.rte-table-action-bar > ul > li {
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+.rte-table-action-bar > ul > li > button {
+    background-color: #E2E2E2;
+    background-color: transparent;
+    border-style: none;
+    padding: 7px;
+    cursor: pointer;
+}
+
+.rte-table-action-bar > ul > li > button > i {
+    font-size: 15px;
+}

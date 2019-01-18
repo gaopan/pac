@@ -1,5 +1,5 @@
 <template>
-  <div class="statistic-dashboard">
+  <!-- <div class="statistic-dashboard">
     <div class="table-wrapper" v-show="!editCompanies">
       <div class="table-header">
         <div>
@@ -42,7 +42,8 @@
       </div>
     </div>
     <edit-form v-if="editCompanies" :requestId="module.curMonthDataId" :companies="editCompanies" @submitted="submit" @cancel="cancel"></edit-form>
-  </div>
+  </div> -->
+  <router-view></router-view>
 </template>
 <script src="./statistic-dashboard.js"></script>
 <style src="./statistic-dashboard.scss" lang="scss"></style>

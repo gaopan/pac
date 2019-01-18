@@ -120,5 +120,5 @@ export default {
     return objToStr(obj);
   },
   ascendSort_ObjectsInArray,
-  descendSort_ObjectsInArray,
+  descendSort_ObjectsInArray
 }

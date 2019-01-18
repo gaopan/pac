@@ -1,112 +1,12 @@
-.pac-nav {
-  display: flex;
-  width: 100%;
-  position: relative;
-  align-items: center;
-  justify-content: space-between;
-  height: 40/12*$unit;
-  background-color: $color;
-
-  .pac-nav-brand {
-    height: 100%;
-
-    .btn {
-      font-size: 16/12*$unit;
-    }
-  }
-
-  .logo {
-    display: inline-block;
-    height: 100%;
-    background-color: #2d51a3;
-    white-space: nowrap;
-
-    &>.notification {
-      display: inline-block;
-      position: relative;
-      height: 100%;
-      color: #fff;
-      vertical-align: middle;
-
-      &>div {
-        position: absolute;
-        width: 20/12*$unit;
-        height: 20/12*$unit;
-        text-align: center;
-        padding: 3/12*$unit;
-        font-size: 14/12*$unit;
-        border-radius: 50%;
-        right: 0;
-        top: 0;
-        background-color: #D9534F;
-        color: #fff;
-
-        &:hover {
-          cursor: pointer;
-        }
-      }
-
-      &>span {
-        display: inline-block;
-        font-size: 20/12*$unit;
-        padding: 10/12*$unit 10/12*$unit;
-      }
-    }
-
-    &>.user-profile {
-      display: inline-block;
-      height: 100%;
-      color: #fff;
-      border: 1px solid #fff;
-      vertical-align: middle;
-
-      &>span {
-        display: inline-block;
-        padding: 10/12*$unit 10/12*$unit;
-      }
-    }
-
-    img {
-      display: inline-block;
-      height: 100%;
-    }
-
-    &>span {
-      padding: 0 10/12*$unit 0 5/12*$unit;
-      font-size: 16/12*$unit;
-      font-weight: bold;
-      color: #fff;
-      vertical-align: middle;
-    }
-  }
-
-  .crumb {
-    display: inline-block;
-    height: 100%;
-    padding: 6/12*$unit 15/12*$unit;
-    list-style: none;
-    margin-bottom: 0;
-    vertical-align: middle;
-    background-color: #8DD74E;
-
-    &>li {
-      display: inline-block;
-      color: #fff;
-      font-size: 14/12*$unit;
-      padding: 6/12*$unit;
-    }
-
-    &>li+li:before {
-      padding: 0 5px;
-      color: #fff;
-      content: "/\00a0";
-    }
+.pac-nav-wrapper {
+  .menus-options {
+    padding: 15/12*$unit 10/12*$unit 0;
   }
 
   .menus-container {
     display: block;
     position: fixed;
-    width: 240/12*$unit;
+    width: 282/12*$unit;
     left: 0;
     top: 40/12*$unit;
     bottom: 0;
@@ -134,6 +34,7 @@
       .menu-module-wrapper {
         display: block;
         padding: 10/12*$unit;
+
         .menu-module {
           display: block;
           margin-bottom: 20/12*$unit;
@@ -206,6 +107,7 @@
           padding: 10/12*$unit 15/12*$unit;
           cursor: pointer;
           background-color: #fff;
+
           &:hover,
           &.active {
             color: #fff;
@@ -214,5 +116,113 @@
         }
       }
     }
+  }
+
+  .pac-nav {
+    display: flex;
+    width: 100%;
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
+    height: 40/12*$unit;
+    background-color: $color;
+
+    .pac-nav-brand {
+      height: 100%;
+
+      .btn {
+        font-size: 16/12*$unit;
+      }
+    }
+
+    .logo {
+      display: inline-block;
+      height: 100%;
+      background-color: #2d51a3;
+      white-space: nowrap;
+
+      &>.notification {
+        display: inline-block;
+        position: relative;
+        height: 100%;
+        color: #fff;
+        vertical-align: middle;
+
+        &>div {
+          position: absolute;
+          width: 20/12*$unit;
+          height: 20/12*$unit;
+          text-align: center;
+          padding: 3/12*$unit;
+          font-size: 14/12*$unit;
+          border-radius: 50%;
+          right: 0;
+          top: 0;
+          background-color: #D9534F;
+          color: #fff;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        &>span {
+          display: inline-block;
+          font-size: 20/12*$unit;
+          padding: 10/12*$unit 10/12*$unit;
+        }
+      }
+
+      &>.user-profile {
+        display: inline-block;
+        height: 100%;
+        color: #fff;
+        border: 1px solid #fff;
+        vertical-align: middle;
+
+        &>span {
+          display: inline-block;
+          padding: 10/12*$unit 10/12*$unit;
+        }
+      }
+
+      img {
+        display: inline-block;
+        height: 100%;
+      }
+
+      &>span {
+        padding: 0 10/12*$unit 0 5/12*$unit;
+        font-size: 16/12*$unit;
+        font-weight: bold;
+        color: #fff;
+        vertical-align: middle;
+      }
+    }
+
+    .crumb {
+      display: inline-block;
+      height: 100%;
+      padding: 6/12*$unit 15/12*$unit;
+      list-style: none;
+      margin-bottom: 0;
+      vertical-align: middle;
+      background-color: #8DD74E;
+
+      &>li {
+        display: inline-block;
+        color: #fff;
+        font-size: 14/12*$unit;
+        padding: 6/12*$unit;
+      }
+
+      &>li+li:before {
+        padding: 0 5px;
+        color: #fff;
+        content: "/\00a0";
+      }
+    }
+
+
   }
 }

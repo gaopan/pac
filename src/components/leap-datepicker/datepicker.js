@@ -65,7 +65,7 @@ export default {
     },
     calendarButtonIcon: {
       type: String,
-      default: 'icon-calendar-o'
+      default: 'icon-calendar'
     },
     bootstrapStyling: {
       type: Boolean,
@@ -120,7 +120,7 @@ export default {
        * Positioning
        */
       calendarHeight: 0,
-      format: 'yyyy-MM-dd',
+      format: 'yyyy年MM月',
       /*
        * Time View 
        */
@@ -351,7 +351,7 @@ export default {
       this.$emit('selected', new Date(date))
 
       if (!this.enabledTime) {
-        let convertedDate = datetimeUtils.getFullDate(new Date(date), this.format);
+        let convertedDate = datetimeUtils.getFullDate(new Date(date), "yyyy-MM");
         this.$emit('input', convertedDate);
       } else {
         let theDate = new Date(date);
@@ -823,12 +823,12 @@ export default {
      */
     setValue(date) {
       if (typeof date === 'string') {
-        let dateReg = /^([0-9]{4})\-([0-9]{2})\-([0-9]{2})$/,
+        let dateReg = /^([0-9]{4})\-([0-9]{2})$/,
           timeReg = /^([0-9]{4})\-([0-9]{2})\-([0-9]{2})T([0-9]{2})\:([0-9]{2})\:([0-9]{2})\.([0-9]{3})$/;
         if (dateReg.test(date)) {
           date += 'T00:00:00.000';
         } else if (!timeReg.test(date)) {
-          console.warn('The date format is not valid. Valid format: "yyyy-MM-dd" or "yyyy-MM-ddThh:mm:ss.SSS"');
+          console.warn('The date format is not valid. Valid format: "yyyy-MM" or "yyyy-MM-ddThh:mm:ss.SSS"');
           return;
         }
         let parsed = new Date(date)

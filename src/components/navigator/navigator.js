@@ -1,7 +1,11 @@
 import Vue from 'vue'
 import CommonUtils from '@/utils/common-utils.js'
 import MiniLoader from '@/components/loader/MiniLoader.vue'
+import Datepicker from '@/components/leap-datepicker/Datepicker.vue'
+import TypeChecker from '@/utils/type-checker.js'
+import shared from '@/shared.js'
 
+var eventHub = shared.eventHub;
 var images = require.context('@/assets/imgs/', false, /\.(png|jpg)$/)
 
 export default {
@@ -13,10 +17,14 @@ export default {
   },
   data() {
     return {
+      paramsBundle: {
+        companyId: null
+      },
       isShowMenus: true,
       navs: null,
       breadcrumbs: [],
-      user: this.$store.getters.userProfile
+      user: this.$store.getters.userProfile,
+      date: null
     };
   },
   watch: {
@@ -25,11 +33,22 @@ export default {
         this.parseMenus(val);
       }
     },
+    date(val){
+      localStorage.setItem("global-date", val);
+      eventHub.$emit("global-date", val);
+    },
     $route(to, from) {
       this.parseCurrentRoutes(to);
     }
   },
   created: function() {
+    if(this.$route.params.companyId) {
+      this.paramsBundle.companyId = this.$route.params.companyId;
+    }
+    eventHub.$on("global-params-change-companyId", this.changedCompanyId);
+    this.date = new Date("2018-12");
+    localStorage.setItem("global-date", this.date);
+
     this.parseMenus(this.$props.menus);
 
     this.parseCurrentRoutes(this.$router.currentRoute);
@@ -95,6 +114,14 @@ export default {
       }
     },
     clickOnMenu(cm) {
+      if(TypeChecker.isObject(cm.paramsRequired)) {
+        cm.params = {};
+        for(let key in cm.paramsRequired) {
+          if(cm.paramsRequired.hasOwnProperty(key)) {
+            cm.params[key] = this.paramsBundle[key];
+          }
+        }
+      }
       this.$router.push({ name: cm.route, params: cm.params });
     },
     imgUrl(path) {
@@ -103,9 +130,12 @@ export default {
     logout() {
       this.$router.push('/passport/login');
     },
-    toProject(){
-      this.$router.push('/console/cust/project/中海庭1_181227_223039_2435/task/1');
+    changedCompanyId(companyId){
+      this.paramsBundle.companyId = companyId;
     }
   },
-  components: { MiniLoader }
+  components: { MiniLoader, Datepicker },
+  beforeDestroy(){
+    eventHub.$off("global-params-change-companyId", this.changedCompanyId);
+  }
 }

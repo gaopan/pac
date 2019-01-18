@@ -67,6 +67,11 @@ let axiosHelper = {
       instance.interceptors.response.use(function(res) {
         return res;
       }, function(err) {
+        if(!err.response) {
+          console.error("Network issue.");
+          router.replace('/passport/login');
+          return;
+        }
         if (err.response.status == 401) {
           // UserServices.clearCurrentUser();
           const storageKey2 = 'knight-sq-logined-user';

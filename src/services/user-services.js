@@ -71,7 +71,7 @@ let service = {
     this.inflateUserRoleCheck(user);
 
     UserApi.getUser(user.id).then(res => {
-      user.companies = res.data.company;
+      user.companies = res.data.companyId;
       Store.dispatch('setUserProfile', user);
       setTimeout(function() {
         if (TypeChecker.isFunction(cb)) {
@@ -101,7 +101,7 @@ let service = {
         axios.defaults.headers.common['Authorization'] = auth;
         service.inflateUserRoleCheck(userCookie);
         UserApi.getUser(userCookie.id).then(res => {
-          userCookie.companies = res.data.company;
+          userCookie.companies = res.data.companyId;
           Store.dispatch('setUserProfile', userCookie);
           setTimeout(function() {
             if (TypeChecker.isFunction(cb)) {

@@ -21,27 +21,26 @@ export default {
         height: 50,
         width: 60
       },
-      
+
       loginUser: {},
 
       loginBlocked: false,
 
-      displayControl:{
+      displayControl: {
         timmer: 10,
         countDown: false,
         haveError: false,
         errorMessage: null,
         isLoading: false
       },
-      errTemplate:{
+      errTemplate: {
         failed: "登录失败。账号或者密码不正确！",
-        blocked:"登录失败。账号或者密码不正确！请10秒后再试！"
+        blocked: "登录失败。账号或者密码不正确！请10秒后再试！"
       }
-      
+
     }
   },
-  components: {
-  },
+  components: {},
   watch: {
     'data.email': {
       handler: function() {
@@ -92,22 +91,28 @@ export default {
           var url = '/passport/admincreatedactivation/' + code;
           vm.$router.replace(url);
         } else {
-          UserServices.setCurrentUser(response.data);
+          UserServices.setCurrentUser(response.data, function() {
+            var user = vm.$store.getters.userProfile;
+            if(user.isAA) {
+              if(user.companies && user.companies.length > 0) {
+                vm.$router.replace(`/console/cust/monthly/${user.companies[0]}/input`);
+              }
+            } else if(user.isAdmin || user.isBoss) {
+              vm.$router.replace('/console/cust');
+            }
+          });
           vm.displayControl.haveError = false;
           vm.displayControl.isLoading = false;
-
-          var user = vm.$store.getters.userProfile;
-          vm.$router.replace('/console/cust');
         }
 
       }).catch(function(err) {
         if (err.response.data.code == 400) {
           if (err.response.data.details[0].code == "CUSTOMER_BLOCKED") {
             vm.displayControl.loginBlocked = true;
-             vm.errHandler("blocked");
+            vm.errHandler("blocked");
             vm.lockCustomer()
           } else {
-             vm.errHandler("failed");
+            vm.errHandler("failed");
           }
         } else {
           vm.errHandler("failed");
@@ -141,8 +146,8 @@ export default {
     lockCustomer() {
       this.countdown();
     },
-    errHandler(key){
-      this.displayControl.errorMessage=this.errTemplate[key];
+    errHandler(key) {
+      this.displayControl.errorMessage = this.errTemplate[key];
       this.displayControl.haveError = true;
       this.displayControl.isLoading = false;
     },
@@ -157,7 +162,7 @@ export default {
           clearInterval(t);
           vm.displayControl.countDown = false;
           vm.displayControl.loginBlocked = false;
-          vm.displayControl.errorMessage='';
+          vm.displayControl.errorMessage = '';
         }
       }, 1000);
     },

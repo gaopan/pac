@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <!-- <div class="container">
     <div class="row">
       <div class="col-xs-12">
         <div class="form-header">
@@ -28,6 +28,7 @@
         </div>
       </div>
     </form>
-  </div>
+  </div> -->
+  <div style="padding: 20px">正在维护中。。。</div>
 </template>
-<script src="./input.js"></script>
+<!-- <script src="./input.js"></script> -->

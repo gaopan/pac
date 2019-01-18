@@ -19,4 +19,4 @@
   </div>
 </template>
 <script src="./task.js"></script>
-<style src="./task.scss" lang="scss"></style>
+<style src="./task.scss" lang="scss" scoped></style>

@@ -11,7 +11,7 @@ import shared from '@/shared.js'
 let eventHub = shared.eventHub;
 export default {
   template: `<div class="container-fluid" ref="container">
-      <div class="row">
+      <div class="row" v-if="!conf.noPeriodSelector">
         <div class="col-xs-12">
           <period-selector :periods="periods" @change="changedPeriod"></period-selector>
         </div>
@@ -38,8 +38,7 @@ export default {
   </div>`,
   props: {
     tileId: {
-      type: String,
-      required: true
+      type: String
     },
     conf: {
       validator: function(_conf) {
@@ -59,14 +58,21 @@ export default {
     };
   },
   created() {
-    eventHub.$on("tile-window-resized", this.windowResized);
-    eventHub.$on("tile-full-screen-inner", this.toggleFullScreen);
+    if (this.$props.tileId) {
+      eventHub.$on("tile-window-resized", this.windowResized);
+      eventHub.$on("tile-full-screen-inner", this.toggleFullScreen);
+    }
     this.parseMonths(this.conf.months);
   },
   components: { LeapSelect, PeriodSelector, DashboardComment },
   mounted() {
     this.container = this.$refs.container;
     this.init();
+
+    if (this.$props.conf.noPeriodSelector) {
+      let months = this.periods.months;
+      this.changedPeriod(months);
+    }
   },
   methods: {
     init() {
@@ -97,7 +103,7 @@ export default {
     },
     draw() {
       let vm = this,
-        chartHeight = (vm.container.parentNode.clientHeight - 38 - 38 - 52 - 4) / 2 + 'px';
+        chartHeight = (vm.container.parentNode.clientHeight - (this.$props.conf.noPeriodSelector ? 0 : 38) - 38 - 52 - 4) / 2 + 'px';
       vm.hUContainer.style('height', chartHeight);
       if (vm.hUContainer.select('svg').size()) {
         vm.hUContainer
@@ -280,7 +286,9 @@ export default {
     }
   },
   beforeDestroy: function() {
-    eventHub.$off("tile-window-resized", this.windowResized);
-    eventHub.$off("tile-full-screen-inner", this.toggleFullScreen);
+    if (this.$props.tileId) {
+      eventHub.$off("tile-window-resized", this.windowResized);
+      eventHub.$off("tile-full-screen-inner", this.toggleFullScreen);
+    }
   }
 }

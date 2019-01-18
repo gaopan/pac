@@ -11,7 +11,7 @@ import shared from '@/shared.js'
 let eventHub = shared.eventHub;
 export default {
   template: `<div class="container-fluid" ref="container">
-      <div class="row">
+      <div class="row" v-if="!conf.noPeriodSelector">
         <div class="col-xs-12">
           <period-selector :periods="periods" @change="changedPeriod"></period-selector>
         </div>
@@ -56,8 +56,7 @@ export default {
   </div>`,
   props: {
     tileId: {
-      type: String,
-      required: true
+      type: String
     },
     conf: {
       validator: function(_conf) {
@@ -80,14 +79,21 @@ export default {
     };
   },
   created() {
-    eventHub.$on("tile-window-resized", this.windowResized);
-    eventHub.$on("tile-full-screen-inner", this.toggleFullScreen);
+    if (this.$props.tileId) {
+      eventHub.$on("tile-window-resized", this.windowResized);
+      eventHub.$on("tile-full-screen-inner", this.toggleFullScreen);
+    }
     this.parseMonths(this.conf.months);
   },
   components: { LeapSelect, PeriodSelector, DashboardComment },
   mounted() {
     this.container = this.$refs.container;
     this.init();
+
+    if (this.$props.conf.noPeriodSelector) {
+      let months = this.periods.months;
+      this.changedPeriod(months);
+    }
   },
   methods: {
     init() {
@@ -150,7 +156,7 @@ export default {
       }
     },
     draw() {
-      this.chartHeight = Math.floor((this.container.parentNode.clientHeight - 52 - 38 - 52 - 4) / 2) + 'px';
+      this.chartHeight = Math.floor((this.container.parentNode.clientHeight - 52 - (this.$props.conf.noPeriodSelector ? 0 : 38) - 52 - 4) / 2) + 'px';
       this.drawQUChart();
       this.drawQDChart();
     },
@@ -350,7 +356,8 @@ export default {
     changedPeriod(args) {
       let selectedMonths = args.map(m => m.year + '-' + m.month);
       let data = this.massagedData = { up: [], down: {} },
-        comments = this.comments = [], table = this.table = {};
+        comments = this.comments = [],
+        table = this.table = {};
 
       if (TypeChecker.isArray(this.$props.conf.data.comments)) {
         this.$props.conf.data.comments.filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
@@ -361,7 +368,7 @@ export default {
         });
       }
 
-      if(TypeChecker.isObject(this.$props.conf.data.table)) {
+      if (TypeChecker.isObject(this.$props.conf.data.table)) {
         table.headers = this.$props.conf.data.table.headers;
         table.list = [];
         this.$props.conf.data.table.list.filter(item => selectedMonths.indexOf(item.month) > -1).forEach(item => {
@@ -411,7 +418,9 @@ export default {
     }
   },
   beforeDestroy: function() {
-    eventHub.$off("tile-window-resized", this.windowResized);
-    eventHub.$off("tile-full-screen-inner", this.toggleFullScreen);
+    if (this.$props.tileId) {
+      eventHub.$off("tile-window-resized", this.windowResized);
+      eventHub.$off("tile-full-screen-inner", this.toggleFullScreen);
+    }
   }
 }

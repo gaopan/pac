@@ -13,25 +13,49 @@ function componentRule(to, from, next) {
       theQuery[key] = from.query[key];
     }
   }
-  if(to.name == 'Customization') {
-    next({path: '/console/cust/company'});
-  } else if(to.name == 'Customization Dashboard'){
-    if(userProfile.isAdmin || userProfile.isBoss) {
-      next({path: `/console/cust/monthly/${to.params.company}/report`});
-    } else if(userProfile.isAA) {
-      next({path: `/console/cust/monthly/${to.params.company}/overview`});
+  if (to.name == 'Customization Dashboard' || to.name == 'Customization Project' || to.name == 'Statistic Dashboard') {
+    if (!to.params.companyId) {
+      if (userProfile.isAdmin || userProfile.isBoss) {
+        next({ path: `/console/cust/main` });
+      } else if (userProfile.isAA) {
+        next({ path: `/passport/login` });
+      }
+      return;
+    }
+  }
+  if (to.name == 'Customization') {
+    if (userProfile.isAdmin || userProfile.isBoss) {
+      next({ path: `/console/cust/main` });
+    } else if (userProfile.isAA) {
+      next({ path: `/console/cust/monthly/${to.params.companyId}/input` });
     } else {
       next();
     }
-  } else if(to.name == 'Customization Project'){
-    if(userProfile.isAdmin || userProfile.isBoss) {
-      next({path: `/console/cust/project/${to.params.company}/overview`});
-    } else if(userProfile.isAA) {
-      next({path: `/console/cust/project/${to.params.company}/overview`});
+  } else if (to.name == 'Customization Dashboard') {
+    if (userProfile.isAdmin || userProfile.isBoss) {
+      next({ path: `/console/cust/monthly/${to.params.companyId}/review` });
+    } else if (userProfile.isAA) {
+      next({ path: `/console/cust/monthly/${to.params.companyId}/input` });
     } else {
       next();
     }
-  }else {
+  } else if (to.name == 'Customization Project') {
+    if (userProfile.isAdmin || userProfile.isBoss) {
+      next({ path: `/console/cust/project/${to.params.companyId}/review` });
+    } else if (userProfile.isAA) {
+      next({ path: `/console/cust/project/${to.params.companyId}/input` });
+    } else {
+      next();
+    }
+  } else if (to.name == 'Statistic Dashboard') {
+    if (userProfile.isAdmin || userProfile.isBoss) {
+      next({ path: `/console/cust/statistic/${to.params.companyId}/review` });
+    } else if (userProfile.isAA) {
+      next({ path: `/console/cust/statistic/${to.params.companyId}/input` });
+    } else {
+      next();
+    }
+  } else {
     next();
   }
 }
@@ -58,7 +82,7 @@ function validateAccessByRoles(route, aRolesRequired) {
 
   let foundRoleInRequiredRoles = false;
   if (aRolesRequired.length == 0) {
-    foundRoleInRequiredRoles=true;
+    foundRoleInRequiredRoles = true;
     return valid;
   }
 
@@ -77,11 +101,7 @@ function routingGuard(to, from, next) {
   let handler = function() {
 
     if (to.matched.length == 0) {
-      if (from.matched.length == 0) {
-        next({ path: '/passport/login' });
-      } else {
-        next({ path: from.path });
-      }
+      next({ path: '/passport/login' });
       console.warn("No Matched route found for: ");
       console.warn(to);
       return;
