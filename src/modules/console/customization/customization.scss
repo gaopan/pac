@@ -95,15 +95,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      position: absolute;
-      top: 52px;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      padding: 100/12*$unit;
+    }
+
+    &.no-data-comments {
+      margin-top: 100%;
     }
 
     .dashboard-comment {
       margin-top: 15px;
+
+
     }
   }
 
@@ -140,7 +142,7 @@
       z-index: 1;
       background-color: $bgColor;
       white-space: nowrap;
-      
+
 
       &>.tab+.tab {
         border-left: 1px solid $color;
@@ -183,5 +185,76 @@
       background-color: #fff;
       flex-grow: 1;
     }
+  }
+}
+
+.cust-dashboard-input {
+  padding: 10% 0;
+
+  &.editing {
+    padding: 30px 0;
+    border: none;
+  }
+
+  input.form-control,
+  textarea.form-control {
+    border-radius: 0;
+  }
+
+  .form-control.has-error {
+    border-color: #D9534F;
+  }
+
+  fieldset {
+    border: 1px solid $borderColor;
+    padding: 10/12*$unit 15/12*$unit;
+  }
+
+  legend {
+    width: auto;
+    // margin: 15/12*$unit;
+    border-bottom: none;
+    padding: 5/12*$unit 10/12*$unit;
+
+    h4 {
+      display: inline-block;
+      width: auto;
+    }
+  }
+
+  .close {
+    position: absolute;
+    right: 0;
+    top: 30/12*$unit;
+    color: #000;
+  }
+
+  .table-no-data {
+    display: block;
+    padding: 10/12*$unit 15/12*$unit;
+    text-align: center;
+  }
+
+  .table-form-wrapper {
+    padding: 10/12*$unit 15/12*$unit;
+  }
+
+  .leap-table {
+    td>a {
+      font-size: 16/12*$unit;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    td>a+a {
+      margin-left: 5/12*$unit;
+    }
+  }
+
+  .form-actions {
+    text-align: right;
+    padding: 30/12*$unit;
   }
 }

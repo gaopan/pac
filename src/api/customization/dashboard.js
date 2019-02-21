@@ -52,6 +52,10 @@ export default {
 		let url = `statistics`;
 		return instance.get(url);
 	},
+  getStatisticsByCompanyId(companyId){
+    let url = `statistics/companies/${companyId}`
+    return instance.get(url);
+  },
 	updateStatistics(id, data){
 		let url = `statistics/${id}`;
 		return instance.put(url, data);

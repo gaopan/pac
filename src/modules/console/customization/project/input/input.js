@@ -7,6 +7,7 @@ import BScroll from "better-scroll"
 import shared from '@/shared.js'
 import CommonGenerators from '@/utils/common-generators.js'
 import InputForm from './input-form/InputForm.vue'
+import LeapSelect from '@/components/leap-select/LEAPSelect.vue'
 
 let UUIDGenerator = CommonGenerators.UUIDGenerator
 
@@ -18,16 +19,32 @@ export default {
       loadId: UUIDGenerator.purchase(),
       projects: null,
       currentProject: null,
-      curMonth: null
+      curMonth: null,
+      user: null,
+      newProject: null,
+      projStatusOptions: [{
+        name: "红色",
+        value: "red"
+      }, {
+        name: "绿色",
+        value: "green"
+      }, {
+        name: "黄色",
+        value: "yellow"
+      }]
     };
   },
-  components: { InputForm },
+  components: { InputForm, LeapSelect },
   created() {
+    this.user = this.$store.getters.userProfile;
     eventHub.$on("global-date", this.onGlobalDateChange);
     this.companyId = this.$router.currentRoute.params.companyId;
     let globalDate = new Date(localStorage.getItem("global-date")) || new Date();
     this.curMonth = globalDate.getFullYear() + "-" + (globalDate.getMonth() + 1);
     this.init();
+  },
+  beforeDestroy(){
+    eventHub.$off("global-date", this.onGlobalDateChange);
   },
   methods: {
     init() {
@@ -96,6 +113,26 @@ export default {
       let theDate = new Date(newDate);
       this.curMonth = theDate.getFullYear() + '-' + (theDate.getMonth() + 1);
       this.refresh();
+    },
+    toAddProject(){
+      this.newProject = {
+        companyId: this.companyId
+      };
+    },
+    onFormRequested(){
+      this.refresh();
+    },
+    submit(){
+      ProjectApi.addProject(this.newProject).then(res => {
+        this.newProject = null;
+        this.refresh();
+        Noty.notifySuccess({text: "保存数据成功！"});
+      }, err => {
+        Noty.notifyError({text: "保存数据失败！"});
+      });
+    },
+    cancel(){
+      this.newProject = null;
     }
   }
 }

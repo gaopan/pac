@@ -22,12 +22,12 @@ export default {
   </thead>
   <tbody>
   <tr v-for="row in d.data">
-  <td v-for="th in headers"><div>{{row[th.key]}}</div></td>
+  <td v-for="th in headers" :class="{'text-center':th.textCenter}"><pre v-if="th.pre">{{row[th.key]}}</pre><div v-else>{{row[th.key]}}</div></td>
   </tr>
   </tbody>
   </table></div>
   <div v-if="data.length < 1" class="no-data">没有数据显示</div>
-  <dashboard-comment v-if="ifFullScreen&&comments" :module="conf.data.module" :comments="comments"></dashboard-comment>
+  <div style="margin:0 -15px;" :class="{'no-data-comments':data.length<1}"><dashboard-comment v-if="comments" :module="conf.data.module" :comments="comments"></dashboard-comment></div>
   </div>`,
   props: {
     tileId: {
@@ -124,7 +124,7 @@ export default {
     toggleFullScreen(args) {
       if (args.id == this.$props.tileId) {
         this.ifFullScreen = args.ifFullScreen;
-      };
+      }
     }
   },
   beforeDestroy() {

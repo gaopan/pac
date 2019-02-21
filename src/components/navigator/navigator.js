@@ -8,6 +8,7 @@ import shared from '@/shared.js'
 var eventHub = shared.eventHub;
 var images = require.context('@/assets/imgs/', false, /\.(png|jpg)$/)
 
+let RoutesHiddenDateSelect = ["Customization Project Review", "Statistic Dashboard Review"]
 export default {
   props: {
     menus: {
@@ -18,13 +19,15 @@ export default {
   data() {
     return {
       paramsBundle: {
-        companyId: null
+        companyId: null,
+        companyName: null
       },
       isShowMenus: true,
       navs: null,
       breadcrumbs: [],
       user: this.$store.getters.userProfile,
-      date: null
+      date: null,
+      showMonthSelect: true
     };
   },
   watch: {
@@ -38,6 +41,7 @@ export default {
       eventHub.$emit("global-date", val);
     },
     $route(to, from) {
+      this.showMonthSelect = RoutesHiddenDateSelect.indexOf(to.name) < 0;
       this.parseCurrentRoutes(to);
     }
   },
@@ -45,12 +49,16 @@ export default {
     if(this.$route.params.companyId) {
       this.paramsBundle.companyId = this.$route.params.companyId;
     }
+    eventHub.$on("global-params-change-companyName", this.changedCompanyName);
     eventHub.$on("global-params-change-companyId", this.changedCompanyId);
-    this.date = new Date("2018-12");
+    this.date = new Date();
     localStorage.setItem("global-date", this.date);
 
     this.parseMenus(this.$props.menus);
 
+    if(RoutesHiddenDateSelect.indexOf(this.$router.currentRoute.name) > -1) {
+      this.showMonthSelect = false;
+    }
     this.parseCurrentRoutes(this.$router.currentRoute);
   },
   methods: {
@@ -132,6 +140,9 @@ export default {
     },
     changedCompanyId(companyId){
       this.paramsBundle.companyId = companyId;
+    },
+    changedCompanyName(companyName){
+      this.paramsBundle.companyName = companyName;
     }
   },
   components: { MiniLoader, Datepicker },

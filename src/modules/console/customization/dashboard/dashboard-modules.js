@@ -235,7 +235,6 @@ quality.dashboardConfig.adaptData = function(remoteData, months) {
     parseTableData(upDataKeyPrefixs, upDataKeys, upDataNumberKeys, month, monthData, data.up);
     parseTableData(downDataKeyPrefixs, downDataKeys, downDataNumberKeys, month, monthData, data.down);
   });
-  console.log(data);
   return data;
 };
 
@@ -560,6 +559,7 @@ let safty = {
         }, {
           key: "状态",
           name: "状态",
+          texteara: true,
           validate: {
             required: true
           }
@@ -605,15 +605,19 @@ safty.dashboardConfig.adaptData = function(remoteData, months) {
   }, {
     key: "实施措施",
     name: "实施措施",
-    width: "20%"
+    width: "20%",
+    pre: true
   }, {
     key: "状态",
     name: "状态",
-    width: "20%"
+    width: "20%",
+    textCenter: true,
+    pre: true
   }, {
     key: "备注",
     name: "备注",
-    width: "20%"
+    width: "20%",
+    pre: true
   }];
   let list = data.list = [];
   let dataKeys = ["序号", "内容", "责任人", "实施措施", "状态", "备注"];
@@ -673,6 +677,7 @@ let operation = {
       }, {
         key: "状态",
         name: "状态",
+        texteara: true,
         validate: {
           required: true
         }
@@ -704,6 +709,7 @@ let operation = {
         }, {
           key: "状态",
           name: "状态",
+          texteara: true,
           validate: {
             required: true
           }
@@ -741,11 +747,14 @@ operation.dashboardConfig.adaptData = function(remoteData, months) {
   }, {
     key: "实施情况",
     name: "实施情况",
-    width: "25%"
+    width: "25%",
+    pre: true
   }, {
     key: "状态",
     name: "状态",
-    width: "25%"
+    width: "25%",
+    pre: true,
+    textCenter: true
   }, {
     key: "备注",
     name: "备注",
@@ -805,6 +814,7 @@ let respond = {
         }, {
           key: "状态",
           name: "状态",
+          texteara: true,
           validate: {
             required: true
           }
@@ -842,11 +852,14 @@ respond.dashboardConfig.adaptData = function(remoteData, months) {
   }, {
     key: "实施情况",
     name: "实施情况",
-    width: "25%"
+    width: "25%",
+    pre: true
   }, {
     key: "状态",
     name: "状态",
-    width: "25%"
+    width: "25%",
+    textCenter: true,
+    pre: true
   }, {
     key: "备注",
     name: "备注",

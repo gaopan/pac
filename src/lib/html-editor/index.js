@@ -1,7 +1,5 @@
-'use strict'
 import RTE from './rte.js';
 import './assets/style.css';
-import './assets/dxc-icon/style.css';
 
 const uuidv1 = require('uuid/v1');
 

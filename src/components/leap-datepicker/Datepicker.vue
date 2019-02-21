@@ -11,7 +11,7 @@
     </div>
     <div class="wrapper-body" v-show="showDayView || showMonthView || showYearView">
       <!-- Day View -->
-      <div :class="[calendarClass, 'vdp-datepicker__calendar']" v-show="showDayView" v-bind:style="calendarStyle">
+      <div :class="[calendarClass, 'vdp-datepicker__calendar']" v-show="showDayView && !disabledDayView" v-bind:style="calendarStyle">
         <header>
           <span @click="previousMonth" class="prev" v-bind:class="{ 'disabled' : previousMonthDisabled(pageDate) }">
                     <i class="icon-chevron-left"></i>

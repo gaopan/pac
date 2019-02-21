@@ -65,7 +65,9 @@ export default {
   watch: {
     currentComp(val) {
       eventHub.$emit("global-params-change-companyId", this.currentComp.id);
+      eventHub.$emit("global-params-change-companyName", this.currentComp.name);
       eventHub.$emit("start-mini-loader", { id: this.loadId2, roughTime: 1000 * 10 });
+      localStorage.setItem("current-company-id", this.currentComp.id);
       let projects = [],
         reports = [];
       let projectPromise = ProjectApi.getProjectsByCompanyId(this.currentComp.id);
@@ -104,6 +106,7 @@ export default {
       let companies = [];
       let companyPromise = this.user.isAdmin ? CompanyApi.companies() : CompanyApi.userCompanies(this.user.id);
       eventHub.$emit("start-mini-loader", { id: this.loadId, roughTime: 1000 * 10 });
+      let localCompanyId = localStorage.getItem("current-company-id");
       companyPromise.then(res => {
         companies = res.data.map(comp => {
           return {
@@ -116,16 +119,18 @@ export default {
         });
 
         this.companies = companies;
-        this.currentComp = this.companies[0];
-        if (this.user.isAdmin) {
+        if(localCompanyId) {
           this.companies.every(comp => {
-            // 3730 with projects, 3732 with reports
-            if (comp.id == 3730) {
+            if(comp.id == localCompanyId) {
               this.currentComp = comp;
               return false;
             }
             return true;
           });
+        } 
+
+        if(!this.currentComp && this.companies.length > 0) {
+          this.currentComp = this.companies[0];
         }
 
         this.companySelectOptions = this.companies.map(comp => {
@@ -144,6 +149,9 @@ export default {
     },
     toViewReport(m) {
       this.$router.push(`/console/cust/monthly/${this.currentComp.id}/review`);
+    },
+    toViewProject(p) {
+      this.$router.push(`/console/cust/project/${this.currentComp.id}/review`);
     }
   },
   beforeDestroy() {

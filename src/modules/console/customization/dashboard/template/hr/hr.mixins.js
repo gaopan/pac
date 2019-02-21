@@ -30,7 +30,7 @@ export default {
           <div class="chart-container" ref="hDContainer"></div>
         </div>
       </div>
-      <div class="row" v-if="ifFullScreen&&comments">
+      <div class="row" v-if="comments">
         <div class="col-xs-12">
         <dashboard-comment :module="conf.data.module" :comments="comments"></dashboard-comment>
         </div>

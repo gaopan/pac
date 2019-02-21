@@ -1,4 +1,3 @@
-'use strict'
 import Utils from './utils';
 import Button from './button';
 import Dropdown from './dropdown';

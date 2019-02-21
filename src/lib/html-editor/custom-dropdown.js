@@ -1,4 +1,4 @@
-'use strict'
+
 import Utils from './utils';
 
 class CustomDropDown {

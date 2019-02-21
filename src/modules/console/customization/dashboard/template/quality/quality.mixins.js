@@ -50,7 +50,7 @@ export default {
           </table>
           </div>
       </div>
-      <div class="row" v-if="ifFullScreen&&comments">
+      <div class="row" v-if="comments">
         <dashboard-comment :module="conf.data.module" :comments="comments"></dashboard-comment>
       </div>
   </div>`,

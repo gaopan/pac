@@ -1,4 +1,4 @@
-'use strict'
+
 
 import Button from './button';
 import Utils from './utils';

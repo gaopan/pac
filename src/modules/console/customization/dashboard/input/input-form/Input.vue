@@ -206,4 +206,4 @@
   </div>
 </template>
 <script src="./input.js"></script>
-<style src="./input.scss" lang="scss"></style>
+<style src="./input.scss" lang="scss" scoped></style>

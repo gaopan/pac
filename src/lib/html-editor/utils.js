@@ -1,7 +1,6 @@
 import { dataURItoBlob } from './lib/base64toBlob';
 import TypeChecker from './utils/type-checker-utils';
 
-'use strict'
 export default {
 
     getActionTypeDetails(type){

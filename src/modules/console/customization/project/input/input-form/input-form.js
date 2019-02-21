@@ -10,6 +10,7 @@ import ProjectApi from '@/api/customization/project.js'
 Task step:
 empty -> saved -> submitted -> approved
 */
+const STEP_OPTIONS = ["empty", "saved", "submitted", "approved"];
 export default {
   props: {
     project: {
@@ -39,6 +40,16 @@ export default {
       }, {
         name: "绿色",
         value: "green"
+      }, {
+        name: "黄色",
+        value: "yellow"
+      }],
+      taskStatusOptions: [{
+        name: "红色",
+        value: "red"
+      }, {
+        name: "绿色",
+        value: "green"
       }],
       proj: {
         name: null,
@@ -52,6 +63,9 @@ export default {
               "min-height": "300px"
             }
           },
+          featureLists: [ 'bold','underline', 'italic','fontSize','fontColor',
+                            'justifyLeft', 'justifyCenter', 'justifyRight',
+                            'image', 'link'],
           mode: "simple",
           showBodyCharacters: false
         }
@@ -77,7 +91,7 @@ export default {
           month: t.month,
           status: t.status,
           value: t.value,
-          step: t.step || "empty"
+          step: STEP_OPTIONS.indexOf(t.step) < 0 ? "empty" : t.step
         };
         if(t.month == this.month) {
           this.proj.curMonthTask = _t;
@@ -89,21 +103,6 @@ export default {
         this.proj.curMonthTask.value = "";
         this.proj.curMonthTask.step = "empty";
       }
-      // this.proj.tasks.sort((a, b) => {
-      //   let aAMonth = a.month.split('-'),
-      //     aBMonth = b.month.split('-');
-      //   let yearA = parseInt(aAMonth[0]),
-      //     monthA = parseInt(aAMonth[1]),
-      //     yearB = parseInt(aBMonth[0]),
-      //     monthB = parseInt(aBMonth[1]);
-      //   if (yearA > yearB) {
-      //     return true;
-      //   } else if (yearA < yearB) {
-      //     return false;
-      //   } else {
-      //     return yearA > yearB;
-      //   }
-      // });
     },
     prepareDataToSend(){
       let vm = this, curMonthTask = vm.proj.curMonthTask, proj = this.proj;
@@ -137,19 +136,19 @@ export default {
     request(type){
       let req = null, name = null, dataToSend = this.prepareDataToSend(), task = dataToSend.task, proj = dataToSend.project;
       if(type == "save") {
-        task.status = "saved";
+        task.step = "saved";
         name = "保存";
       } else if(type == "submit") {
-        task.status = "submitted";
+        task.step = "submitted";
         name = "提交";
       } else if(type == "approve"){
-        task.status = "approved";
+        task.step = "approved";
         name = "保存";
       } else if(type == "reject"){
-        task.status = "empty";
+        task.step = "empty";
         name = "保存";
       } else if(type == "withdraw") {
-        task.status = "empty";
+        task.step = "empty";
         name = "保存";
       }
       if(task.id) {
@@ -159,9 +158,10 @@ export default {
       }
       req.then(res => {
         ProjectApi.updateProject(proj.id, proj).then(r => {
+          this.$emit("requested");
           Noty.notifySuccess({ text: `${name}数据成功！` });
         }, err => {
-          Noty.notifySuccess({ text: `${name}数据失败！` });
+          Noty.notifyError({ text: `${name}数据失败！` });
         });
       });
     },

@@ -4,8 +4,8 @@
       <div class="menus-container" v-show="isShowMenus">
         <div class="menus" @click.stop>
           <div class="menus-options">
-            <div class="menus-option">
-              <datepicker v-model="date" :format="'yyyy-MM'" :placeholder="'选择月份'" :calendarButton="true" :clearDateButton="false">
+            <div class="menus-option" v-show="showMonthSelect">
+              <datepicker v-model="date" :format="'yyyy-MM'" :placeholder="'选择月份'" :calendarButton="true" :clearDateButton="false" :initialView="'month'" :disabledDayView="true">
               </datepicker>
             </div>
           </div>
@@ -42,6 +42,7 @@
         </ol>
       </div>
       <div class="logo">
+        <span class="current-company">{{paramsBundle.companyName}}</span>
         <div class="user-profile" title="退出登陆" @click="logout">
           <span>{{user.firstName}} {{user.lastName}}</span>
         </div>
@@ -51,4 +52,4 @@
   </div>
 </template>
 <script src="./navigator.js"></script>
-<style src="./navigator.scss" lang="scss"></style>
+<style src="./navigator.scss" lang="scss" scoped></style>

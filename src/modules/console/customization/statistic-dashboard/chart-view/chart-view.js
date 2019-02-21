@@ -3,13 +3,14 @@ import * as d3BI from '@/lib/d3-bi/index.js'
 import TypeChecker from '@/utils/type-checker.js'
 import CommonUtils from '@/utils/common-utils.js'
 import CommonGenerators from '@/utils/common-generators.js'
+import DataUtils from '@/utils/data-utils.js'
 
 const ColorGenerator = CommonGenerators.ColorGenerator;
 
 export default {
   props: {
     data: {
-      type: Object,
+      type: Array,
       required: true
     }
   },
@@ -20,7 +21,12 @@ export default {
   },
   mounted() {
     this.init();
-    this.parseData(this.$props.data);
+    this.parseData(CommonUtils.deepClone(this.$props.data));
+  },
+  watch: {
+    data(){
+      this.parseData(CommonUtils.deepClone(this.$props.data));
+    }
   },
   methods: {
     init() {
@@ -53,47 +59,53 @@ export default {
       }
     },
     parseData(data) {
-      if (!data || !data.months || data.months.length < 1 || !data.months[0].data) return;
-      let barProps = ["企业员工人数", "研发人员人数"];
+      if (!data || data.length < 1) return;
+      let barProps = ["实际工作时长", "研发人员实际工作时长"];
+      let lineProps = ["企业员工人数", "研发人员人数"];
 
       let chartConfigs = [];
 
-      Object.keys(data.months[0].data).sort((a, b) => a.localeCompare(b)).forEach(key => {
-        if (barProps.indexOf(key) > -1) {
+      data.sort((a, b) => a.key.localeCompare(b.key)).forEach(item => {
+        if (barProps.indexOf(item.name) > -1) {
           let barConfig = {
             type: 'bar',
-            name: key,
+            name: item.name,
             label: {
               x: '月',
-              y: key,
+              y: item.name,
               name: ''
             },
-            color: ColorGenerator.purchase(key).value,
-            values: data.months.map(monthData => {
+            color: ColorGenerator.purchase(item.name).value,
+            values: item.months.map(monthData => {
               return {
                 label: monthData.month,
-                value: monthData.data[key]
+                value: monthData.value
               }
+            }).sort((a, b) => {
+              return DataUtils.monthComparison(a.label, b.label)
             })
           };
           chartConfigs.push(barConfig);
-        } else {
+        } 
+        if(lineProps.indexOf(item.name) > -1) {
           let lineConfig = {
             type: 'line',
-            name: key,
+            name: item.name,
             axis: 'y2',
             label: {
               x: '月',
-              y: key,
+              y: item.name,
               name: ''
             },
-            color: ColorGenerator.purchase(key).value,
-            values: data.months.map(monthData => {
+            color: ColorGenerator.purchase(item.name).value,
+            values: item.months.map(monthData => {
               return {
                 label: monthData.month,
-                value: monthData.data[key],
-                y2: monthData.data[key]
+                value: monthData.value,
+                y2: monthData.value
               }
+            }).sort((a, b) => {
+              return DataUtils.monthComparison(a.label, b.label)
             })
           }
           chartConfigs.push(lineConfig);
@@ -101,7 +113,6 @@ export default {
       });
 
       this.chartData = chartConfigs;
-      console.log(chartConfigs);
 
       this.draw();
     }

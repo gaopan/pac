@@ -1,69 +1,103 @@
 .dashboard-m {
-	.dashboard-m-header {
-		padding: 30/12*$unit 20/12*$unit;
-		margin-bottom: 30/12*$unit;
-	}
+  .dashboard-m-header {
+    padding: 30/12*$unit 20/12*$unit;
+    margin-bottom: 30/12*$unit;
+  }
 
-	.dashboard-m-title {
-		font-weight: 700;
-		margin-bottom: 30/12*$unit;
-	}
+  .dashboard-m-title {
+    font-weight: 700;
+    margin-bottom: 30/12*$unit;
+  }
 
-	.m-reports {
-		display: block;
-		padding: 15/12*$unit 20/12*$unit;
+  .m-reports {
+    display: block;
+    padding: 15/12*$unit 20/12*$unit;
 
-		.m-report {
-			display: block;
-			padding: 20/12*$unit 40/12*$unit;
-			text-align: center;
-			background-color: $bgColor;
+    .m-report {
+      display: block;
+      padding: 20/12*$unit 40/12*$unit;
+      text-align: center;
+      background-color: $bgColor;
 
-			&:hover {
-				cursor: pointer;
-				background-color: $color;
-				color: #fff;
-			}
-		}
-	}
+      &:hover {
+        cursor: pointer;
+        background-color: $color;
+        color: #fff;
+      }
+    }
+  }
 
-	.m-projects {
-		display: block;
-		padding: 15/12*$unit 20/12*$unit;
+  .m-projects {
+    display: block;
+    padding: 15/12*$unit 20/12*$unit;
 
-		.m-project {
-			display: block;
-			padding: 20/12*$unit;
-			text-align: center;
-			background-color: $bgColor;
+    .m-project {
+      display: block;
+      padding: 20/12*$unit;
+      text-align: center;
+      background-color: $bgColor;
 
-			&:hover {
-				cursor: pointer;
-				background-color: $color;
-				color: #fff;
+      &.green {
+      	background-color: #449D44;
+      	color: #fff;
+      }
 
-				.project-name {
-					background-color: transparent;
-				}
-			}
+      &.red {
+      	background-color: #D9534F;
+      	color: #fff;
+      }
 
-			.project-name {
-				word-break: break-all;
-				text-align: left;
-				font-weight: 700;
-				background-color: #ccc;
-				padding: 10/12*$unit;
-				margin-bottom: 10/12*$unit;
-			}
+      &.yellow {
+      	background-color: #ffc107;
+      	color: #fff;
+      }
 
-			.project-desc {
-				padding: 5/12*$unit 10/12*$unit;
-				font-size: 14/12*$unit;
-				word-break: break-all;
-				text-align: left;
-				height: 128/12*$unit;
-				line-height: 1.25;
-			}
-		}
-	}
+      &:hover {
+        cursor: pointer;
+        background-color: #cdcdcd;
+        color: #333;
+
+        .project-name {
+          background-color: transparent;
+        }
+      }
+
+      .project-name {
+        word-break: break-all;
+        text-align: left;
+        font-weight: 700;
+        // background-color: #ccc;
+        padding: 10/12*$unit;
+        margin-bottom: 10/12*$unit;
+      }
+
+      .project-desc {
+        padding: 5/12*$unit 10/12*$unit;
+        font-size: 14/12*$unit;
+        word-break: break-all;
+        text-align: left;
+        height: 128/12*$unit;
+        line-height: 1.25;
+      }
+    }
+  }
+
+  .proj-guide {
+    padding: 10/12*$unit;
+    background-color: $bgColor;
+    margin-bottom: 30/12*$unit;
+
+    span.red {
+      color: #D9534F;
+    }
+
+    span.green {
+      color: #449D44;
+    }
+
+    span.yellow {
+    	color: #ffc107;
+    }
+
+  }
 }

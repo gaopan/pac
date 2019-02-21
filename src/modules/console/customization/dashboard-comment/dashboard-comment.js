@@ -21,7 +21,7 @@ export default {
   },
   created() {
     let curMonth = this.curMonth;
-    this.companyId = this.$router.currentRoute.params.company.substr(this.$router.currentRoute.params.company.lastIndexOf('_') + 1);
+    this.companyId = this.$router.currentRoute.params.companyId;
     this.data = this.$props.comments.slice();
     if (this.data.filter(item => item.month == curMonth) < 1) {
       this.data.push({

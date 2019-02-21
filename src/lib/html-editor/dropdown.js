@@ -1,4 +1,4 @@
-'use strict'
+
 import Utils from './utils';
 import Actions from './actions';
 import CustomDD from './custom-dropdown';

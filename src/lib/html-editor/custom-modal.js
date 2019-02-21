@@ -1,4 +1,4 @@
-'use strict'
+
 class CustomModal {
     constructor(config,cbFn){
         this.config = config;
@@ -93,8 +93,8 @@ function _createModal(localVariable){
 
     customModalCtaSubmitBtn.disabled = true;
 
-    customModalCtaCloseBtn.innerHTML = "Close";
-    customModalCtaSubmitBtn.innerHTML = "Submit";
+    customModalCtaCloseBtn.innerHTML = "取消";
+    customModalCtaSubmitBtn.innerHTML = "确定";
 
     var ctaSubmitListener = _cta.bind(null,'submit',localVariable),
         ctaCloseListener = _cta.bind(null,'close',localVariable);

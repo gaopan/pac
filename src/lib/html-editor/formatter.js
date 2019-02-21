@@ -1,4 +1,4 @@
-'use-strict'
+
 import Utils from './utils';
 import TypeChecker from './utils/type-checker-utils';
 import CustomTable from './components/custom-table/custom-table';

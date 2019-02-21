@@ -79,6 +79,10 @@ export default {
       type: Boolean,
       default: false
     },
+    disabledDayView: {
+      type: Boolean,
+      default: false
+    },
     required: {
       type: Boolean,
       default: false
@@ -140,9 +144,9 @@ export default {
       if (!this.selectedDate) {
         return null
       }
-      if(!this.enabledTime) {
+      if (!this.enabledTime) {
         return DateUtils.formatDate(new Date(this.selectedDate), this.format, this.translation)
-      } 
+      }
       let theDate = new Date(this.selectedDate);
       return DateUtils.formatDate(theDate, this.format, this.translation) + ' ' + zerolize(theDate.getHours()) + ":" + zerolize(theDate.getMinutes());
     },
@@ -390,10 +394,16 @@ export default {
       if (month.isDisabled) {
         return false
       }
-      const date = new Date(month.timestamp)
-      this.setPageDate(date)
-      this.showDayCalendar()
-      this.$emit('changedMonth', month)
+      if (this.disabledDayView) {
+        this.setDate(month.timestamp);
+        this.close();
+      } else {
+        const date = new Date(month.timestamp)
+        this.setPageDate(date)
+        this.showDayCalendar()
+        this.$emit('changedMonth', month)
+      }
+
     },
 
     /**

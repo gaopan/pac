@@ -1,5 +1,5 @@
 .pac-nav-wrapper {
-  .menus-options {
+  .menus-option {
     padding: 15/12*$unit 10/12*$unit 0;
   }
 
@@ -192,7 +192,7 @@
       }
 
       &>span {
-        padding: 0 10/12*$unit 0 5/12*$unit;
+        padding: 0 10/12*$unit;
         font-size: 16/12*$unit;
         font-weight: bold;
         color: #fff;

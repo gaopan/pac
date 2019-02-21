@@ -42,16 +42,7 @@ export default {
   },
   created() {
     this.user = this.$store.getters.userProfile;
-    this.refresh();
-  },
-  watch: {
-    months: {
-      handler(val) {
-        if (val) {
-          this.parseMonths(val);
-        }
-      }
-    }
+    // this.refresh();
   },
   methods: {
     refresh() {

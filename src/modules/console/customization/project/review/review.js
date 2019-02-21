@@ -7,6 +7,7 @@ import BScroll from "better-scroll"
 import shared from '@/shared.js'
 import CommonGenerators from '@/utils/common-generators.js'
 import Task from './task/Task.vue'
+import LeapSelect from '@/components/leap-select/LEAPSelect.vue'
 
 let UUIDGenerator = CommonGenerators.UUIDGenerator
 
@@ -18,10 +19,18 @@ export default {
       loadId: UUIDGenerator.purchase(),
     	projects: null,
       currentProject: null,
-      curMonth: null
+      curMonth: null,
+      newProject: null,
+      projStatusOptions: [{
+        name: "红色",
+        value: "red"
+      }, {
+        name: "绿色",
+        value: "green"
+      }]
     };
   },
-  components: {Task},
+  components: {Task, LeapSelect},
   created() {
   	eventHub.$on("global-date", this.onGlobalDateChange);
     this.companyId = this.$router.currentRoute.params.companyId;
@@ -57,32 +66,10 @@ export default {
             id: p.id,
             name: p.name,
             status: p.status,
-            description: p.description
+            description: p.description,
+            tasks: p.monthlyTask
           };
         });
-      });
-      let taskPromise = ProjectApi.allTasks();
-      taskPromise.then(res => {
-        tasks = res.data.map(t => {
-          return {
-            id: t.id,
-            projectId: t.projectId,
-            month: t.month,
-            status: t.status,
-            value: t.value
-          };
-        });
-      });
-      Promise.all([projectPromise, taskPromise]).then(() => {
-        tasks.forEach(t => {
-          projects.forEach(p => {
-            if(!p.tasks) p.tasks = [];
-            if(p.id == t.projectId) {
-              p.tasks.push(t);
-            }
-          });
-        });
-
         this.projects = projects;
         if(cb) {
           cb.call(this);
@@ -115,6 +102,23 @@ export default {
       let theDate = new Date(newDate);
       this.curMonth = theDate.getFullYear() + '-' + (theDate.getMonth() + 1);
       this.refresh();
+    },
+    toAddProject(){
+      this.newProject = {
+        companyId: this.companyId
+      };
+    },
+    submit(){
+      ProjectApi.addProject(this.newProject).then(res => {
+        this.newProject = null;
+        this.refresh();
+        Noty.notifySuccess({text: "保存数据成功！"});
+      }, err => {
+        Noty.notifyError({text: "保存数据失败！"});
+      });
+    },
+    cancel(){
+      this.newProject = null;
     }
   }
 }

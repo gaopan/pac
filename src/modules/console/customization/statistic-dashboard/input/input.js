@@ -1,191 +1,251 @@
-import Noty from '@/utils/noty-operation.js'
 import DashboardApi from '@/api/customization/dashboard.js'
-const REQUEST_KEY = 'statistic'
+import CommonUtils from '@/utils/common-utils.js'
+import TypeChecker from '@/utils/type-checker.js'
+import Noty from '@/utils/noty-operation.js'
+import shared from '@/shared.js'
+import CommonGenerators from '@/utils/common-generators.js'
+
+let UUIDGenerator = CommonGenerators.UUIDGenerator
+
+let eventHub = shared.eventHub
 export default {
-  props: {
-    companies: {
-      type: Array,
-      required: true
-    },
-    requestId: {
-      type: Number
-    }
-  },
   data() {
     return {
+      data: {
+        formData: {}
+      },
       keys: [{
         name: '企业员工人数',
-        value: '企业员工人数',
+        value: 'qyygrs',
+        default: 0,
         validate: {
           required: true,
-          decimal: 0
+          decimal: 2
         }
       }, {
         name: "研发人员人数",
-        value: "研发人员人数",
+        value: "yfryrs",
+        default: 0,
         validate: {
           required: true,
-          decimal: 0
+          decimal: 2
         }
       }, {
         name: "法定工作总时长",
-        value: "法定工作总时长",
+        value: "fdgzzsc",
+        default: 0,
         validate: {
           required: true,
-          decimal: 0
+          decimal: 2
         }
       }, {
         name: "研发人员法定工作总时长",
-        value: "研发人员法定工作总时长",
+        value: "yfryfdgzzsc",
+        default: 0,
         validate: {
           required: true,
-          decimal: 0
+          decimal: 2
         }
       }, {
         name: "实际工作时长",
-        value: "实际工作时长",
+        value: "sjgzsc",
+        default: 0,
         validate: {
           required: true,
-          decimal: 0
+          decimal: 2
         }
       }, {
         name: "研发人员实际工作时长",
-        value: "研发人员实际工作时长",
+        value: "yfrysjgzsc",
+        default: 0,
         validate: {
           required: true,
-          decimal: 0
+          decimal: 2
         }
       }, {
         name: "加班总时长",
-        value: "加班总时长",
+        value: "jbzsc",
+        default: 0,
         validate: {
           required: true,
-          decimal: 0
+          decimal: 2
         }
       }, {
         name: "研发人员加班总时长",
-        value: "研发人员加班总时长",
+        value: "yfryjbzsc",
+        default: 0,
         validate: {
           required: true,
-          decimal: 0
+          decimal: 2
         }
       }, {
         name: "法定工作时长（人均）",
-        value: "法定工作时长（人均）",
+        value: "fdgzscrj",
+        default: 0,
+        disabled: false,
         validate: {
           required: true,
-          decimal: 0
+          decimal: 2
         }
       }, {
         name: "研发人员法定工作时长（人均）",
-        value: "研发人员法定工作时长（人均）",
+        value: "yfryfdgzscrj",
+        default: 0,
+        disabled: false,
         validate: {
           required: true,
-          decimal: 0
+          decimal: 2
         }
       }, {
         name: "实际工作时长（人均）",
-        value: "实际工作时长（人均）",
+        value: "sjgzscrj",
+        default: 0,
+        disabled: false,
         validate: {
           required: true,
-          decimal: 0
+          decimal: 2
         }
       }, {
         name: "研发人员实际工作时长（人均）",
-        value: "研发人员实际工作时长（人均）",
+        value: "yfrysjgzscrj",
+        default: 0,
+        disabled: false,
         validate: {
           required: true,
-          decimal: 0
+          decimal: 2
         }
       }, {
         name: "加班时长（人均）",
-        value: "加班时长（人均）",
+        value: "jbscrj",
+        default: 0,
+        disabled: false,
         validate: {
           required: true,
-          decimal: 0
+          decimal: 2
         }
       }, {
         name: "研发人员加班时长（人均）",
-        value: "研发人员加班时长（人均）",
+        value: "yfryjbscrj",
+        default: 0,
+        disabled: false,
         validate: {
           required: true,
-          decimal: 0
+          decimal: 2
         }
       }]
     };
   },
   created() {
-    let curMonth = this.curMonth = new Date().getFullYear() + "-" + (new Date().getMonth() + 1);
+    this.user = this.$store.getters.userProfile;
+    eventHub.$on("global-date", this.onGlobalDateChange);
+    this.companyId = Number(this.$router.currentRoute.params.companyId);
+    let globalDate = new Date(localStorage.getItem("global-date")) || new Date();
+    this.curMonth = globalDate.getFullYear() + "-" + (globalDate.getMonth() + 1);
+    this.refresh();
+  },
+  beforeDestroy() {
+    eventHub.$off("global-date", this.onGlobalDateChange);
   },
   methods: {
+    onGlobalDateChange(newDate) {
+      let theDate = new Date(newDate);
+      this.curMonth = theDate.getFullYear() + '-' + (theDate.getMonth() + 1);
+      this.refresh();
+    },
+    refresh() {
+      let curMonthData = null;
+      let statPromise = DashboardApi.getStatisticsByCompanyId(this.companyId);
+      delete this.data.id;
+      let _formData = {};
+      this.keys.forEach(key => {
+        if (TypeChecker.isUndefined(_formData[key.value])) {
+          _formData[key.value] = key.default;
+        }
+      });
+      this.data.formData = _formData;
+      statPromise.then(res => {
+        let stats = res.data;
+        curMonthData = stats.filter(stat => stat.month == this.curMonth);
+        curMonthData = curMonthData.length > 0 ? curMonthData[0] : null;
+        this.data.companyId = this.companyId;
+        this.data.month = this.curMonth;
+        if (curMonthData) {
+          this.data.id = curMonthData.id;
+          let formData = null;
+          try {
+            formData = JSON.parse(curMonthData.value);
+          } catch (err) {
+            console.log(err);
+          }
+          if (formData) {
+            this.keys.forEach(key => {
+              if (TypeChecker.isUndefined(formData[key.value])) {
+                formData[key.value] = key.default;
+              }
+            });
+            this.data.formData = formData;
+          }
+        }
+      });
+
+    },
     parseData() {
 
     },
-    onInputChange(company, key) {
+    onInputChange(key) {
 
     },
-    prepareDataToRequest(isSubmitted) {
+    prepareDataToRequest() {
       let vm = this;
-      let data = { name: REQUEST_KEY, month: this.curMonth, value: {} };
-      data.value.isSubmitted = !!isSubmitted;
-      this.companies.forEach(comp => {
-        data.value[comp.key] = {};
-        Object.keys(comp.data).forEach(key => {
-          data.value[comp.key][key] = comp.data[key] ? Number(comp.data[key]) : 0;
-        });
+      let data = { companyId: this.companyId, month: this.curMonth, value: {} };
+      if (this.data.id) {
+        data.id = this.data.id;
+      }
+      Object.keys(this.data.formData).forEach(key => {
+        data.value[key] = this.data.formData[key] ? Number(this.data.formData[key]) : 0;
       });
       return data;
     },
-    save() {
-      let vm = this;
-      let saveTable = function(data) {
-        let promise = null;
-        let _dataToSend = {
-          month: data.month,
-          value: JSON.stringify(data.value)
-        };
-        if(vm.$props.requestId) {
-          promise = DashboardApi.updateStatistics(vm.$props.requestId, _dataToSend);
-        } else {
-          promise = DashboardApi.addStatistics(_dataToSend);
-        }
-        
-        promise.then(res => {
-          Noty.notifySuccess({ text: '保存数据成功！' });
-          vm.$emit('submitted');
-        }, err => {
-          Noty.notifyError({ text: '保存数据失败！' });
-        });
-      };
-      let dataToSend = this.prepareDataToRequest(false);
-      saveTable(dataToSend);
-    },
-    submit() {
-      let vm = this;
-      let saveTable = function(data) {
-        let promise = null;
-        let _dataToSend = {
-          month: data.month,
-          value: JSON.stringify(data.value)
-        };
-        if(vm.$props.requestId) {
-          promise = DashboardApi.updateStatistics(vm.$props.requestId, _dataToSend);
-        } else {
-          promise = DashboardApi.addStatistics(_dataToSend);
-        }
+    request(type) {
+      let req = null,
+        name = null,
+        dataToSend = this.prepareDataToRequest();
+      if (type == "save") {
+        name = "保存";
+      } else if (type == "submit") {
+        dataToSend.value.isSubmitted = true;
+        name = "提交";
+      } else if (type == "approve") {
+        dataToSend.value.isApproved = true;
+        name = "保存";
+      } else if (type == "reject") {
+        dataToSend.value.isSubmitted = false;
+        dataToSend.value.isApproved = false;
+        name = "保存";
+      } else if (type == "withdraw") {
+        dataToSend.value.isSubmitted = false;
+        dataToSend.value.isApproved = false;
+        name = "保存";
+      }
 
-        promise.then(res => {
-          Noty.notifySuccess({ text: '提交数据成功！' });
-          vm.$emit('submitted');
-        }, err => {
-          Noty.notifyError({ text: '提交数据失败！' });
-        });
+      let promise = null;
+      let _dataToSend = {
+        companyId: dataToSend.companyId,
+        month: dataToSend.month,
+        value: JSON.stringify(dataToSend.value)
       };
-      let dataToSend = this.prepareDataToRequest(true);
-      saveTable(dataToSend);
-    },
-    cancel() {
-      this.$emit('cancel');
+      if (dataToSend.id) {
+        promise = DashboardApi.updateStatistics(dataToSend.id, _dataToSend);
+      } else {
+        promise = DashboardApi.addStatistics(_dataToSend);
+      }
+
+      promise.then(res => {
+        Noty.notifySuccess({ text: `${name}数据成功！` });
+        this.refresh();
+      }, err => {
+        Noty.notifyError({ text: `${name}数据失败！` });
+      });
     }
   }
 }

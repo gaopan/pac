@@ -1,4 +1,4 @@
-'use strict'
+
 import Utils from '../../utils';
 import CustomTableUtils from './custom-table-utils'
 

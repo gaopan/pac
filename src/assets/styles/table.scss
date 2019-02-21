@@ -1,5 +1,6 @@
 .leap-table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   border-spacing: 0;
   vertical-align: middle;
@@ -9,7 +10,7 @@
 .leap-table thead {
   background: #000;
   color: #fff;
-  text-align: left;
+  text-align: center;
 }
 
 .leap-table thead i {
@@ -27,13 +28,14 @@
   padding: 6px 12px;
   height: 36px;
   position: relative;
+  text-align: center;
 }
 
 .leap-table th>div {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .leap-table th>.sortable {
@@ -56,8 +58,20 @@
 }
 
 .leap-table tbody>tr>td {
-  height: 36px;
+  // height: 36px;
   padding: 6px 8px;
+}
+
+.leap-table tbody>tr>td>pre {
+  display: block;
+  width: 100%;
+  white-space: pre-wrap;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  background-color: transparent;
+  border: none;
+  border-radius: none;
 }
 
 .leap-table .edit-actions i {
