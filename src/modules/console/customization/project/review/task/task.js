@@ -1,5 +1,5 @@
 import BScroll from "better-scroll"
-
+import TaskTimeline from './TaskTimeline.vue'
 export default {
   props: {
     project: {
@@ -13,6 +13,7 @@ export default {
       curTask: null
     };
   },
+  components: {TaskTimeline},
   watch: {
     project() {
       this.prepareTasks();
@@ -24,12 +25,12 @@ export default {
     this.prepareTasks();
   },
   mounted() {
-    this.tabScroll = new BScroll(this.$refs.taskTabs, {
-      probeType: 3,
-      scrollX: true,
-      scrollY: false,
-      click: true
-    });
+    // this.tabScroll = new BScroll(this.$refs.taskTabs, {
+    //   probeType: 3,
+    //   scrollX: true,
+    //   scrollY: false,
+    //   click: true
+    // });
   },
   methods: {
     prepareTasks() {
@@ -41,6 +42,7 @@ export default {
             value: t.value,
             month: t.month,
             status: t.status,
+            nodeType: t.nodeType,
             projectId: t.projectId
           };
         });

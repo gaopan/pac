@@ -1,5 +1,16 @@
 .task-container {
-  padding: 0;
+  padding: 0 15px;
+  height: 100%;
+
+  &>div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &>.task-timeline {
+      flex-grow: 1;
+    }
+  }
 
   .no-data {
     font-size: 12px;

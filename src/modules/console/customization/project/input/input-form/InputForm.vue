@@ -45,6 +45,14 @@
                       </div>
                       <div class="col-xs-12">
                         <div class="form-group">
+                          <label class="col-sm-2 control-label">项目节点：</label>
+                          <div class="col-sm-10">
+                            <leap-select :options="taskNodeTypeOptions" :initSelectedValue="proj.curMonthTask.nodeType" v-on:onSelectedValues="(args)=>{proj.curMonthTask.nodeType=args.value}"></leap-select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xs-12">
+                        <div class="form-group">
                           <label class="col-sm-2 control-label">交付物：</label>
                           <div class="col-sm-10">
                             <rte :config="rteSetup.config" :dataIn="proj.curMonthTask.value" v-on:getValue="onEmittedUpdateContent">
