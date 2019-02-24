@@ -26,7 +26,7 @@ export default {
   watch: {
     data(){
       this.parseData(CommonUtils.deepClone(this.$props.data));
-    }
+    } 
   },
   methods: {
     init() {
@@ -41,6 +41,7 @@ export default {
       vm.chart.xAxis.title("月").textRotate(-50).maxTextLength(10);
       vm.chart.yAxis.title("人数").domainToZero(true).axis().ticks(5);
       vm.chart.y2Axis.title("小时").axis().ticks(5);
+      console.log(Object.keys(vm.chart.tooltip))
     },
     draw(){
     	let vm = this,
@@ -79,7 +80,8 @@ export default {
             values: item.months.map(monthData => {
               return {
                 label: monthData.month,
-                value: monthData.value
+                // value: monthData.value
+                value: (monthData.value).toFixed(1)
               }
             }).sort((a, b) => {
               return DataUtils.monthComparison(a.label, b.label)

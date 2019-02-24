@@ -53,9 +53,84 @@ export default {
       }, 0);
     },
     refreshData(cb) {
-      let modules = CommonUtils.deepClone(Modules);
-      let curMonth = this.curMonth;
-      DashboardApi.companyModulesByMonths(this.companyId, [curMonth]).then(detailRes => {
+      let modules = CommonUtils.deepClone(Modules),
+          curMonth = this.curMonth,
+          allMonth = getAllMonthString();
+
+      function getAllMonthString(){
+        let result = [],
+            year = new Date().getFullYear();
+        for(let i = 1; i <= 12; i++){
+          result.push(`${year}-${i}`);
+        }
+        return result;
+      }
+      DashboardApi.companyModulesByMonths(this.companyId, allMonth).then(detailRes=>{
+        let _oData = {};
+        if (TypeChecker.isArray(detailRes.data) && detailRes.data.length > 0) {
+          detailRes.data.forEach(d => {
+            let month = d.report.month;
+
+            if (d.reportModules) {
+              d.reportModules.forEach(rm => {
+                let obj = _oData[rm.moduleName];
+                if (!obj) obj = _oData[rm.moduleName] = {};
+                if (!obj.months) obj.months = [];
+                if (!obj.monthData) obj.monthData = {};
+                let rmValue = rm.value;
+                let rmValueObj = null;
+                try {
+                  rmValueObj = JSON.parse(rmValue);
+                } catch (err) {}
+                if (rmValueObj && (this.user.isAdmin || this.user.isAA || rmValueObj.isApproved)) {
+                  if (obj.months.indexOf(month)) {
+                    obj.months.push(month);
+                  }
+                  obj.monthData[month] = rmValueObj;
+                }
+              });
+            }
+          });
+        }
+
+        modules.forEach(m => {
+          m.dashboardConfig.data = {
+            noPeriodSelector: true,
+            curMonth:curMonth
+          };
+          let oM = _oData[m.key];
+          if (oM) {
+
+            // m['months'] = oM["months"];
+            // m['monthData'] = oM['monthData'];
+            let panelMonth = m.name ==="成本"|| m.name==="人力资源" ? oM["months"] : [curMonth];
+            let panelMonthData = {};
+            if(m.name==="成本"||m.name==="人力资源"){
+              panelMonthData = oM['monthData'];
+            }else{
+              panelMonthData[curMonth] = oM['monthData'][curMonth];
+            }
+            m['months'] = panelMonth;
+            m['monthData'] = panelMonthData;
+
+            if (TypeChecker.isObject(m["monthData"])) {
+              m['curMonthData'] = m["monthData"][curMonth];
+            }
+          } else {
+            m['curMonthData'] = {};
+          }
+          m.dashboardConfig.data.months = m.months;
+          m.dashboardConfig.data.data = m.dashboardConfig.adaptData(m.monthData, m.months);
+        });
+
+        this.modules = modules;
+        cb.call(this);
+      },err=>{
+
+      })
+
+      /*DashboardApi.companyModulesByMonths(this.companyId, [curMonth]).then(detailRes => {
+
         let _oData = {};
         if (TypeChecker.isArray(detailRes.data) && detailRes.data.length > 0) {
           detailRes.data.forEach(d => {
@@ -100,9 +175,10 @@ export default {
           m.dashboardConfig.data.months = m.months;
           m.dashboardConfig.data.data = m.dashboardConfig.adaptData(m.monthData, m.months);
         });
+
         this.modules = modules;
         cb.call(this);
-      });
+      });*/
     },
     refresh() {
       let currentModuleName = null;

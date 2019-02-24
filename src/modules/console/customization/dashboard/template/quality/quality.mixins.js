@@ -30,7 +30,10 @@ export default {
               <leap-select :options="qDOptions" :initSelectedValue="selectedQDOption" v-on:onSelectedValues="selectQDOption"></leap-select>
             </div>
           </div>
-          <div class="chart-container" ref="qDContainer"></div>
+          <div class="chart-container">
+            <div class = "qD-container-1" ref="qDContainer"></div>
+            <div class = "qD-container-2" ref="qDContainer2"></div>
+          </div>
         </div>
       </div>
       <div class="row" v-if="ifFullScreen&&table">
@@ -75,7 +78,10 @@ export default {
       qDOptions: [],
       table: null,
       comments: null,
-      ifFullScreen: false
+      ifFullScreen: false,
+
+      qDContainer: null,
+      qDContainer2: null,
     };
   },
   created() {
@@ -104,19 +110,26 @@ export default {
         .y(function(d) { return d.value })
         .y2(function(d) { return d.y2 })
         .margin({ top: 15, right: 20, left: 15, bottom: 10 });
+
       vm.qUChart.axisLines.showAll({ x: false, y: false });
       vm.qUChart.xAxis.title("批次").textRotate(-50).maxTextLength(10);
       vm.qUChart.yAxis.title("里程").domainToZero(true).axis().ticks(5);
-      vm.qUChart.y2Axis.title("率").axis().ticks(5);
+      // modify:vm.qUChart.y2Axis.title("率").axis().ticks(5);
+      vm.qUChart.y2Axis.title("率(%)").axis().ticks(5);
 
       vm.qDContainer = d3.select(vm.$refs.qDContainer);
+      vm.qDContainer2 = d3.select(vm.$refs.qDContainer2);
+
       vm.qDChart = d3BI.baseChart()
         .x(function(d) { return d.label })
         .y(function(d) { return d.value })
         .margin({ top: 15, right: 20, left: 15, bottom: 10 });
-      vm.qDChart.axisLines.showAll({ x: false, y: false });
+
+      //  modify:vm.qDChart.axisLines.showAll({ x: false, y: false });
+      vm.qDChart.axisLines.showAll({ x: false, y: true });
       vm.qDChart.xAxis.title("月").maxTextLength(10);
-      vm.qDChart.yAxis.title("率").domainToZero(true).axis().ticks(5);
+      // vm.qDChart.yAxis.title("率").domainToZero(true).axis().ticks(5);
+      vm.qDChart.yAxis.title("率(%)").domainToZero(true).axis().ticks(5);
     },
     selectQDOption(args) {
       this.selectedQDOption = args.value;
@@ -141,19 +154,52 @@ export default {
     },
     drawQDChart() {
       let vm = this,
-        chartHeight = this.chartHeight;
+          chartHeight = this.chartHeight,
+          chartData = divideData(vm.qDData);
+
       vm.qDContainer.style('height', chartHeight);
+      vm.qDContainer2.style('height', chartHeight);
+
       if (vm.qDContainer.select('svg').size()) {
         vm.qDContainer
           .select('svg')
-          .datum(function(d) { return vm.qDData ? vm.qDData : d })
+          .datum(function(d) { return chartData.chart1 ? chartData.chart1 : d })
           .call(vm.qDChart);
       } else {
         vm.qDContainer
           .append('svg')
-          .datum(vm.qDData)
+          .datum(chartData.chart1)
           .call(vm.qDChart);
       }
+
+
+      if (vm.qDContainer2.select('svg').size()) {
+        vm.qDContainer2
+          .select('svg')
+          .datum(function(d) { return chartData.chart2 ? chartData.chart2 : d })
+          .call(vm.qDChart);
+      } else {
+        vm.qDContainer2
+          .append('svg')
+          .datum(chartData.chart2)
+          .call(vm.qDChart);
+      }
+
+      function divideData(data){
+        let chart1 = [], chart2 = [];
+        if(Array.isArray(data)){
+          data.forEach(d=>{
+            if(d.name === "错误率" || d.name === "错误发生率标准"){
+              chart1.push(d);
+            }else if(d.name === "错误流出率" || d.name === "错误流出率标准"){
+              chart2.push(d);
+            }
+          })
+        }
+
+        return { chart1, chart2 }
+      }
+
     },
     draw() {
       this.chartHeight = Math.floor((this.container.parentNode.clientHeight - 52 - (this.$props.conf.noPeriodSelector ? 0 : 38) - 52 - 4) / 2) + 'px';
@@ -194,7 +240,9 @@ export default {
           },
           color: 'rgb(178, 18, 176)',
           values: _zlcData
-        }, {
+        },
+        //commented by hong-yu
+        /* {
           type: 'bar',
           name: '累计总里程',
           label: {
@@ -204,7 +252,8 @@ export default {
           },
           color: 'rgb(150, 10, 148)',
           values: _ljzlcData
-        }, {
+        }, */
+        {
           type: 'bar',
           name: '合格里程',
           label: {
@@ -220,39 +269,44 @@ export default {
         this.qUData = chartData([]);
         return;
       }
+
       let hglData = data.up.map(_d => {
           return {
             label: _d['外业批次'],
-            y2: _d['合格率'],
-            value: _d['合格里程']
+            // y2: _d['合格率'],
+            y2: (_d['合格率']*100).toFixed(1),
+            value: (_d['合格里程']).toFixed(1)
           };
         }),
         hgbzData = data.up.map(_d => {
           return {
             label: _d['外业批次'],
-            y2: _d['合格标准'],
-            value: _d['总里程']
+            // y2: _d['合格标准'],
+            y2: (_d['合格标准']*100).toFixed(1),
+            value: (_d['总里程']).toFixed(1)
           }
         }),
         zlcData = data.up.map(_d => {
           return {
             label: _d['外业批次'],
-            value: _d['总里程']
+            value: (_d['总里程']).toFixed(1)
           }
         }),
         ljzlcData = data.up.map(_d => {
           return {
             label: _d['外业批次'],
-            value: _d['累计总里程']
+            value: (_d['累计总里程']).toFixed(1)
           };
         }),
         hglcData = data.up.map(_d => {
           return {
             label: _d['外业批次'],
-            value: _d['合格里程']
+            value: (_d['合格里程']).toFixed(1)
           }
         });
+
       this.qUData = chartData(hglData, hgbzData, zlcData, ljzlcData, hglcData);
+      console.log(this.qUData)
     },
     windowResized: function(args) {
       if (args.id == this.$props.tileId) {
@@ -296,7 +350,8 @@ export default {
             y: '错误流出率',
             name: ''
           },
-          color: 'rgb(178, 18, 176)',
+          // color: 'rgb(178, 18, 176)',
+          color: 'rgb(255,90,252)',
           values: _cwlclData
         }, {
           type: 'line',
@@ -318,25 +373,29 @@ export default {
       let cwlData = data.down[this.selectedQDOption].map(_d => {
           return {
             label: _d['月'],
-            value: _d['错误发生率']
+            // value: _d['错误发生率']
+            value: (_d['错误发生率']*100).toFixed(1)
           };
         }),
         cwlbzData = data.down[this.selectedQDOption].map(_d => {
           return {
             label: _d['月'],
-            value: _d['错误发生率标准']
+            // value: _d['错误发生率标准']
+            value: (_d['错误发生率标准']*100).toFixed(1)
           }
         }),
         cwlclData = data.down[this.selectedQDOption].map(_d => {
           return {
             label: _d['月'],
-            value: _d['错误流出率']
+            // value: _d['错误流出率']
+            value: (_d['错误流出率']*100).toFixed(1)
           }
         }),
         cwlclbzData = data.down[this.selectedQDOption].map(_d => {
           return {
             label: _d['月'],
-            value: _d['错误流出率标准']
+            // value: _d['错误流出率标准']
+            value: (_d['错误流出率标准']*100).toFixed(1)
           }
         });
       this.qDData = chartData(cwlData, cwlbzData, cwlclData, cwlclbzData);

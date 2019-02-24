@@ -25,6 +25,7 @@ export default {
       <div class="col-xs-12">
           <div class="chart-title">
             <span>成本与里程</span>
+                        
           </div>
           <div class="chart-container" ref="hUContainer"></div>
         </div>
@@ -32,9 +33,17 @@ export default {
     <div class="row">
         <div class="col-xs-12">
           <div class="chart-title">
-            <span>成本目标</span>
+            <!-- <span>成本目标</span> -->
+            <span>成本</span>
           </div>
-          <div class="chart-container" ref="hDContainer"></div>
+          <div class="chart-container" v-show = "selectedType == '外业'">
+            <div class = "hD-container-1" ref="hDContainer"></div>
+            <div class = "hD-container-2" ref="hDContainer2"></div>            
+          </div>
+          <div class="chart-container" v-show = "selectedType == '内业'">
+            <div class = "hD-container-3" ref="hDContainer3"></div>
+          </div>
+
         </div>
     </div>
     <div class="row" v-if="comments">
@@ -62,7 +71,9 @@ export default {
       selectedType: '内业',
       typeOptions: [{ name: '内业', value: '内业' }, { name: '外业', value: '外业' }],
       comments: null,
-      ifFullScreen: false
+      ifFullScreen: false,
+
+      chartHeight:null
     };
   },
   created() {
@@ -70,6 +81,7 @@ export default {
       eventHub.$on("tile-window-resized", this.windowResized);
       eventHub.$on("tile-full-screen-inner", this.toggleFullScreen);
     }
+
     this.parseMonths(this.conf.months);
   },
   components: { LeapSelect, PeriodSelector, DashboardComment },
@@ -99,25 +111,36 @@ export default {
         .margin({ top: 15, right: 20, left: 15, bottom: 10 });
       vm.hUChart.axisLines.showAll({ x: false, y: false });
       vm.hUChart.xAxis.title("月").maxTextLength(10);
-      vm.hUChart.yAxis.title("元").domainToZero(true).axis().ticks(5);
-      vm.hUChart.y2Axis.title("公里").axis().ticks(5);
+      // vm.hUChart.yAxis.title("元").domainToZero(true).axis().ticks(5);
+      vm.hUChart.yAxis.title("总成本(元)").domainToZero(true).axis().ticks(5);
+      // vm.hUChart.y2Axis.title("公里").axis().ticks(5);
+      vm.hUChart.y2Axis.title("总公里数(公里)").axis().ticks(5);
 
-      vm.hDContainer = d3.select(vm.$refs.hDContainer);
+      // vm.hDContainer = d3.select(vm.$refs.hDContainer);
+      // vm.hDContainer2 = d3.select(vm.$refs.hDContainer2);
+
       vm.hDChart = d3BI.baseChart()
         .x(function(d) { return d.label })
         .y(function(d) { return d.value })
+        .y2(function(d) { return d.y2 })
         .margin({ top: 15, right: 20, left: 15, bottom: 10 });
-      vm.hDChart.axisLines.showAll({ x: false, y: false });
+
+      vm.hDChart.axisLines.showAll({ x: false, y: true });
       vm.hDChart.xAxis.title("月").maxTextLength(10);
-      vm.hDChart.yAxis.title("元/公里").domainToZero(true).axis().ticks(5);
+      // vm.hDChart.yAxis.title("元/公里").domainToZero(true).axis().ticks(5);
+      vm.hDChart.yAxis.title("成本(元/公里)").domainToZero(true).axis().ticks(5);
+      vm.hDChart.y2Axis.title("总公里数(公里)").axis().ticks(5);
+      
     },
     selectType(args) {
       this.selectedType = args.value;
     },
     draw() {
       let vm = this,
-        chartHeight = (vm.container.parentNode.clientHeight - 38 - 38 - 52 - 4) / 2 + 'px';
+          chartHeight = !!this.chartHeight ? this.chartHeight : this.chartHeight = (vm.container.parentNode.clientHeight - 38 - 38 - 52 - 4) / 2 + 'px';      
+
       vm.hUContainer.style('height', chartHeight);
+
       if (vm.hUContainer.select('svg').size()) {
         vm.hUContainer
           .select('svg')
@@ -130,18 +153,74 @@ export default {
           .call(vm.hUChart);
       }
 
-      vm.hDContainer.style('height', chartHeight);
-      if (vm.hDContainer.select('svg').size()) {
-        vm.hDContainer
-          .select('svg')
-          .datum(function(d) { return vm.hDData ? vm.hDData : d })
-          .call(vm.hDChart);
-      } else {
-        vm.hDContainer
-          .append('svg')
-          .datum(vm.hDData)
-          .call(vm.hDChart);
+      d3.select(vm.$refs.hDContainer3).style('height', chartHeight);      
+
+      if(vm.selectedType == '内业'){
+        setTimeout(function(){
+
+          if (d3.select(vm.$refs.hDContainer3).select('svg').size()) {
+            d3.select(vm.$refs.hDContainer3)
+              .select('svg')
+              .datum(function(d) { return vm.hDData ? vm.hDData : d })
+              .call(vm.hDChart);
+          } else {
+            d3.select(vm.$refs.hDContainer3)
+              .append('svg')
+              .datum(vm.hDData)
+              .call(vm.hDChart);
+          }
+
+        },0)   
+
+      }else{
+        setTimeout(function(){
+          let hDData = divideData(vm.hDData);
+
+          d3.select(vm.$refs.hDContainer).style('height', chartHeight);
+          d3.select(vm.$refs.hDContainer2).style('height', chartHeight);
+
+          if (d3.select(vm.$refs.hDContainer).select('svg').size()) {
+            d3.select(vm.$refs.hDContainer)
+              .select('svg')
+              .datum(function(d) { return hDData.chart1 ? hDData.chart1 : d })
+              .call(vm.hDChart);
+          } else {
+             d3.select(vm.$refs.hDContainer)
+              .append('svg')
+              .datum(hDData.chart1)
+              .call(vm.hDChart);
+          }
+
+          if (d3.select(vm.$refs.hDContainer2).select('svg').size()) {
+             d3.select(vm.$refs.hDContainer2)
+              .select('svg')
+              .datum(function(d) { return hDData.chart2 ? hDData.chart2 : d })
+              .call(vm.hDChart);
+          } else {
+             d3.select(vm.$refs.hDContainer2)
+              .append('svg')
+              .datum(hDData.chart2)
+              .call(vm.hDChart);
+          }
+        },0)
+
       }
+
+      function divideData(data){
+        let chart1 = [], chart2 = [];
+        if(Array.isArray(data)){
+          data.forEach(d=>{
+            if(d.name === "市区成本" || d.name === "市区成本目标"){
+              chart1.push(d);
+            }else if(d.name === "高速成本" || d.name === "高速成本目标"){
+              chart2.push(d);
+            }
+          })
+        }
+
+        return { chart1, chart2 }
+      }
+
     },
     windowResized: function(args) {
       if (args.id == this.$props.tileId) {
@@ -158,21 +237,26 @@ export default {
       let zcbData = d.map(_d => {
           return {
             label: _d['月'],
-            value: _d['总成本']
+            // value: _d['总成本']
+            value: (_d['总成本']).toFixed(1)
           };
         }),
         zglData = d.map(_d => {
           return {
             label: _d['月'],
-            value: _d['总成本'],
-            y2: _d['总公里数']
+            // value: _d['总成本'],
+            // y2: _d['总公里数']
+            value: (_d['总成本']).toFixed(1),
+            y2: (_d['总公里数']).toFixed(1)
           };
         }),
         ljzglData = d.map(_d => {
           return {
             label: _d['月'],
-            value: _d['总成本'],
-            y2: _d['累计总公里数']
+            // value: _d['总成本'],
+            // y2: _d['累计总公里数']
+            value: (_d['总成本']).toFixed(1),
+            y2: (_d['累计总公里数']).toFixed(1)
           };
         });
 
@@ -188,38 +272,50 @@ export default {
         sqcbData = d.map(_d => {
           return {
             label: _d['月'],
-            value: _d['成本']
+            // value: _d['成本']
+            y2: (_d['成本']).toFixed(1),
+            value: (_d['成本']).toFixed(1)
           };
         });
         gscbData = d.map(_d => {
           return {
             label: _d['月'],
-            value: _d['成本目标']
+            // value: _d['成本目标']
+            y2: (_d['成本目标']).toFixed(1),
+            value: (_d['成本目标']).toFixed(1)
           };
         });
       } else {
         sqcbData = d.map(_d => {
           return {
             label: _d['月'],
-            value: _d['市区成本']
+            // value: _d['市区成本']
+            y2: (_d['市区成本']).toFixed(1),
+            value: (_d['市区成本']).toFixed(1)
           };
         });
         gscbData = d.map(_d => {
           return {
             label: _d['月'],
-            value: _d['高速成本']
+            // value: _d['高速成本']
+            y2: (_d['高速成本']).toFixed(1),
+            value: (_d['高速成本']).toFixed(1)
           };
         });
         sqcbmbData = d.map(_d => {
           return {
             label: _d['月'],
-            value: _d['市区成本目标']
+            // value: _d['市区成本目标']
+            y2: (_d['市区成本目标']).toFixed(1),
+            value: (_d['市区成本目标']).toFixed(1)
           };
         });
         gscbmbData = d.map(_d => {
           return {
             label: _d['月'],
-            value: _d['高速成本目标']
+            // value: _d['高速成本目标']
+            y2: (_d['高速成本目标']).toFixed(1),
+            value: (_d['高速成本目标']).toFixed(1)
           };
         });
       }
@@ -250,7 +346,9 @@ export default {
           },
           color: 'rgb(0, 201, 255)',
           values: _zglData
-        }, {
+        }
+        //commented by hong-yu:去除累计的总里程的柱状图
+        /*, {
           type: 'line',
           name: '累计总公里数',
           axis: 'y2',
@@ -261,7 +359,7 @@ export default {
           },
           color: 'rgb(0, 178, 140)',
           values: _ljzglData
-        }];
+        }*/];
       };
       let hDChartData = function(_sqcbData, _gscbData, _sqcbmbData, _gscbmbData) {
         let _data = null;
@@ -277,6 +375,17 @@ export default {
             color: 'rgb(0, 201, 255)',
             values: _sqcbData
           }, {
+            type: 'line',
+            name: '市区成本目标',
+            label: {
+              x: '月',
+              y: '市区成本目标',
+              name: ''
+            },
+            dashed: '3 3',
+            color: 'rgb(43, 162, 41)',
+            values: _sqcbmbData
+          }, {
             type: "bar",
             name: '高速成本',
             label: {
@@ -284,19 +393,8 @@ export default {
               y: '高速成本',
               name: ''
             },
-            color: 'rgb(43, 162, 41)',
-            values: _gscbData
-          }, {
-            type: 'line',
-            name: '市区成本目标',
-            label: {
-              x: '月',
-              y: '高速成本目标',
-              name: ''
-            },
-            dashed: '3 3',
             color: 'rgb(0, 201, 255)',
-            values: _sqcbmbData
+            values: _gscbData
           }, {
             type: 'line',
             name: '高速成本目标',
@@ -348,7 +446,6 @@ export default {
     },
     parseMonths(months) {
       let periods = PeriodUtils.parsePeriodsFromMonths(months);
-
       this.periods.months = periods.months;
       this.periods.quarters = periods.quarters;
       this.periods.years = periods.years;

@@ -34,7 +34,12 @@ var Legend = function() {
 
       // build
       var prevWidth = 0,
-        prevHeight = 0;
+          prevHeight = 0;
+
+      // added by hong-yu
+      utils.ascendSort_ObjectsInArray(data,"type");
+      //====
+      
       var legendGroups = hContainer.selectAll('g')
         .data(data)
         .enter()

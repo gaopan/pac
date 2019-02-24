@@ -82,7 +82,8 @@ export default {
         name: "法定工作时长（人均）",
         value: "fdgzscrj",
         default: 0,
-        disabled: false,
+        // disabled: false,
+        disabled: true,
         validate: {
           required: true,
           decimal: 2
@@ -91,7 +92,8 @@ export default {
         name: "研发人员法定工作时长（人均）",
         value: "yfryfdgzscrj",
         default: 0,
-        disabled: false,
+        // disabled: false,
+        disabled: true,
         validate: {
           required: true,
           decimal: 2
@@ -100,7 +102,8 @@ export default {
         name: "实际工作时长（人均）",
         value: "sjgzscrj",
         default: 0,
-        disabled: false,
+        // disabled: false,
+        disabled: true,
         validate: {
           required: true,
           decimal: 2
@@ -109,7 +112,8 @@ export default {
         name: "研发人员实际工作时长（人均）",
         value: "yfrysjgzscrj",
         default: 0,
-        disabled: false,
+        // disabled: false,
+        disabled: true,
         validate: {
           required: true,
           decimal: 2
@@ -118,7 +122,8 @@ export default {
         name: "加班时长（人均）",
         value: "jbscrj",
         default: 0,
-        disabled: false,
+        // disabled: false,
+        disabled: true,
         validate: {
           required: true,
           decimal: 2
@@ -127,7 +132,8 @@ export default {
         name: "研发人员加班时长（人均）",
         value: "yfryjbscrj",
         default: 0,
-        disabled: false,
+        // disabled: false,
+        disabled: true,
         validate: {
           required: true,
           decimal: 2
@@ -163,6 +169,8 @@ export default {
         }
       });
       this.data.formData = _formData;
+      console.log(_formData);
+
       statPromise.then(res => {
         let stats = res.data;
         curMonthData = stats.filter(stat => stat.month == this.curMonth);
@@ -174,6 +182,7 @@ export default {
           let formData = null;
           try {
             formData = JSON.parse(curMonthData.value);
+            console.log(formData);
           } catch (err) {
             console.log(err);
           }
@@ -184,6 +193,7 @@ export default {
               }
             });
             this.data.formData = formData;
+            console.log(formData);
           }
         }
       });
@@ -196,15 +206,46 @@ export default {
 
     },
     prepareDataToRequest() {
-      let vm = this;
-      let data = { companyId: this.companyId, month: this.curMonth, value: {} };
+      let vm = this,
+          data = { companyId: this.companyId, month: this.curMonth, value: {} },
+          formData = this.data.formData;
+
       if (this.data.id) {
         data.id = this.data.id;
       }
-      Object.keys(this.data.formData).forEach(key => {
-        data.value[key] = this.data.formData[key] ? Number(this.data.formData[key]) : 0;
+
+      Object.keys(formData).forEach(key => {     
+        console.log(key) 
+        switch(key){
+          case 'fdgzscrj': 
+            data.value[key] = this.validateNumber(formData['fdgzzsc']/(formData['yfryrs']));
+            break;
+          case 'yfryfdgzscrj':
+            data.value[key] = this.validateNumber(formData['yfryfdgzzsc']/(formData['yfryrs']));
+            break;
+          case 'sjgzscrj':
+            data.value[key] = this.validateNumber(formData['sjgzsc']/(formData['qyygrs']));
+            break;
+          case 'yfrysjgzscrj':
+            data.value[key] = this.validateNumber(formData['yfrysjgzsc']/(formData['yfryrs']));
+            break;
+          case 'jbscrj':
+            data.value[key] = this.validateNumber(formData['jbzsc']/(formData['qyygrs']));
+            break;
+          case 'yfryjbscrj':
+            data.value[key] = this.validateNumber(formData['yfryjbzsc']/(formData['yfryrs']));
+            break;
+          default:
+            data.value[key] = this.data.formData[key] ? Number(this.data.formData[key]) : 0;
+        }
+
       });
+      console.log(data);
       return data;
+    },
+    validateNumber(num){
+      num = {}.toString.call(num) === "[object Number]" ? num : parseInt(num);
+      return !isFinite(num)||isNaN(num) ? 0 : +(num.toFixed(1));
     },
     request(type) {
       let req = null,
@@ -234,18 +275,18 @@ export default {
         month: dataToSend.month,
         value: JSON.stringify(dataToSend.value)
       };
-      if (dataToSend.id) {
-        promise = DashboardApi.updateStatistics(dataToSend.id, _dataToSend);
-      } else {
-        promise = DashboardApi.addStatistics(_dataToSend);
-      }
+      // if (dataToSend.id) {
+      //   promise = DashboardApi.updateStatistics(dataToSend.id, _dataToSend);
+      // } else {
+      //   promise = DashboardApi.addStatistics(_dataToSend);
+      // }
 
-      promise.then(res => {
-        Noty.notifySuccess({ text: `${name}数据成功！` });
-        this.refresh();
-      }, err => {
-        Noty.notifyError({ text: `${name}数据失败！` });
-      });
+      // promise.then(res => {
+      //   Noty.notifySuccess({ text: `${name}数据成功！` });
+      //   this.refresh();
+      // }, err => {
+      //   Noty.notifyError({ text: `${name}数据失败！` });
+      // });
     }
   }
 }
