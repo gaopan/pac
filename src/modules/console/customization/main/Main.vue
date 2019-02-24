@@ -43,9 +43,11 @@
                 </div>
                 <div class="row" v-if="currentComp">
                   <div class="col-xs-12 col-md-4 col-lg-2" v-for="p in currentComp.projects">
-                    <div class="m-project" :class="{red:p.status=='red',yellow:p.status=='yellow',green:p.status=='green'}" @click="toViewProject(p)">
+                    <div class="m-project" :class="{red:p.monthlyStatus=='red',yellow:p.monthlyStatus=='yellow',green:p.monthlyStatus=='green'}" @click="toViewProject(p)">
                       <div class="project-name">{{p.name}}</div>
-                      <div class="project-desc"><span>{{p.shortDesc}}</span> . . .</div>
+                      <div class="project-desc" v-if="p.description&&p.description.length>=80"><span>{{p.shortDesc}}</span> . . .</div>
+                      <div class="project-desc" v-else><span>{{p.shortDesc}}</span></div>
+                      <div class="project-status">项目状态： <span>{{p.status | projectStatus}}</span></div>
                     </div>
                   </div>
                 </div>

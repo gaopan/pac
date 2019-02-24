@@ -22,11 +22,11 @@ export default {
       curMonth: null,
       newProject: null,
       projStatusOptions: [{
-        name: "红色",
-        value: "red"
+        name: "正在进行",
+        value: "InProgress"
       }, {
-        name: "绿色",
-        value: "green"
+        name: "已经完成",
+        value: "Completed"
       }]
     };
   },

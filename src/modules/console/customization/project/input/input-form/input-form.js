@@ -35,6 +35,13 @@ export default {
   data() {
     return {
       projStatusOptions: [{
+        name: "正在进行",
+        value: "InProgress"
+      }, {
+        name: "已经完成",
+        value: "Completed"
+      }],
+      taskStatusOptions: [{
         name: "红色",
         value: "red"
       }, {
@@ -44,15 +51,16 @@ export default {
         name: "黄色",
         value: "yellow"
       }],
-      taskStatusOptions: [{
-        name: "红色",
-        value: "red"
+      taskNodeTypeOptions: [{
+        name: "关键重大节点",
+        value: "Key"
       }, {
-        name: "绿色",
-        value: "green"
+        name: "普通节点",
+        value: "General"
       }],
       proj: {
         name: null,
+        status: "InProgress",
         tasks: null,
         curMonthTask: {}
       },
@@ -80,7 +88,7 @@ export default {
     parseProject() {
       let theProj = this.$props.project;
       this.proj.name = theProj.name;
-      this.proj.status = theProj.status;
+      this.proj.status = this.projStatusOptions.filter(option => option.value == theProj.status).length > 0 ? theProj.status: "InProgress";
       this.proj.id = theProj.id;
       this.proj.description = theProj.description;
       this.proj.companyId = theProj.companyId;
@@ -90,6 +98,7 @@ export default {
           projectId: t.projectId,
           month: t.month,
           status: t.status,
+          nodeType: t.nodeType,
           value: t.value,
           step: STEP_OPTIONS.indexOf(t.step) < 0 ? "empty" : t.step
         };
@@ -101,6 +110,7 @@ export default {
       if(!this.proj.curMonthTask.id) {
         this.proj.curMonthTask.status = "";
         this.proj.curMonthTask.value = "";
+        this.proj.curMonthTask.nodeType = "";
         this.proj.curMonthTask.step = "empty";
       }
     },
@@ -111,6 +121,7 @@ export default {
           projectId: proj.id,
           status: curMonthTask.status,
           value: curMonthTask.value,
+          nodeType: curMonthTask.nodeType,
           month: vm.month,
           step: curMonthTask.step
         };

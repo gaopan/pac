@@ -73,6 +73,21 @@ export default {
       let projectPromise = ProjectApi.getProjectsByCompanyId(this.currentComp.id);
       projectPromise.then(res => {
         projects = res.data;
+        projects.forEach(proj => {
+          let curMonthTask = null;
+          if(proj.monthlyTask && proj.monthlyTask.length > 0) {
+            proj.monthlyTask.every(task => {
+              if(task.month == this.curMonth) {
+                curMonthTask = task;
+                return false;
+              }
+              return true;
+            });
+          }
+          if(curMonthTask) {
+            proj.monthlyStatus = curMonthTask.status;
+          }
+        });
       });
       let reportPromise = DashboardApi.getReportByCompanyId(this.currentComp.id);
       reportPromise.then(res => {
