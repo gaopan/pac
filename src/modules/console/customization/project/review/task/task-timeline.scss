@@ -36,7 +36,7 @@
       user-select: none;
 
       &>.node-container+.node-container {
-      	margin-left: 15px;
+        margin-left: 15px;
       }
 
       .node-container {
@@ -48,13 +48,21 @@
         position: relative;
 
         .node-month {
-        	display: block;
-        	position: absolute;
-        	left: 50%;
-        	top: 0;
-        	font-size: 12px;
-        	margin-left: -20px;
-        	line-height: 1;
+          display: block;
+          position: absolute;
+          left: 50%;
+          top: 0;
+          font-size: 12px;
+          margin-left: -20px;
+          line-height: 1;
+
+          &.red {
+            color: #D9534F;
+          }
+
+          &.green {
+            color: #449D44;
+          }
         }
 
         .node-icon {
@@ -80,25 +88,25 @@
         }
 
         .node-content {
-        	position: absolute;
-        	text-align: left;
-        	background-color: $bgColor;
-        	overflow: auto;
-        	top: 50px;
-        	width: 100%;
-        	padding: 15px;
+          position: absolute;
+          text-align: left;
+          background-color: $bgColor;
+          overflow: auto;
+          top: 50px;
+          width: 100%;
+          padding: 15px;
         }
 
         .node-content-shortcut {
-        	top: 50px;
-        	width: 100%;
-        	padding: 15px;
-        	position: absolute;
-        	transform: scale(0.5);
-        	transform-origin: 50% 0;
-        	text-align: left;
-        	background-color: $bgColor;
-        	overflow: hidden;
+          top: 50px;
+          width: 100%;
+          padding: 15px;
+          position: absolute;
+          transform: scale(0.5);
+          transform-origin: 50% 0;
+          text-align: left;
+          background-color: $bgColor;
+          overflow: hidden;
         }
 
         &.current {
@@ -110,6 +118,10 @@
             &>.general {
               background-color: #007bff;
             }
+          }
+
+          .node-content, .node-content-shortcut {
+          	background-color: #b8daff;
           }
         }
       }

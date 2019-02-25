@@ -59,7 +59,7 @@ function render() {
       .style("width", nodeContainerWidth + 'px')
       .classed('current', function(d) { return d.month == self._curMonth; })
       .html(function(d) {
-        return `<div class="node-month">${d.month}</div><div class="node-icon ${d.nodeType=='Key'?'key':'general'}"></div>
+        return `<div class="node-month ${d.status}">${d.month}</div><div class="node-icon ${d.nodeType=='Key'?'key':'general'}"></div>
         <div class="node-content-shortcut" style="display:block;height:${nodeContentShortcutHeight+'px'}">${d.value}</div>
         <div class="node-content" style="display:none;height:${nodeContentHeight + 'px'}">${d.value}</div>`;
       });

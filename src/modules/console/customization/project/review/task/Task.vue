@@ -3,8 +3,7 @@
     <div>
       <div class="task-title">{{project.name}} <span style="color: #7d7d7d">项目计划</span>
       </div>
-      <p class="task-guide"><span class="red">红色节点（字体红色）</span>：项目关键/重大节点 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">绿色节点（字体绿色）</span>：项目正常月度交付目标</p>
-      <p class="task-guide now"><span>当前节点（背景黄色）</span>：当前月份的交付情况</p>
+      <p class="task-guide"><span>三角形节点 </span>：项目关键/重大节点 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>圆形节点 </span>：项目正常月度交付目标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="blue">蓝色节点 </span>：当前月份的交付情况</p>
       <!-- <div class="task-tabs-wrapper" v-show="tasks&&tasks.length>0">
         <div class="task-tabs" ref="taskTabs">
           <div>
