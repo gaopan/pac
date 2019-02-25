@@ -12,11 +12,12 @@ export default {
     data: {
       type: Array,
       required: true
-    }
+    },
+    selectedYear: String
   },
   data() {
     return {
-    	chartData: null
+      chartData: null
     };
   },
   mounted() {
@@ -24,9 +25,9 @@ export default {
     this.parseData(CommonUtils.deepClone(this.$props.data));
   },
   watch: {
-    data(){
+    data() {
       this.parseData(CommonUtils.deepClone(this.$props.data));
-    } 
+    }
   },
   methods: {
     init() {
@@ -42,8 +43,8 @@ export default {
       vm.chart.yAxis.title("人数").domainToZero(true).axis().ticks(5);
       vm.chart.y2Axis.title("小时").domainToZero(true).axis().ticks(5);
     },
-    draw(){
-    	let vm = this,
+    draw() {
+      let vm = this,
         chartHeight = vm.$refs.container.parentNode.clientHeight + 'px';
       vm.container.style('height', chartHeight);
       if (vm.container.select('svg').size()) {
@@ -61,14 +62,18 @@ export default {
     parseData(data) {
       if (!data || data.length < 1) return;
       let barProps = ["实际工作时长", "研发人员实际工作时长"],
-          lineProps = ["企业员工人数", "研发人员人数"],
-          barColor = {
-            "实际工作时长": 'rgb(142,121,242)', 
-            "研发人员实际工作时长": 'rgb(77,54,187)'
-          }
+        lineProps = ["企业员工人数", "研发人员人数"],
+        barColor = {
+          "实际工作时长": 'rgb(142,121,242)',
+          "研发人员实际工作时长": 'rgb(77,54,187)'
+        },
+        vm = this;
 
-      let chartConfigs = [];
+      let chartConfigs = [];      
+
       data.sort((a, b) => a.key.localeCompare(b.key)).forEach(item => {
+        // console.log();
+
         if (barProps.indexOf(item.name) > -1) {
           let barConfig = {
             type: 'bar',
@@ -78,12 +83,10 @@ export default {
               y: item.name,
               name: ''
             },
-            // color: ColorGenerator.purchase(item.name).value,
             color: barColor[item.name],
-            values: item.months.map(monthData => {
+            values: fillMonth(item.months, vm.selectedYear).map(monthData => {
               return {
                 label: monthData.month,
-                // value: monthData.value
                 value: (monthData.value).toFixed(1)
               }
             }).sort((a, b) => {
@@ -91,8 +94,8 @@ export default {
             })
           };
           chartConfigs.push(barConfig);
-        } 
-        if(lineProps.indexOf(item.name) > -1) {
+        }
+        if (lineProps.indexOf(item.name) > -1) {
           let lineConfig = {
             type: 'line',
             name: item.name,
@@ -117,6 +120,34 @@ export default {
         }
       });
 
+      function fillMonth(months, year) {
+        let fullMonth = [];
+        months = TypeChecker.isArray(months) ? months : [];
+
+        for (let i = 1; i <= 12; i++) {
+          let monthData = null;
+
+          months.every(month => {
+            if (month.month === `${year}-${i}`) {
+              monthData = month;
+              return false;
+            }
+            return true;
+          })
+
+          if (!!monthData) {
+            fullMonth.push(monthData);
+          } else {
+            fullMonth.push({
+              month: `${year}-${i}`,
+              value: 0              
+            });
+          }
+        }
+
+        return fullMonth;
+      }
+      
       this.chartData = chartConfigs;
 
       this.draw();

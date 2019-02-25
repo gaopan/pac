@@ -7,7 +7,7 @@
     </div>
     <div v-if="isNoData" class="no-data">没有数据显示</div>
     <div class="chart-wrapper" v-if="!isNoData">
-      <chart-view :data="chartData"></chart-view>
+      <chart-view :data="chartData" :selectedYear = "selectedYear"></chart-view>
     </div>
     <div class="table-wrapper" v-if="!isNoData">
       <div>

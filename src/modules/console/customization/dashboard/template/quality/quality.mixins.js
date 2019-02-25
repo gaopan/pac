@@ -106,7 +106,7 @@ export default {
       let vm = this;
       vm.qUContainer = d3.select(vm.$refs.qUContainer);
       vm.qUChart = d3BI.baseChart()
-        .x(function(d) { return d.label })
+        .x(function(d) { return `${d.label}(${d.field})` })
         .y(function(d) { return d.value })
         .y2(function(d) { return d.y2 })
         .margin({ top: 15, right: 20, left: 15, bottom: 10 });
@@ -269,34 +269,37 @@ export default {
 
       let hglData = data.up.map(_d => {
           return {
+            field:_d['区域'],
             label: _d['外业批次'],
-            // y2: _d['合格率'],
             y2: (_d['合格率']*100).toFixed(1),
             value: (_d['合格里程']).toFixed(1)
           };
         }),
         hgbzData = data.up.map(_d => {
           return {
+            field:_d['区域'],
             label: _d['外业批次'],
-            // y2: _d['合格标准'],
             y2: (_d['合格标准']*100).toFixed(1),
             value: (_d['总里程']).toFixed(1)
           }
         }),
         zlcData = data.up.map(_d => {
           return {
+            field:_d['区域'],
             label: _d['外业批次'],
             value: (_d['总里程']).toFixed(1)
           }
         }),
         ljzlcData = data.up.map(_d => {
           return {
+            field:_d['区域'],
             label: _d['外业批次'],
             value: (_d['累计总里程']).toFixed(1)
           };
         }),
         hglcData = data.up.map(_d => {
           return {
+            field:_d['区域'],
             label: _d['外业批次'],
             value: (_d['合格里程']).toFixed(1)
           }

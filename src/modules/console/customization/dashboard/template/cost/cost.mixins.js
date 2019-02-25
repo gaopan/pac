@@ -121,13 +121,13 @@ export default {
       vm.hDChart = d3BI.baseChart()
         .x(function(d) { return d.label })
         .y(function(d) { return d.value })
-        .y2(function(d) { return d.y2 })
+        // .y2(function(d) { return d.y2 })
         .margin({ top: 15, right: 20, left: 15, bottom: 10 });
 
       vm.hDChart.axisLines.showAll({ x: false, y: true });
       vm.hDChart.xAxis.title("月").maxTextLength(10);
       vm.hDChart.yAxis.title("成本(元/公里)").domainToZero(true).axis().ticks(5);
-      vm.hDChart.y2Axis.title("总公里数(公里)").domainToZero(true).axis().ticks(5);
+      // vm.hDChart.y2Axis.title("总公里数(公里)").domainToZero(true).axis().ticks(5);
       
     },
     selectType(args) {
@@ -269,7 +269,7 @@ export default {
         gscbData = d.map(_d => {
           return {
             label: _d['月'],
-            y2: (_d['成本目标']).toFixed(1),
+            value: (_d['成本目标']).toFixed(1),
           };
         });
       } else {
@@ -283,7 +283,7 @@ export default {
         sqcbmbData = d.map(_d => {
           return {
             label: _d['月'],
-            y2: (_d['市区成本目标']).toFixed(1),
+            value: (_d['市区成本目标']).toFixed(1),
           };
         });
 
@@ -297,7 +297,7 @@ export default {
         gscbmbData = d.map(_d => {
           return {
             label: _d['月'],
-            y2: (_d['高速成本目标']).toFixed(1),
+            value: (_d['高速成本目标']).toFixed(1),
           };
         });
       }
@@ -318,7 +318,7 @@ export default {
           color: 'rgb(43, 162, 41)',
           values: _zcbData
         }, {
-          type: 'bar',
+          type: 'line',
           name: '总公里数',
           axis: 'y2',
           label: {
@@ -357,7 +357,7 @@ export default {
             color: 'rgb(0, 201, 255)',
             values: _sqcbData
           }, {
-            type: 'line',
+            type: 'bar',
             name: '市区成本目标',
             axis: 'y2',
             label: {
@@ -379,7 +379,7 @@ export default {
             color: 'rgb(0, 201, 255)',
             values: _gscbData
           }, {
-            type: 'line',
+            type: 'bar',
             axis: 'y2',
             name: '高速成本目标',
             label: {
@@ -403,7 +403,7 @@ export default {
             color: 'rgb(0, 201, 255)',
             values: _sqcbData
           }, {
-            type: 'line',
+            type: 'bar',
             name: '成本目标',
             axis: 'y2',
             label: {
@@ -418,16 +418,71 @@ export default {
         }
         return _data;
       };
+
+      let fillMonth = function (months, year, module) {
+        let fullMonth = [];
+        months = TypeChecker.isArray(months) ? months : [];
+
+        for (let i = 1; i <= 12; i++) {
+          let monthData = null;
+
+          months.every(month => {
+            if (month['月'] === `${year}-${i}`) {
+              monthData = month;
+              return false;
+            }
+            return true;
+          })
+
+          if (!!monthData) {
+            fullMonth.push(monthData);
+          } else {
+
+            if(module === 'inner'){
+              fullMonth.push({
+                备注:"",
+                总公里数:0,
+                总成本:0,
+                成本:0,
+                成本目标:0,
+                月:`${year}-${i}`,
+                累计总公里数:0             
+              });
+            }else{
+              fullMonth.push({
+                市区成本:0,
+                市区成本目标:0,
+                总公里数:0,
+                总成本:0,
+                月:`${year}-${i}`,
+                累计总公里数:0,
+                高速成本:0,
+                高速成本目标:0,  
+              })          
+            }
+
+          }
+        }
+
+        return fullMonth;
+      };
+
       if (!TypeChecker.isObject(data) || !TypeChecker.isArray(data[this.selectedType])) {
         this.hUData = hUChartData([]);
         this.hDData = hDChartData([]);
         return;
       }
 
-      let d = data[this.selectedType];
+      let d = data[this.selectedType],
+          selectedYear = this.$props.conf.curMonth.split('-')[0],
+          module = this.selectedType === '外业'? 'outer':'inner';
 
-      this.parseUData(d, hUChartData);
-      this.parseDData(d, hDChartData);
+      let fullMonthData = fillMonth(d, selectedYear, module);
+
+      // this.parseUData(d, hUChartData);
+      // this.parseDData(d, hDChartData);
+      this.parseUData(fullMonthData, hUChartData);
+      this.parseDData(fullMonthData, hDChartData);
     },
     parseMonths(months) {
       let periods = PeriodUtils.parsePeriodsFromMonths(months);
@@ -473,6 +528,7 @@ export default {
       this.parseData(data);
       this.draw();
     }
+
   },
   beforeDestroy: function() {
     if (this.$props.tileId) {

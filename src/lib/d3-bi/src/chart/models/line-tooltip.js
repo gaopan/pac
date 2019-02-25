@@ -57,7 +57,8 @@ var LineTooltip = function() {
             .attr('cx', function(d){ return xScale(x(d))})
             .attr('cy', function(d){ return yScale(y(d))})
             .attr('fill', tData.color)
-            .style('opacity', 0);
+            // .style('opacity', 1);
+            .style('opacity', 0.5);
 
           hTGGroups.append('circle')
             .attr('r', triggerAreaRadius)
@@ -79,7 +80,7 @@ var LineTooltip = function() {
             .on('mousemove', function() { tooltipDispatch.call('setPosition', this);})
             .on('mouseleave', function() {
               tooltipDispatch.call('remove', this);
-              d3.select(this.previousSibling).style('opacity', 0);
+              d3.select(this.previousSibling).style('opacity', 0.5);
             });
         });
       }else if (type == 'line') {

@@ -169,6 +169,7 @@ export default {
       if (!TypeChecker.isObject(data) || TypeChecker.isArray(data.recruit)) {
         vm.hDData = [];
       }
+
       let chartData = function(_yjdgData, _sjdgData, _qnjhData, _zzData) {         
         return [
           {
@@ -216,71 +217,62 @@ export default {
           }
         ]
 
-        /*[
-          {
-            type: "line",
-            name: '预计到岗人数',
-            label: {
-              x: '月',
-              y: '预计到岗人数',
-              name: ''
-            },
-            color: 'rgb(0, 201, 255)',
-            values: _yjdgData
-          }, {
-            type: 'line',
-            name: '实际到岗人数',
-            label: {
-              x: '月',
-              y: '实际到岗人数',
-              name: ''
-            },
-            color: 'rgb(43, 162, 41)',
-            values: _sjdgData
-          }, {
-            type: 'line',
-            name: '全年计划人数',
-            label: {
-              x: '月',
-              y: '全年计划人数',
-              name: ''
-            },
-            color: 'rgb(178, 18, 176)',
-            values: _qnjhData
-          }, {
-            type: 'line',
-            name: '在职人数',
-            label: {
-              x: '月',
-              y: '在职人数',
-              name: ''
-            },
-            color: 'rgb(255, 176, 58)',
-            values: _zzData
-          }
-        ];*/
       };
+      let fillMonth = function(months, year) {
+        let fullMonth = [];
+        months = TypeChecker.isArray(months) ? months : [];
 
-      let yjdgData = data.recruit.map(d => {
+        for (let i = 1; i <= 12; i++) {
+          let monthData = null;
+
+          months.every(month => {
+            if (month['月'] === `${year}-${i}`) {
+              monthData = month;
+              return false;
+            }
+            return true;
+          })
+
+          if (!!monthData) {
+            fullMonth.push(monthData);
+          } else {
+            fullMonth.push({
+              全年计划人数: 0,
+              在职人数: 0,
+              备注: '',
+              月: `${year}-${i}`,
+              本月实际到岗人数: 0,
+              本月预计到岗人数: 0           
+            });
+          }
+        }
+
+        return fullMonth;
+      }
+
+      let curYear = this.$props.conf.curMonth.split('-')[0],
+          recruit = fillMonth(data.recruit, curYear);
+
+      let yjdgData = recruit.map(d => {
           return {
             label: d['月'],
             value: d['本月预计到岗人数']
           }
         }),
-        sjdgData = data.recruit.map(d => {
+        sjdgData = recruit.map(d => {
           return {
             label: d['月'],
             value: d['本月实际到岗人数']
           }
         }),
-        qnjhData = data.recruit.map(d => {
+        qnjhData = recruit.map(d => {
           return {
             label: d['月'],
             y2: d['全年计划人数'],
             // value: d['全年计划人数']
           }
         }),
-        zzData = data.recruit.map(d => {
+        zzData = recruit.map(d => {
           return {
             label: d['月'],
             y2: d['在职人数'],
