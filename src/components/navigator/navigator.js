@@ -4,6 +4,7 @@ import MiniLoader from '@/components/loader/MiniLoader.vue'
 import Datepicker from '@/components/leap-datepicker/Datepicker.vue'
 import TypeChecker from '@/utils/type-checker.js'
 import shared from '@/shared.js'
+import CompanyApi from '@/api/customization/company.js'
 
 var eventHub = shared.eventHub;
 var images = require.context('@/assets/imgs/', false, /\.(png|jpg)$/)
@@ -48,6 +49,9 @@ export default {
   created: function() {
     if(this.$route.params.companyId) {
       this.paramsBundle.companyId = this.$route.params.companyId;
+      CompanyApi.company(this.paramsBundle.companyId).then(res => {
+        this.paramsBundle.companyName = res.data.name;
+      });
     }
     eventHub.$on("global-params-change-companyName", this.changedCompanyName);
     eventHub.$on("global-params-change-companyId", this.changedCompanyId);
