@@ -114,7 +114,6 @@ export default {
       vm.hDChart.yAxis.title("人数").domainToZero(true).axis().ticks(5);
       vm.hDChart.y2Axis.title("人数").domainToZero(true).axis().ticks(5);
 
-
     },
     draw() {
       let vm = this,
@@ -278,14 +277,14 @@ export default {
           return {
             label: d['月'],
             y2: d['全年计划人数'],
-            value: d['全年计划人数']
+            // value: d['全年计划人数']
           }
         }),
         zzData = data.recruit.map(d => {
           return {
             label: d['月'],
             y2: d['在职人数'],
-            value: d['在职人数']
+            // value: d['在职人数']
           }
         });
 

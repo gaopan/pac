@@ -114,7 +114,6 @@ export default {
       vm.qUChart.axisLines.showAll({ x: false, y: false });
       vm.qUChart.xAxis.title("批次").textRotate(-50).maxTextLength(10);
       vm.qUChart.yAxis.title("里程").domainToZero(true).axis().ticks(5);
-      // modify:vm.qUChart.y2Axis.title("率").axis().ticks(5);
       vm.qUChart.y2Axis.title("率(%)").axis().ticks(5);
 
       vm.qDContainer = d3.select(vm.$refs.qDContainer);
@@ -125,10 +124,8 @@ export default {
         .y(function(d) { return d.value })
         .margin({ top: 15, right: 20, left: 15, bottom: 10 });
 
-      //  modify:vm.qDChart.axisLines.showAll({ x: false, y: false });
       vm.qDChart.axisLines.showAll({ x: false, y: true });
       vm.qDChart.xAxis.title("月").maxTextLength(10);
-      // vm.qDChart.yAxis.title("率").domainToZero(true).axis().ticks(5);
       vm.qDChart.yAxis.title("率(%)").domainToZero(true).axis().ticks(5);
     },
     selectQDOption(args) {
@@ -339,7 +336,7 @@ export default {
             y: '错误发生率标准',
             name: ''
           },
-          color: 'rgb(0, 201, 255)',
+          color: 'rgb(15,113,139)',
           values: _cwlbzData
         }, {
           type: 'line',
@@ -349,7 +346,6 @@ export default {
             y: '错误流出率',
             name: ''
           },
-          // color: 'rgb(178, 18, 176)',
           color: 'rgb(255,90,252)',
           values: _cwlclData
         }, {

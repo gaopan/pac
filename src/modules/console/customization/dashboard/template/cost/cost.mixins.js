@@ -127,7 +127,7 @@ export default {
       vm.hDChart.axisLines.showAll({ x: false, y: true });
       vm.hDChart.xAxis.title("月").maxTextLength(10);
       vm.hDChart.yAxis.title("成本(元/公里)").domainToZero(true).axis().ticks(5);
-      vm.hDChart.y2Axis.title("总公里数(公里)").axis().ticks(5);
+      vm.hDChart.y2Axis.title("总公里数(公里)").domainToZero(true).axis().ticks(5);
       
     },
     selectType(args) {
@@ -235,25 +235,18 @@ export default {
       let zcbData = d.map(_d => {
           return {
             label: _d['月'],
-            // value: _d['总成本']
             value: (_d['总成本']).toFixed(1)
           };
         }),
         zglData = d.map(_d => {
           return {
-            label: _d['月'],
-            // value: _d['总成本'],
-            // y2: _d['总公里数']
-            value: (_d['总成本']).toFixed(1),
-            y2: (_d['总公里数']).toFixed(1)
+            label: _d['月'],          
+            y2: (_d['总公里数']).toFixed(1),
           };
         }),
         ljzglData = d.map(_d => {
           return {
             label: _d['月'],
-            // value: _d['总成本'],
-            // y2: _d['累计总公里数']
-            value: (_d['总成本']).toFixed(1),
             y2: (_d['累计总公里数']).toFixed(1)
           };
         });
@@ -270,50 +263,41 @@ export default {
         sqcbData = d.map(_d => {
           return {
             label: _d['月'],
-            // value: _d['成本']
-            y2: (_d['成本']).toFixed(1),
             value: (_d['成本']).toFixed(1)
           };
         });
         gscbData = d.map(_d => {
           return {
             label: _d['月'],
-            // value: _d['成本目标']
             y2: (_d['成本目标']).toFixed(1),
-            value: (_d['成本目标']).toFixed(1)
           };
         });
       } else {
         sqcbData = d.map(_d => {
           return {
             label: _d['月'],
-            // value: _d['市区成本']
-            y2: (_d['市区成本']).toFixed(1),
             value: (_d['市区成本']).toFixed(1)
           };
         });
-        gscbData = d.map(_d => {
-          return {
-            label: _d['月'],
-            // value: _d['高速成本']
-            y2: (_d['高速成本']).toFixed(1),
-            value: (_d['高速成本']).toFixed(1)
-          };
-        });
+
         sqcbmbData = d.map(_d => {
           return {
             label: _d['月'],
-            // value: _d['市区成本目标']
             y2: (_d['市区成本目标']).toFixed(1),
-            value: (_d['市区成本目标']).toFixed(1)
           };
         });
+
+        gscbData = d.map(_d => {
+          return {
+            label: _d['月'],
+            value: (_d['高速成本']).toFixed(1)
+          };
+        });
+
         gscbmbData = d.map(_d => {
           return {
             label: _d['月'],
-            // value: _d['高速成本目标']
             y2: (_d['高速成本目标']).toFixed(1),
-            value: (_d['高速成本目标']).toFixed(1)
           };
         });
       }
@@ -375,6 +359,7 @@ export default {
           }, {
             type: 'line',
             name: '市区成本目标',
+            axis: 'y2',
             label: {
               x: '月',
               y: '市区成本目标',
@@ -395,6 +380,7 @@ export default {
             values: _gscbData
           }, {
             type: 'line',
+            axis: 'y2',
             name: '高速成本目标',
             label: {
               x: '月',
@@ -419,6 +405,7 @@ export default {
           }, {
             type: 'line',
             name: '成本目标',
+            axis: 'y2',
             label: {
               x: '月',
               y: '成本目标',
