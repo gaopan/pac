@@ -121,6 +121,9 @@ function render() {
           activeMonthDataIndex = -Math.round(lastTrans.x / (nodeContainerWidth + marginHor)) + (rowCount - 1) / 2;
           lastTrans.x = -(activeMonthDataIndex - (rowCount - 1) / 2) * (nodeContainerWidth + marginHor);
         }
+        self._$lineContainer.selectAll('div.node-container').each(function(d, i){
+          d3.select(this).classed("current", activeMonthDataIndex == i);
+        });
         self._$lineContainer.style("transform", `translate(${lastTrans.x}px, 0)`);
         lastMouseDownTrans.x = lastTrans.x;
         $doc.on("mousemove", null);
