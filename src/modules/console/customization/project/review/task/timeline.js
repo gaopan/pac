@@ -28,11 +28,31 @@ function render() {
     if (!self._$lineContainer) {
       init.call(self);
     }
-    let lineWrapperWidth = self._$lineContainer.node().parentNode.clientWidth,
+    let rowCount = 3,
+      marginHor = 15,
+      lineWrapperWidth = self._$lineContainer.node().parentNode.clientWidth,
       lineContainerHeight = self._$lineContainer.node().clientHeight,
-      nodeContainerWidth = lineWrapperWidth / 3 - 15 * 2,
+      nodeContainerWidth = lineWrapperWidth / rowCount - marginHor * (rowCount - 1),
+      elasticRangeX = nodeContainerWidth / 2,
       nodeContentShortcutHeight = (lineContainerHeight - 50) / 2,
-      nodeContentHeight = lineContainerHeight - 50;
+      nodeContentHeight = lineContainerHeight - 50,
+      activeMonthDataIndex = -1;
+
+    data.every((d, index) => {
+      if (d.month == this._curMonth) {
+        activeMonthDataIndex = index;
+        return false;
+      }
+      return true;
+    });
+
+    let lineContainerWidth = nodeContainerWidth * data.length + marginHor * (data.length - 1),
+      lineContainerInitTransX = -(activeMonthDataIndex - (rowCount - 1) / 2) * (nodeContainerWidth + marginHor);
+    if (activeMonthDataIndex == -1) {
+      lineContainerInitTransX = 0;
+      activeMonthDataIndex = (rowCount - 1) / 2;
+    }
+
     self._$lineContainer.html("");
     self._$lineContainer.selectAll('div.node-container')
       .data(data).enter().append('div').classed('node-container', true)
@@ -43,7 +63,8 @@ function render() {
         <div class="node-content-shortcut" style="display:block;height:${nodeContentShortcutHeight+'px'}">${d.value}</div>
         <div class="node-content" style="display:none;height:${nodeContentHeight + 'px'}">${d.value}</div>`;
       });
-    self._$lineContainer.style("width", nodeContainerWidth * data.length + 15 * (data.length - 1) + 'px');
+    self._$lineContainer.style("width", lineContainerWidth + 'px');
+    self._$lineContainer.style("transform", `translate(${lineContainerInitTransX}px, 0)`);
     let selections = self._$lineContainer.selectAll('div.node-container > .node-content-shortcut')
     selections.on('mouseenter', function() {
       let $shortcutContent = d3.select(this),
@@ -58,11 +79,59 @@ function render() {
         $shortcutContent.style('display', 'block');
         $content.style('display', 'none');
       })
-    if(self._$lineContainer.node().clientWidth > lineWrapperWidth) {
-      self._$lineContainer.on("mouseup", function(){});
-      self._$lineContainer.on("mousedown", function(){});
-      self._$lineContainer.on("mousemove", function(){});
-    }
+    // if(self._$lineContainer.node().clientWidth > lineWrapperWidth) {
+    self._$lineContainer.style("cursor", "move");
+    let startPos = { x: -1, y: -1 },
+      dist = { x: 0, y: 0 },
+      lastTrans = { x: 0, y: 0 },
+      lastMouseDownTrans = { x: lineContainerInitTransX, y: 0 };
+    self._$lineContainer.on("mousedown", function() {
+      let evt = d3.event, $doc = d3.select(document.body);
+      self._$lineContainer.style("transition-duration", '0s');
+      startPos.x = evt.screenX;
+      lastTrans.x = lastMouseDownTrans.x;
+
+      let onMouseMove = function() {
+        let _evt = d3.event,
+          $this = d3.select(this);
+        dist.x = _evt.screenX - startPos.x;
+
+        lastTrans.x = lastMouseDownTrans.x + dist.x;
+
+        if (lastTrans.x > nodeContainerWidth + marginHor + elasticRangeX) {
+          lastTrans.x = nodeContainerWidth + marginHor;
+          self._$lineContainer.style("transition-duration", '.5s');
+        } else if (lastTrans.x < -(lineContainerWidth - nodeContainerWidth - marginHor + elasticRangeX)) {
+          lastTrans.x = -(lineContainerWidth - nodeContainerWidth - marginHor);
+          self._$lineContainer.style("transition-duration", '.5s');
+        } else {
+          self._$lineContainer.style("transition-duration", '0s');
+          self._$lineContainer.style("transform", `translate(${lastTrans.x}px, 0)`);
+        }
+      };
+
+      let onMouseUp = function() {
+        if (lastTrans.x >= nodeContainerWidth + marginHor) {
+          lastTrans.x = nodeContainerWidth + marginHor;
+          self._$lineContainer.style("transition-duration", '.5s');
+        } else if (lastTrans.x <= -(lineContainerWidth - nodeContainerWidth - marginHor)) {
+          lastTrans.x = -(lineContainerWidth - nodeContainerWidth - marginHor);
+          self._$lineContainer.style("transition-duration", '.5s');
+        } else {
+          activeMonthDataIndex = -Math.round(lastTrans.x / (nodeContainerWidth + marginHor)) + (rowCount - 1) / 2;
+          lastTrans.x = -(activeMonthDataIndex - (rowCount - 1) / 2) * (nodeContainerWidth + marginHor);
+        }
+        self._$lineContainer.style("transform", `translate(${lastTrans.x}px, 0)`);
+        lastMouseDownTrans.x = lastTrans.x;
+        $doc.on("mousemove", null);
+        $doc.on("mouseup", null);
+      };
+
+      $doc.on("mousemove", onMouseMove);
+      $doc.on("mouseup", onMouseUp);
+    });
+
+    // }
   } else {
     self._$container.html("暂时没有数据显示");
     self._$lineContainer = null;

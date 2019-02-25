@@ -33,6 +33,7 @@
       white-space: nowrap;
       height: 100%;
       z-index: 1;
+      user-select: none;
 
       &>.node-container+.node-container {
       	margin-left: 15px;
