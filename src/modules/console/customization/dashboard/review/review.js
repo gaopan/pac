@@ -59,7 +59,7 @@ export default {
 
       function getAllMonthString(){
         let result = [],
-            year = new Date().getFullYear();
+            year = curMonth.split('-')[0];
         for(let i = 1; i <= 12; i++){
           result.push(`${year}-${i}`);
         }

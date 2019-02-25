@@ -318,7 +318,7 @@ export default {
           color: 'rgb(43, 162, 41)',
           values: _zcbData
         }, {
-          type: 'line',
+          type: 'bar',
           name: '总公里数',
           axis: 'y2',
           label: {

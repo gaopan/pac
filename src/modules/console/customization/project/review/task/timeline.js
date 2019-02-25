@@ -28,7 +28,7 @@ function render() {
     if (!self._$lineContainer) {
       init.call(self);
     }
-    let rowCount = 3,
+    let rowCount = 5,
       marginHor = 15,
       lineWrapperWidth = self._$lineContainer.node().parentNode.clientWidth,
       lineContainerHeight = self._$lineContainer.node().clientHeight,

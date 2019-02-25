@@ -114,7 +114,7 @@ export default {
       vm.qUChart.axisLines.showAll({ x: false, y: false });
       vm.qUChart.xAxis.title("批次").textRotate(-50).maxTextLength(10);
       vm.qUChart.yAxis.title("里程").domainToZero(true).axis().ticks(5);
-      vm.qUChart.y2Axis.title("率(%)").axis().ticks(5);
+      vm.qUChart.y2Axis.title("率(%)").domainToZero(true).axis().ticks(5);
 
       vm.qDContainer = d3.select(vm.$refs.qDContainer);
       vm.qDContainer2 = d3.select(vm.$refs.qDContainer2);
