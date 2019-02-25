@@ -41,7 +41,6 @@ export default {
       vm.chart.xAxis.title("月").textRotate(-50).maxTextLength(10);
       vm.chart.yAxis.title("人数").domainToZero(true).axis().ticks(5);
       vm.chart.y2Axis.title("小时").axis().ticks(5);
-      console.log(Object.keys(vm.chart.tooltip))
     },
     draw(){
     	let vm = this,
@@ -61,11 +60,14 @@ export default {
     },
     parseData(data) {
       if (!data || data.length < 1) return;
-      let barProps = ["实际工作时长", "研发人员实际工作时长"];
-      let lineProps = ["企业员工人数", "研发人员人数"];
+      let barProps = ["实际工作时长", "研发人员实际工作时长"],
+          lineProps = ["企业员工人数", "研发人员人数"],
+          barColor = {
+            "实际工作时长": 'rgb(142,121,242)', 
+            "研发人员实际工作时长": 'rgb(77,54,187)'
+          }
 
       let chartConfigs = [];
-
       data.sort((a, b) => a.key.localeCompare(b.key)).forEach(item => {
         if (barProps.indexOf(item.name) > -1) {
           let barConfig = {
@@ -76,7 +78,8 @@ export default {
               y: item.name,
               name: ''
             },
-            color: ColorGenerator.purchase(item.name).value,
+            // color: ColorGenerator.purchase(item.name).value,
+            color: barColor[item.name],
             values: item.months.map(monthData => {
               return {
                 label: monthData.month,

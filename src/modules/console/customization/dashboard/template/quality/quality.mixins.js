@@ -306,7 +306,6 @@ export default {
         });
 
       this.qUData = chartData(hglData, hgbzData, zlcData, ljzlcData, hglcData);
-      console.log(this.qUData)
     },
     windowResized: function(args) {
       if (args.id == this.$props.tileId) {

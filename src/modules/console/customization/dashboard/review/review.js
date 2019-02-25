@@ -100,15 +100,27 @@ export default {
           };
           let oM = _oData[m.key];
           if (oM) {
-
             // m['months'] = oM["months"];
             // m['monthData'] = oM['monthData'];
-            let panelMonth = m.name ==="成本"|| m.name==="人力资源" ? oM["months"] : [curMonth];
+            let panelMonth = null;
+
+            if(m.name ==="成本"|| m.name==="人力资源"){
+              panelMonth = oM["months"];
+            }else{
+              panelMonth = ~(oM["months"].indexOf(curMonth)) ? [curMonth] : undefined;
+            }
+
             let panelMonthData = {};
             if(m.name==="成本"||m.name==="人力资源"){
               panelMonthData = oM['monthData'];
             }else{
-              panelMonthData[curMonth] = oM['monthData'][curMonth];
+              
+              if(~(oM["months"].indexOf(curMonth))){
+                panelMonthData[curMonth] = oM['monthData'][curMonth];
+              }else{
+                panelMonthData = undefined;
+              }
+
             }
             m['months'] = panelMonth;
             m['monthData'] = panelMonthData;
@@ -119,6 +131,7 @@ export default {
           } else {
             m['curMonthData'] = {};
           }
+
           m.dashboardConfig.data.months = m.months;
           m.dashboardConfig.data.data = m.dashboardConfig.adaptData(m.monthData, m.months);
         });
@@ -130,7 +143,6 @@ export default {
       })
 
       /*DashboardApi.companyModulesByMonths(this.companyId, [curMonth]).then(detailRes => {
-
         let _oData = {};
         if (TypeChecker.isArray(detailRes.data) && detailRes.data.length > 0) {
           detailRes.data.forEach(d => {

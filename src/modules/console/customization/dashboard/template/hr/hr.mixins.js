@@ -290,7 +290,6 @@ export default {
         });
 
       vm.hDData = chartData(yjdgData, sjdgData, qnjhData, zzData);
-      console.log(vm.hDData)
     },
     windowResized: function(args) {
       if (args.id == this.$props.tileId) {

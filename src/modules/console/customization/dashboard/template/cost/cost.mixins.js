@@ -104,20 +104,19 @@ export default {
     init() {
       let vm = this;
       vm.hUContainer = d3.select(vm.$refs.hUContainer);
+      
       vm.hUChart = d3BI.baseChart()
         .x(function(d) { return d.label })
         .y(function(d) { return d.value })
         .y2(function(d) { return d.y2 })
         .margin({ top: 15, right: 20, left: 15, bottom: 10 });
-      vm.hUChart.axisLines.showAll({ x: false, y: false });
+
+      vm.hUChart.axisLines.showAll({ x: false, y: true });
       vm.hUChart.xAxis.title("月").maxTextLength(10);
-      // vm.hUChart.yAxis.title("元").domainToZero(true).axis().ticks(5);
       vm.hUChart.yAxis.title("总成本(元)").domainToZero(true).axis().ticks(5);
-      // vm.hUChart.y2Axis.title("公里").axis().ticks(5);
       vm.hUChart.y2Axis.title("总公里数(公里)").axis().ticks(5);
 
       // vm.hDContainer = d3.select(vm.$refs.hDContainer);
-      // vm.hDContainer2 = d3.select(vm.$refs.hDContainer2);
 
       vm.hDChart = d3BI.baseChart()
         .x(function(d) { return d.label })
@@ -127,7 +126,6 @@ export default {
 
       vm.hDChart.axisLines.showAll({ x: false, y: true });
       vm.hDChart.xAxis.title("月").maxTextLength(10);
-      // vm.hDChart.yAxis.title("元/公里").domainToZero(true).axis().ticks(5);
       vm.hDChart.yAxis.title("成本(元/公里)").domainToZero(true).axis().ticks(5);
       vm.hDChart.y2Axis.title("总公里数(公里)").axis().ticks(5);
       

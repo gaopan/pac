@@ -169,7 +169,6 @@ export default {
         }
       });
       this.data.formData = _formData;
-      console.log(_formData);
 
       statPromise.then(res => {
         let stats = res.data;
@@ -182,7 +181,6 @@ export default {
           let formData = null;
           try {
             formData = JSON.parse(curMonthData.value);
-            console.log(formData);
           } catch (err) {
             console.log(err);
           }
@@ -193,7 +191,6 @@ export default {
               }
             });
             this.data.formData = formData;
-            console.log(formData);
           }
         }
       });
@@ -215,7 +212,6 @@ export default {
       }
 
       Object.keys(formData).forEach(key => {     
-        console.log(key) 
         switch(key){
           case 'fdgzscrj': 
             data.value[key] = this.validateNumber(formData['fdgzzsc']/(formData['yfryrs']));
@@ -275,18 +271,18 @@ export default {
         month: dataToSend.month,
         value: JSON.stringify(dataToSend.value)
       };
-      // if (dataToSend.id) {
-      //   promise = DashboardApi.updateStatistics(dataToSend.id, _dataToSend);
-      // } else {
-      //   promise = DashboardApi.addStatistics(_dataToSend);
-      // }
+      if (dataToSend.id) {
+        promise = DashboardApi.updateStatistics(dataToSend.id, _dataToSend);
+      } else {
+        promise = DashboardApi.addStatistics(_dataToSend);
+      }
 
-      // promise.then(res => {
-      //   Noty.notifySuccess({ text: `${name}数据成功！` });
-      //   this.refresh();
-      // }, err => {
-      //   Noty.notifyError({ text: `${name}数据失败！` });
-      // });
+      promise.then(res => {
+        Noty.notifySuccess({ text: `${name}数据成功！` });
+        this.refresh();
+      }, err => {
+        Noty.notifyError({ text: `${name}数据失败！` });
+      });
     }
   }
 }
