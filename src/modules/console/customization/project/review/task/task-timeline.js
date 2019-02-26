@@ -18,7 +18,7 @@ export default {
     },
     currentMonth(val){
       this.timeline.currentMonth(val);
-      this.timeline.render();
+      // this.timeline.render();
     }
   },
   mounted(){

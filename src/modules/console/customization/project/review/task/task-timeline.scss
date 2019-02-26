@@ -1,10 +1,13 @@
 .task-timeline {
   padding: 10px;
+  position: relative;
 
   .line-wrapper {
-    width: 100%;
-    height: 100%;
-    position: relative;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
     overflow: hidden;
 
     .middle-line-wrapper {
@@ -36,7 +39,7 @@
       user-select: none;
 
       &>.node-container+.node-container {
-        margin-left: 15px;
+        margin-left: 5px;
       }
 
       .node-container {
@@ -102,7 +105,7 @@
           width: 100%;
           padding: 15px;
           position: absolute;
-          transform: scale(0.5);
+          transform: scale(0.75);
           transform-origin: 50% 0;
           text-align: left;
           background-color: $bgColor;
@@ -120,8 +123,9 @@
             }
           }
 
-          .node-content, .node-content-shortcut {
-          	background-color: #b8daff;
+          .node-content,
+          .node-content-shortcut {
+            background-color: #b8daff;
           }
         }
       }

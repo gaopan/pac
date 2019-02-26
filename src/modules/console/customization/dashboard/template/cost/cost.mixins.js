@@ -114,7 +114,7 @@ export default {
 
       vm.hUChart.axisLines.showAll({ x: false, y: true });
       vm.hUChart.xAxis.title("月").maxTextLength(10);
-      vm.hUChart.yAxis.title("总成本(元)").domainToZero(true).axis().ticks(5);
+      vm.hUChart.yAxis.title("总成本(元)").axis().ticks(5);
       vm.hUChart.y2Axis.title("总公里数(公里)").axis().ticks(5);
 
       // vm.hDContainer = d3.select(vm.$refs.hDContainer);
@@ -147,7 +147,6 @@ export default {
       vm.hDChart3.axisLines.showAll({ x: false, y: true });
       vm.hDChart3.xAxis.title("月").maxTextLength(10);
       vm.hDChart3.yAxis.title("成本(元/公里)").domainToZero(true).axis().ticks(5);
-
       
     },
     selectType(args) {

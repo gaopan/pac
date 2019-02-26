@@ -29,17 +29,18 @@ function render() {
       init.call(self);
     }
     let rowCount = 5,
-      marginHor = 15,
+      marginHor = 5,
+      curMonth = new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
       lineWrapperWidth = self._$lineContainer.node().parentNode.clientWidth,
       lineContainerHeight = self._$lineContainer.node().clientHeight,
-      nodeContainerWidth = lineWrapperWidth / rowCount - marginHor * (rowCount - 1),
+      nodeContainerWidth = (lineWrapperWidth - marginHor * (rowCount - 1)) / rowCount,
       elasticRangeX = nodeContainerWidth / 2,
-      nodeContentShortcutHeight = (lineContainerHeight - 50) / 2,
-      nodeContentHeight = lineContainerHeight - 50,
+      nodeContentShortcutHeight = (lineContainerHeight - 100) / 2,
+      nodeContentHeight = lineContainerHeight - 100,
       activeMonthDataIndex = -1;
 
     data.every((d, index) => {
-      if (d.month == this._curMonth) {
+      if (d.month == curMonth) {
         activeMonthDataIndex = index;
         return false;
       }
@@ -121,9 +122,9 @@ function render() {
           activeMonthDataIndex = -Math.round(lastTrans.x / (nodeContainerWidth + marginHor)) + (rowCount - 1) / 2;
           lastTrans.x = -(activeMonthDataIndex - (rowCount - 1) / 2) * (nodeContainerWidth + marginHor);
         }
-        self._$lineContainer.selectAll('div.node-container').each(function(d, i){
-          d3.select(this).classed("current", activeMonthDataIndex == i);
-        });
+        // self._$lineContainer.selectAll('div.node-container').each(function(d, i){
+        //   d3.select(this).classed("current", activeMonthDataIndex == i);
+        // });
         self._$lineContainer.style("transform", `translate(${lastTrans.x}px, 0)`);
         lastMouseDownTrans.x = lastTrans.x;
         $doc.on("mousemove", null);
