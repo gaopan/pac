@@ -12,7 +12,7 @@ export default {
     });
     return res;
   },
-  monthComparison(a, b) {
+  monthComparison(a, b, desc) {
     let aA = a.split('-'),
       aB = b.split('-');
     let yearA = aA[0],
@@ -20,8 +20,8 @@ export default {
       yearB = aB[0],
       monthB = aB[1];
     if (yearA != yearB) {
-      return yearA - yearB;
+      return desc ? (yearB - yearA) : (yearA - yearB);
     }
-    return monthA - monthB;
+    return desc ? (monthB - monthA) : (monthA - monthB);
   }
 }

@@ -24,7 +24,7 @@ export default {
     <div class="row">
       <div class="col-xs-12">
           <div class="chart-title">
-            <span>成本与里程</span>
+            <span>总成本与总里程</span>
                         
           </div>
           <div class="chart-container" ref="hUContainer"></div>
@@ -34,7 +34,7 @@ export default {
         <div class="col-xs-12">
           <div class="chart-title">
             <!-- <span>成本目标</span> -->
-            <span>成本</span>
+            <span>单位成本</span>
           </div>
           <div class="chart-container" v-show = "selectedType == '外业'">
             <div class = "hD-container-1" ref="hDContainer"></div>
@@ -351,20 +351,20 @@ export default {
         if (vm.selectedType == '内业') {
           _data = [{
             type: "bar",
-            name: '成本',
+            name: '单位成本',
             label: {
               x: '月',
-              y: '成本',
+              y: '单位成本',
               name: ''
             },
             color: 'rgb(0, 201, 255)',
             values: _cbData
           }, {
             type: 'bar',
-            name: '成本目标',
+            name: '单位成本目标',
             label: {
               x: '月',
-              y: '成本目标',
+              y: '单位成本目标',
               name: ''
             },
             dashed: '3 3',

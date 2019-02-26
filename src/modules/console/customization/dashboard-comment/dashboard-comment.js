@@ -1,6 +1,7 @@
 import Noty from '@/utils/noty-operation.js'
 import DashboardApi from '@/api/customization/dashboard.js'
 import CommonUtils from '@/utils/common-utils.js'
+import DataUtils from '@/utils/data-utils.js'
 
 export default {
   data() {
@@ -30,19 +31,7 @@ export default {
       });
     }
     this.data.sort((a, b) => {
-      let arrA = a.month.split('-'),
-        arrB = b.month.split('-');
-      let yearA = Number(arrA[0]),
-        monthA = Number(arrA[1]),
-        yearB = Number(arrB[0]),
-        monthB = Number(arrB[1]);
-      if (yearA < yearB) {
-        return true;
-      } else if (yearA > yearB) {
-        return false;
-      } else {
-        return monthA < monthB;
-      }
+      return DataUtils.monthComparison(a.month, b.month, true);
     });
   },
   methods: {

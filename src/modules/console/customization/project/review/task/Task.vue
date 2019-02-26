@@ -3,7 +3,7 @@
     <div>
       <div class="task-title">{{project.name}} <span style="color: #7d7d7d">项目计划</span>
       </div>
-      <p class="task-guide"><span>三角形节点 </span>：项目关键/重大节点 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>圆形节点 </span>：项目正常月度交付目标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="blue">蓝色节点 </span>：当前月份的交付情况</p>
+      <p class="task-guide"><span>三角形节点 </span>：项目关键/重大节点 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>圆形节点 </span>：项目正常月度交付目标<br/><br/> <span class="red">红灯 </span>：项目进度严重推迟，且无长短期措施&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="green">绿灯 </span>：项目正常推进&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="yellow">黄灯 </span>：项目进度推迟，但有长短期措施<br/><br/> <span class="blue">蓝色对话框 </span>：当前月份的交付情况</p>
       <!-- <div class="task-tabs-wrapper" v-show="tasks&&tasks.length>0">
         <div class="task-tabs" ref="taskTabs">
           <div>

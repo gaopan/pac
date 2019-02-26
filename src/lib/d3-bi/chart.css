@@ -181,6 +181,9 @@
   border-left: 10px solid #333333;
 }
 
+.bi-tooltip table tr td {
+  padding: 4px 8px;
+}
 .bi-tooltip table tr td.title {
   color: #A6A09B;
   font-weight: 500;

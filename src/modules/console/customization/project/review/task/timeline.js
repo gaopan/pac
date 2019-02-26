@@ -35,7 +35,7 @@ function render() {
       lineContainerHeight = self._$lineContainer.node().clientHeight,
       nodeContainerWidth = (lineWrapperWidth - marginHor * (rowCount - 1)) / rowCount,
       elasticRangeX = nodeContainerWidth / 2,
-      nodeContentShortcutHeight = (lineContainerHeight - 100) / 3,
+      nodeContentShortcutHeight = (lineContainerHeight - 100) / 2,
       nodeContentHeight = lineContainerHeight - 100,
       activeMonthDataIndex = -1;
 
@@ -60,7 +60,7 @@ function render() {
       .style("width", nodeContainerWidth + 'px')
       .classed('current', function(d) { return d.month == self._curMonth; })
       .html(function(d) {
-        return `<div class="node-month ${d.status}">${d.month}</div><div class="node-icon ${d.nodeType=='Key'?'key':'general'}"></div>
+        return `<div class="node-month">${d.month}</div><div class="node-icon ${d.status} ${d.nodeType=='Key'?'key':'general'}"></div>
         <div class="node-content-shortcut" style="display:block;height:${nodeContentShortcutHeight+'px'}">${d.value}</div>
         <div class="node-content" style="display:none;width:${nodeContainerWidth * 6/5 + 'px'};height:${nodeContentHeight + 'px'}">${d.value}</div>`;
       });
