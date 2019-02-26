@@ -79,7 +79,7 @@ var Tooltip = function() {
   }
   var remove = function() {
     if (hTooltip) {
-      // hTooltip.style('display', 'none');
+      hTooltip.style('display', 'none');
       if (privateClass) hTooltip.classed(privateClass, false);
     }
   }
