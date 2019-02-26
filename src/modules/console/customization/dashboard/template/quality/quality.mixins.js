@@ -282,37 +282,37 @@ export default {
           return {
             field:_d['区域'],
             label: _d['外业批次'],
-            y2: (_d['合格率']*100).toFixed(1),
-            value: (_d['合格里程']).toFixed(1)
+            y2: +(_d['合格率']*100).toFixed(1),
+            value: +(_d['合格里程']).toFixed(1)
           };
         }),
         hgbzData = data.up.map(_d => {
           return {
             field:_d['区域'],
             label: _d['外业批次'],
-            y2: (_d['合格标准']*100).toFixed(1),
-            value: (_d['总里程']).toFixed(1)
+            y2: +(_d['合格标准']*100).toFixed(1),
+            value: +(_d['总里程']).toFixed(1)
           }
         }),
         zlcData = data.up.map(_d => {
           return {
             field:_d['区域'],
             label: _d['外业批次'],
-            value: (_d['总里程']).toFixed(1)
+            value: +(_d['总里程']).toFixed(1)
           }
         }),
         ljzlcData = data.up.map(_d => {
           return {
             field:_d['区域'],
             label: _d['外业批次'],
-            value: (_d['累计总里程']).toFixed(1)
+            value: +(_d['累计总里程']).toFixed(1)
           };
         }),
         hglcData = data.up.map(_d => {
           return {
             field:_d['区域'],
             label: _d['外业批次'],
-            value: (_d['合格里程']).toFixed(1)
+            value: +(_d['合格里程']).toFixed(1)
           }
         });
 
@@ -383,28 +383,28 @@ export default {
           return {
             label: _d['月'],
             // value: _d['错误发生率']
-            value: (_d['错误发生率']*100).toFixed(1)
+            value: +(_d['错误发生率']*100).toFixed(1)
           };
         }),
         cwlbzData = data.down[this.selectedQDOption].map(_d => {
           return {
             label: _d['月'],
             // value: _d['错误发生率标准']
-            value: (_d['错误发生率标准']*100).toFixed(1)
+            value: +(_d['错误发生率标准']*100).toFixed(1)
           }
         }),
         cwlclData = data.down[this.selectedQDOption].map(_d => {
           return {
             label: _d['月'],
             // value: _d['错误流出率']
-            value: (_d['错误流出率']*100).toFixed(1)
+            value: +(_d['错误流出率']*100).toFixed(1)
           }
         }),
         cwlclbzData = data.down[this.selectedQDOption].map(_d => {
           return {
             label: _d['月'],
             // value: _d['错误流出率标准']
-            value: (_d['错误流出率标准']*100).toFixed(1)
+            value: +(_d['错误流出率标准']*100).toFixed(1)
           }
         });
       this.qDData = chartData(cwlData, cwlbzData, cwlclData, cwlclbzData);

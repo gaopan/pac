@@ -41,8 +41,10 @@ var Axis = function() {
         .attr('font-family', null);
       hContainer.selectAll('g.tick').attr('opacity', null);
       hContainer.selectAll('text').attr('fill', null);
-      hContainer.selectAll('path').attr('stroke', null);
-      hContainer.selectAll('line').attr('stroke', null);
+      // hContainer.selectAll('path').attr('stroke', null);
+      // hContainer.selectAll('line').attr('stroke', null);
+      hContainer.selectAll('path').attr('stroke', "#d9d9d9");
+      hContainer.selectAll('line').attr('stroke', "#d9d9d9");
 
       // deal text
       var hTexts = hContainer.selectAll('g.tick').select('text');

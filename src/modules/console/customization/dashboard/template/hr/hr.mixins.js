@@ -159,7 +159,7 @@ export default {
           label: key,
           value: data.degree[key],
           // percentage: Math.round(data.degree[key] / total * 100)
-          percentage: (data.degree[key] / total * 100).toFixed(1)
+          percentage: +(data.degree[key] / total * 100).toFixed(1)
         });
       });
       vm.hUData = d;

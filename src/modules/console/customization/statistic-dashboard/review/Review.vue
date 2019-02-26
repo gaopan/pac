@@ -23,7 +23,7 @@
               </td>
               <td v-for="month in months">
                 <!-- <div>{{data[month][header.key]}}</div> -->
-                <div>{{header.unit === "人" ? data[month][header.key] : (data[month][header.key]).toFixed(1)}}</div>                
+                <div>{{header.unit === "人" ? data[month][header.key] : +(data[month][header.key]).toFixed(1)}}</div>                
               </td>
             </tr>
           </tbody>

@@ -87,7 +87,7 @@ export default {
             values: fillMonth(item.months, vm.selectedYear).map(monthData => {
               return {
                 label: monthData.month,
-                value: (monthData.value).toFixed(1)
+                value: +(monthData.value).toFixed(1)
               }
             }).sort((a, b) => {
               return DataUtils.monthComparison(a.label, b.label)

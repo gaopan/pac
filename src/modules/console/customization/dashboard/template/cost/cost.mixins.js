@@ -113,9 +113,9 @@ export default {
         .margin({ top: 15, right: 20, left: 15, bottom: 10 });
 
       vm.hUChart.axisLines.showAll({ x: false, y: true });
-      vm.hUChart.xAxis.title("月").maxTextLength(10);
-      vm.hUChart.yAxis.title("总成本(元)").axis().ticks(5);
-      vm.hUChart.y2Axis.title("总公里数(公里)").axis().ticks(5);
+      vm.hUChart.xAxis.title("月").maxTextLength(10);  
+      vm.hUChart.yAxis.title("总成本(元)").domainToZero(true).axis().ticks(5);
+      vm.hUChart.y2Axis.title("总公里数(公里)").domainToZero(true).axis().ticks(5);
 
       // vm.hDContainer = d3.select(vm.$refs.hDContainer);
 
@@ -174,7 +174,6 @@ export default {
 
       if(vm.selectedType == '内业'){
         setTimeout(function(){
-          console.log(vm.hDData);
           if (d3.select(vm.$refs.hDContainer3).select('svg').size()) {
             d3.select(vm.$refs.hDContainer3)
               .select('svg')
@@ -254,13 +253,13 @@ export default {
       let zcbData = d.map(_d => {
           return {
             label: _d['月'],
-            value: (_d['总成本']).toFixed(1)
+            value: +(_d['总成本']).toFixed(1)
           };
         }),
         zglData = d.map(_d => {
           return {
             label: _d['月'],          
-            y2: (_d['总公里数']).toFixed(1),
+            y2: +(_d['总公里数']).toFixed(1),
           };
         });
 
@@ -279,41 +278,41 @@ export default {
         cbData = d.map(_d => {
           return {
             label: _d['月'],
-            value: (_d['成本']).toFixed(1)
+            value: +(_d['成本']).toFixed(1)
           };
         });
         cbmbData = d.map(_d => {
           return {
             label: _d['月'],
-            value: (_d['成本目标']).toFixed(1),
+            value: +(_d['成本目标']).toFixed(1),
           };
         });
       } else {
         sqcbData = d.map(_d => {
           return {
             label: _d['月'],
-            value: (_d['市区成本']).toFixed(1)
+            value: +(_d['市区成本']).toFixed(1)
           };
         });
 
         sqcbmbData = d.map(_d => {
           return {
             label: _d['月'],
-            value: (_d['市区成本目标']).toFixed(1),
+            value: +(_d['市区成本目标']).toFixed(1),
           };
         });
 
         gscbData = d.map(_d => {
           return {
             label: _d['月'],
-            value: (_d['高速成本']).toFixed(1)
+            value: +(_d['高速成本']).toFixed(1)
           };
         });
 
         gscbmbData = d.map(_d => {
           return {
             label: _d['月'],
-            value: (_d['高速成本目标']).toFixed(1),
+            value: +(_d['高速成本目标']).toFixed(1),
           };
         });
       }

@@ -64,7 +64,8 @@
   stroke: #ececec;
 }
 .bi-container .axis-line-groups line.origin-axis-line {
-  stroke: #c4c4c4;
+  stroke: #fff;
+  /*stroke: #c4c4c4;*/
 }
 
 
