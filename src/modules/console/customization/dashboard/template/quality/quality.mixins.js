@@ -112,7 +112,7 @@ export default {
         .margin({ top: 15, right: 20, left: 15, bottom: 10 });
 
       vm.qUChart.axisLines.showAll({ x: false, y: false });
-      vm.qUChart.xAxis.title("批次").textRotate(-40).maxTextLength(10);
+      vm.qUChart.xAxis.title("外业批次(区域)").textRotate(-40).maxTextLength(10);
       vm.qUChart.yAxis.title("里程").domainToZero(true).axis().ticks(5);
       vm.qUChart.y2Axis.title("率(%)").domainToZero(true).axis().ticks(5);
 
