@@ -96,17 +96,19 @@
           background-color: $bgColor;
           overflow: auto;
           top: 50px;
-          left: -25%;
+          left: -10%;
           width: 100%;
           padding: 15px;
+          white-space: pre-wrap;
         }
 
         .node-content-shortcut {
-          left: 25%;
+          left: 10%;
           top: 50px;
-          width: 50%;
+          width: 80%;
           padding: 15px;
           position: absolute;
+          white-space: pre-wrap;
           transform: scale(0.75);
           transform-origin: 50% 0;
           text-align: left;
