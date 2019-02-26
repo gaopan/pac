@@ -50,7 +50,6 @@ var AxisLines = function() {
 
         // when don't select all data relation y axis. we will use y2.
         var curAxis = useYaxisOrY2axis(data);
-
         var yScale = host[curAxis+'Axis'].scale();
         var yScaleConfig = ChartUtils.getScaleConfig(yScale, {hAxis: host.hContainer.select('g.'+ curAxis +'axis-group')});
         var yOriginValue = host.hasOwnProperty('yOriginValue') ? host.yOriginValue() : null;

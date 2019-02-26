@@ -112,7 +112,7 @@ export default {
         .margin({ top: 15, right: 20, left: 15, bottom: 10 });
 
       vm.qUChart.axisLines.showAll({ x: false, y: false });
-      vm.qUChart.xAxis.title("批次").textRotate(-50).maxTextLength(10);
+      vm.qUChart.xAxis.title("批次").textRotate(-40).maxTextLength(10);
       vm.qUChart.yAxis.title("里程").domainToZero(true).axis().ticks(5);
       vm.qUChart.y2Axis.title("率(%)").domainToZero(true).axis().ticks(5);
 
@@ -127,6 +127,17 @@ export default {
       vm.qDChart.axisLines.showAll({ x: false, y: true });
       vm.qDChart.xAxis.title("月").maxTextLength(10);
       vm.qDChart.yAxis.title("率(%)").domainToZero(true).axis().ticks(5);
+
+      vm.qDChart2 = d3BI.baseChart()
+        .x(function(d) { return d.label })
+        .y(function(d) { return d.value })
+        .margin({ top: 15, right: 20, left: 15, bottom: 10 });
+
+      vm.qDChart2.axisLines.showAll({ x: false, y: true });
+      vm.qDChart2.xAxis.title("月").maxTextLength(10);
+      vm.qDChart2.yAxis.title("率(%)").domainToZero(true).axis().ticks(5);
+
+
     },
     selectQDOption(args) {
       this.selectedQDOption = args.value;
@@ -174,12 +185,12 @@ export default {
         vm.qDContainer2
           .select('svg')
           .datum(function(d) { return chartData.chart2 ? chartData.chart2 : d })
-          .call(vm.qDChart);
+          .call(vm.qDChart2);
       } else {
         vm.qDContainer2
           .append('svg')
           .datum(chartData.chart2)
-          .call(vm.qDChart);
+          .call(vm.qDChart2);
       }
 
       function divideData(data){

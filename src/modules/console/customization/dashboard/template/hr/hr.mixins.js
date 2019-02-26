@@ -196,6 +196,7 @@ export default {
             type: 'line',
             name: '全年计划人数',
             axis: "y2",
+            dashed: "3 3",
             label: {
               x: '月',
               y: '全年计划人数',
