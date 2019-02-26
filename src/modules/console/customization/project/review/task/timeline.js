@@ -35,7 +35,7 @@ function render() {
       lineContainerHeight = self._$lineContainer.node().clientHeight,
       nodeContainerWidth = (lineWrapperWidth - marginHor * (rowCount - 1)) / rowCount,
       elasticRangeX = nodeContainerWidth / 2,
-      nodeContentShortcutHeight = (lineContainerHeight - 100) / 2,
+      nodeContentShortcutHeight = (lineContainerHeight - 100) / 3,
       nodeContentHeight = lineContainerHeight - 100,
       activeMonthDataIndex = -1;
 
@@ -62,7 +62,7 @@ function render() {
       .html(function(d) {
         return `<div class="node-month ${d.status}">${d.month}</div><div class="node-icon ${d.nodeType=='Key'?'key':'general'}"></div>
         <div class="node-content-shortcut" style="display:block;height:${nodeContentShortcutHeight+'px'}">${d.value}</div>
-        <div class="node-content" style="display:none;height:${nodeContentHeight + 'px'}">${d.value}</div>`;
+        <div class="node-content" style="display:none;width:${nodeContainerWidth * 3/2 + 'px'};height:${nodeContentHeight + 'px'}">${d.value}</div>`;
       });
     self._$lineContainer.style("width", lineContainerWidth + 'px');
     self._$lineContainer.style("transform", `translate(${lineContainerInitTransX}px, 0)`);
