@@ -18,7 +18,22 @@
       padding: 20/12*$unit 40/12*$unit;
       text-align: center;
       background-color: $bgColor;
-      margin-bottom:20px;
+      margin-bottom: 20px;
+
+      &.green {
+        background-color: #449D44;
+        color: #fff;
+      }
+
+      &.red {
+        background-color: #D9534F;
+        color: #fff;
+      }
+
+      &.yellow {
+        background-color: #ffc107;
+        color: #fff;
+      }
 
       &:hover {
         cursor: pointer;
@@ -39,18 +54,18 @@
       background-color: $bgColor;
 
       &.green {
-      	background-color: #449D44;
-      	color: #fff;
+        background-color: #449D44;
+        color: #fff;
       }
 
       &.red {
-      	background-color: #D9534F;
-      	color: #fff;
+        background-color: #D9534F;
+        color: #fff;
       }
 
       &.yellow {
-      	background-color: #ffc107;
-      	color: #fff;
+        background-color: #ffc107;
+        color: #fff;
       }
 
       &:hover {
@@ -98,7 +113,7 @@
     }
 
     span.yellow {
-    	color: #ffc107;
+      color: #ffc107;
     }
 
   }

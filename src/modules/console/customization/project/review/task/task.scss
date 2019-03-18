@@ -51,6 +51,32 @@
     font-weight: 700;
     font-size: 24/12*$unit;
     margin: 40/12*$unit 0;
+
+    .proj-status {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 0;
+      background-color: $bgColor;
+      font-weight: 400;
+      font-size: 16/12*$unit;
+      line-height: 24/12*$unit;
+      margin-right: 10/12*$unit;
+
+      &.green {
+        background-color: #449D44;
+        color: #fff;
+      }
+
+      &.red {
+        background-color: #D9534F;
+        color: #fff;
+      }
+
+      &.yellow {
+        background-color: #ffc107;
+        color: #fff;
+      }
+    }
   }
 
   .task-month {

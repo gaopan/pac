@@ -3,7 +3,7 @@
     <div class="tabs-container">
       <div class="tab-scroll" ref="tabs">
         <div class="tabs">
-          <div class="tab" v-for="m in modules" @click="activeModule(m)" :class="{active: m==currentModule}">
+          <div class="tab" v-for="m in modules" @click="activeModule(m)" :class="{active: m==currentModule,yellow:m.curMonthData&&m.curMonthData.status=='y',red:m.curMonthData&&m.curMonthData.status=='r',green:m.curMonthData&&m.curMonthData.status=='g'}">
             <div class="tab-name">{{m.name}}</div>
           </div>
         </div>

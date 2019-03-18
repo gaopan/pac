@@ -156,13 +156,9 @@
         display: inline-block;
         padding: 10px 15px;
 
-        &:hover {
-          cursor: pointer;
-          background-color: #fff;
-        }
-
         &.active {
           background-color: #fff;
+          color: #333;
           position: relative;
           z-index: 2;
 
@@ -177,6 +173,28 @@
             height: 1px;
             background-color: #fff;
           }
+        }
+
+
+        &.green {
+          background-color: #449D44;
+          color: #fff;
+        }
+
+        &.red {
+          background-color: #D9534F;
+          color: #fff;
+        }
+
+        &.yellow {
+          background-color: #ffc107;
+          color: #fff;
+        }
+
+        &:hover {
+          cursor: pointer;
+          background-color: #fff;
+          color: #333;
         }
       }
     }
@@ -261,13 +279,13 @@
 }
 
 .qD-container-1,
-.qD-container-2{
-  width:48%;
-  display:inline-block;
+.qD-container-2 {
+  width: 48%;
+  display: inline-block;
 }
 
 .hD-container-1,
-.hD-container-2{
-  width:48%;
-  display:inline-block;
+.hD-container-2 {
+  width: 48%;
+  display: inline-block;
 }

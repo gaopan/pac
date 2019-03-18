@@ -13,7 +13,7 @@ export default {
       curTask: null
     };
   },
-  components: {TaskTimeline},
+  components: { TaskTimeline },
   watch: {
     project() {
       this.prepareTasks();
@@ -47,11 +47,15 @@ export default {
           };
         });
         tasks.sort((a, b) => {
-          let aDateA = a.month.split('-'), aDateB = b.month.split('-');
-          let monthA = Number(aDateA[1]), yearA = Number(aDateA[0]), monthB = Number(aDateB[1]), yearB = Number(aDateB[0]);
-          if(yearA != yearB) {
+          let aDateA = a.month.split('-'),
+            aDateB = b.month.split('-');
+          let monthA = Number(aDateA[1]),
+            yearA = Number(aDateA[0]),
+            monthB = Number(aDateB[1]),
+            yearB = Number(aDateB[0]);
+          if (yearA != yearB) {
             return yearA - yearB;
-          } 
+          }
           return monthA - monthB;
         });
 
@@ -67,6 +71,8 @@ export default {
           });
           if (!this.curTask) {
             this.curTask = this.tasks[0];
+          } else {
+            this.project.monthlyStatus = this.curTask.status;
           }
         }
       }

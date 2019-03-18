@@ -18,7 +18,7 @@
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-xs-12 col-md-4 col-lg-2" v-for="m in curReportModules">
-                    <div class="m-report" @click="toViewReport(m)">
+                    <div class="m-report" @click="toViewReport(m)" :class="{yellow:m.value.status=='y',red:m.value.status=='r',green:m.value.status=='g'}">
                       <div class="report-name">{{m.moduleName | moduleName}}</div>
                     </div>
                   </div>

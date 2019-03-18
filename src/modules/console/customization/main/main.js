@@ -53,6 +53,15 @@ export default {
         this.currentComp.reports.every(r => {
           if (r.month == this.curMonth) {
             curMonthReport = r;
+            if(r.reportModules) {
+              r.reportModules.forEach(m => {
+                if(TypeChecker.isString(m.value)){
+                  try{
+                    m.value = JSON.parse(m.value);
+                  } catch(err){ console.error(err); }
+                }
+              });
+            }
             return false;
           }
           return true;

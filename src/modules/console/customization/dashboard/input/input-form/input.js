@@ -246,6 +246,7 @@ export default {
     addNewRow(moduleTable, field) {
       Vue.set(moduleTable, 'showForm', true);
       Vue.set(moduleTable, 'form', {});
+      Vue.set(moduleTable, 'newRow', true);
     },
     saveNewRow(moduleTable, field) {
       let form = moduleTable.form;
@@ -271,14 +272,17 @@ export default {
       }
       Vue.set(moduleTable, 'showForm', false);
       Vue.set(moduleTable, 'form', null);
+      Vue.set(moduleTable, 'newRow', undefined);
     },
     cancelNewRow(moduleTable, field) {
       Vue.set(moduleTable, 'showForm', false);
       Vue.set(moduleTable, 'form', null);
+      Vue.set(moduleTable, 'newRow', undefined);
     },
     editRow(moduleTable, field, row) {
       Vue.set(moduleTable, 'showForm', true);
       Vue.set(moduleTable, 'form', CommonUtils.deepClone(row));
+      Vue.set(moduleTable, 'newRow', false);
     },
     removeRow(moduleTable, field, row) {
       let index = -1;
