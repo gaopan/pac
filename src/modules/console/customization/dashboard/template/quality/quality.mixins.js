@@ -113,7 +113,7 @@ export default {
 
       vm.qUChart.axisLines.showAll({ x: false, y: true });
       vm.qUChart.xAxis.title("外业批次(区域)").textRotate(-40).maxTextLength(10);
-      vm.qUChart.yAxis.title("里程").domainToZero(true).axis().ticks(5);
+      vm.qUChart.yAxis.title("里程(公里)").domainToZero(true).axis().ticks(5);
       vm.qUChart.y2Axis.title("率(%)").domainToZero(true).axis().ticks(5);
 
       vm.qDContainer = d3.select(vm.$refs.qDContainer);
@@ -332,7 +332,7 @@ export default {
     parseDData(data) {
       let chartData = function(_cwlData, _cwlbzData, _cwlclData, _cwlclbzData) {
         return [{
-          type: 'line',
+          type: 'bar',
           name: '错误率',
           label: {
             x: '月',
@@ -342,7 +342,7 @@ export default {
           color: 'rgb(0, 201, 255)',
           values: _cwlData
         }, {
-          type: 'line',
+          type: 'bar',
           name: '错误发生率标准',
           dashed: "3, 3",
           label: {
@@ -353,7 +353,7 @@ export default {
           color: 'rgb(15,113,139)',
           values: _cwlbzData
         }, {
-          type: 'line',
+          type: 'bar',
           name: '错误流出率',
           label: {
             x: '月',
@@ -363,7 +363,7 @@ export default {
           color: 'rgb(255,90,252)',
           values: _cwlclData
         }, {
-          type: 'line',
+          type: 'bar',
           name: '错误流出率标准',
           dashed: "3, 3",
           label: {

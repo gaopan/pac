@@ -40,8 +40,8 @@ export default {
         .margin({ top: 15, right: 20, left: 15, bottom: 10 });
       vm.chart.axisLines.showAll({ x: false, y: false });
       vm.chart.xAxis.title("月").textRotate(-50).maxTextLength(10);
-      vm.chart.yAxis.title("人数").domainToZero(true).axis().ticks(5);
-      vm.chart.y2Axis.title("小时").domainToZero(true).axis().ticks(5);
+      vm.chart.yAxis.title("小时").domainToZero(true).axis().ticks(5);
+      vm.chart.y2Axis.title("人数").domainToZero(true).axis().ticks(5);
     },
     draw() {
       let vm = this,
