@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "animate.css": "^3.5.2",
-    "axios": "^0.15.3",
+    "axios": "^0.21.1",
     "better-scroll": "^1.13.4",
     "bootstrap-loader": "^2.2.0",
     "d3": "^4.9.1",
